@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #faf8f5;
+  background-image: radial-gradient(#e5e0d8 1px, transparent 1px);
+  background-size: 24px 24px;
+  font-family: 'Inter', sans-serif;
+}
+
+.hanzi-font {
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.kaiti-font {
+  font-family: 'Noto Serif SC', serif;
+}
+
+/* Paper blow animation for aspirated sounds */
+@keyframes blow-paper {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-38deg) skewX(-8deg); }
+  50% { transform: rotate(-25deg); }
+  75% { transform: rotate(-42deg); }
+}
+
+.paper-blowing {
+  transform-origin: top center;
+  animation: blow-paper 0.9s ease-in-out infinite;
+}
+
+/* Speaking pulse */
+@keyframes pulse-ring {
+  0% { transform: scale(0.97); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+  100% { transform: scale(0.97); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+.speaking-active {
+  animation: pulse-ring 1.2s infinite;
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
+  border-color: #dc2626 !important;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

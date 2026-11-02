@@ -1,0 +1,2469 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Giáo Trình Hán Ngữ 2 - Bài 13: Để Tôi Kiểm Tra Cho Bạn (让我给你检查一下) | Tương Tác & Phát Âm</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Noto Sans SC / Noto Serif SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        hanzi: ['"Noto Sans SC"', 'sans-serif'],
+                        kaiti: ['"Noto Serif SC"', 'serif'],
+                    },
+                    colors: {
+                        cinnabar: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        },
+                        medical: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #faf8f5;
+            background-image: radial-gradient(#e5e0d8 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .hanzi-font {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .kaiti-font {
+            font-family: 'Noto Serif SC', serif;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(13, 148, 136, 0); }
+            100% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
+        }
+        .speaking-active {
+            animation: pulse-ring 1.1s infinite;
+            background-color: #0d9488 !important;
+            color: #ffffff !important;
+            border-color: #0d9488 !important;
+        }
+        .mizige-container {
+            position: relative;
+            background-color: #fffdf9;
+            border: 3px solid #b91c1c;
+            box-shadow: inset 0 0 0 2px #fecaca;
+        }
+        .tab-panel {
+            animation: fadeIn 0.25s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body.hide-pinyin .pinyin-text {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col selection:bg-medical-600 selection:text-white">
+
+    <!-- STICKY HEADER & GLOBAL 4-LAYER AUDIO CONTROLLER + DOWNLOAD HTML BUTTON -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3">
+                <!-- Brand & Lesson 13 Title -->
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-medical-600 to-cinnabar-700 flex items-center justify-center text-white shadow-md shadow-medical-600/20 shrink-0">
+                        <span class="hanzi-font text-2xl font-bold">医</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider bg-medical-100 text-medical-700 rounded-full">Hán Ngữ 2 (Bản 2022) • Bài 13</span>
+                            <span class="px-2.5 py-0.5 text-xs font-medium bg-amber-100 text-amber-800 rounded-full flex items-center gap-1">
+                                <i class="fa-brands fa-youtube text-red-600"></i> Tóm tắt bài giảng Dương Châu
+                            </span>
+                        </div>
+                        <h1 class="text-base sm:text-xl font-extrabold text-slate-900 flex items-center gap-2 mt-0.5 flex-wrap">
+                            <span>Để Tôi Kiểm Tra Cho Bạn — <span class="hanzi-font text-cinnabar-600">让我给你检查一下</span> <span class="pinyin-text text-sm font-bold text-medical-700">(Ràng wǒ gěi nǐ jiǎnchá yíxià)</span></span>
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Global Multi-Engine Audio Controls + Pinyin Toggle + Standalone HTML Download -->
+                <div class="flex flex-wrap items-center gap-2 bg-stone-100/95 p-2 rounded-2xl border border-stone-200/90 shadow-inner">
+                    <!-- Live Speaking Status Pill -->
+                    <div id="ttsStatusPill" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white text-slate-700 text-xs font-semibold shadow-sm border border-stone-200/70 min-w-[180px] max-w-[250px]">
+                        <span id="ttsStatusDot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+                        <span id="ttsStatusText" class="truncate">Sẵn sàng phát âm (4 Lớp)</span>
+                    </div>
+
+                    <!-- Audio Engine Mode Dropdown -->
+                    <div class="flex items-center gap-1 bg-white px-2.5 py-1 rounded-xl border border-stone-200 shadow-sm">
+                        <i class="fa-solid fa-sliders text-medical-600 text-xs"></i>
+                        <label for="audioEngineSelect" class="sr-only">Chế độ phát âm</label>
+                        <select id="audioEngineSelect" onchange="changeAudioEngine(this.value)" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1 py-0.5">
+                            <option value="auto">🌐 Giọng Chuẩn MP3 + Trình Duyệt (Tự động)</option>
+                            <option value="vn">🇻🇳 Đọc Bồi Tiếng Việt + Cao Độ</option>
+                            <option value="synth">🎵 Chỉ phát Giai Điệu Thanh Điệu</option>
+                        </select>
+                    </div>
+
+                    <!-- Speed Toggle Button -->
+                    <button id="speedToggleBtn" onclick="toggleSpeechSpeed()" class="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-50 text-slate-800 border border-stone-200 shadow-sm text-xs font-bold transition active:scale-95" title="Đổi tốc độ đọc 1.0x Chuẩn / 0.65x Chậm">
+                        <i class="fa-solid fa-gauge-high text-medical-600"></i>
+                        <span id="speedLabel">1.0x Chuẩn</span>
+                    </button>
+
+                    <!-- Global Pinyin Toggle (Teacher's Hán 2 Method) -->
+                    <button id="globalPinyinBtn" onclick="toggleGlobalPinyin()" class="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 shadow-sm text-xs font-bold transition active:scale-95" title="Ẩn Pinyin để luyện phản xạ nhìn chữ Hán theo lời khuyên của cô giáo [00:00:27]">
+                        <i class="fa-solid fa-eye"></i>
+                        <span id="globalPinyinLabel">Ẩn Pinyin</span>
+                    </button>
+
+                    <!-- Speaker Test Button -->
+                    <button onclick="testSpeakerBeep(this)" class="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition active:scale-95" title="Kiểm tra loa">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>🔔 Thử Loa</span>
+                    </button>
+
+                    <!-- Download Standalone HTML File Button -->
+                    <button onclick="downloadStandaloneHTML()" class="flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-cinnabar-600 hover:bg-cinnabar-700 text-white text-xs font-bold shadow-sm transition active:scale-95" title="Tải toàn bộ trang web Bài 13 này về máy thành 1 file .html độc lập">
+                        <i class="fa-solid fa-download"></i>
+                        <span>⬇️ Tải File HTML (Bài 13)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Audio & Hán 2 Study Method Diagnostic Bar -->
+            <div class="mt-2 px-3 py-1.5 rounded-xl bg-teal-50/90 border border-teal-200/80 flex flex-wrap items-center justify-between gap-2 text-[11px] text-teal-950">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-user-doctor text-medical-600"></i>
+                    <span id="voiceDetectMessage">
+                        <strong>Mẹo học Hán Ngữ 2 [00:00:27]:</strong> Cô giáo khuyên nên tập <strong>nhìn mặt chữ Hán đoán nghĩa & cách đọc</strong> thay vì phụ thuộc Pinyin (Bấm nút <strong>"Ẩn Pinyin"</strong> ở trên để luyện phản xạ!).
+                    </span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="speakChinese('让我给你检查一下。', 'Ràng wǒ gěi nǐ jiǎnchá yíxià. — Để tôi kiểm tra cho bạn một chút.', this)" class="font-extrabold text-cinnabar-700 hover:underline flex items-center gap-1">
+                        <i class="fa-solid fa-volume-high"></i> Nghe tiêu đề Bài 13
+                    </button>
+                    <label class="inline-flex items-center gap-1.5 cursor-pointer select-none font-semibold text-slate-700 bg-white px-2.5 py-0.5 rounded-lg border border-teal-200 shrink-0">
+                        <input id="clickSoundToggle" type="checkbox" checked class="accent-medical-600 rounded">
+                        <span>Âm phản hồi khi bấm</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- NAVIGATION TABS (5 MODULES) -->
+            <nav class="mt-3 pt-2 border-t border-stone-100 flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1" aria-label="Tabs">
+                <button onclick="switchTab('tab-vocab')" id="btn-tab-vocab" class="nav-tab-btn shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-medical-600 text-white shadow-sm">
+                    <i class="fa-solid fa-stethoscope"></i>
+                    <span>1. Phòng Khám & 18 Từ Mới (Chiết Tự)</span>
+                </button>
+                <button onclick="switchTab('tab-grammar')" id="btn-tab-grammar" class="nav-tab-btn shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-stone-100 hover:bg-stone-200 text-slate-700">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <span>2. Ngữ Pháp (Câu Kiêm Ngữ • 多+V • Đơn Thuốc)</span>
+                </button>
+                <button onclick="switchTab('tab-hanzi')" id="btn-tab-hanzi" class="nav-tab-btn shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-stone-100 hover:bg-stone-200 text-slate-700">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <span>3. Tập Viết (24 Chữ) & 16 Bộ Thủ</span>
+                </button>
+                <button onclick="switchTab('tab-dialogue')" id="btn-tab-dialogue" class="nav-tab-btn shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-stone-100 hover:bg-stone-200 text-slate-700">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>4. Hội Thoại Khám Bệnh & Timeline Video</span>
+                </button>
+                <button onclick="switchTab('tab-quiz')" id="btn-tab-quiz" class="nav-tab-btn shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-stone-100 hover:bg-stone-200 text-slate-700">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                    <span>5. Trắc Nghiệm Phản Xạ (12 Câu)</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- HERO BANNER -->
+        <div class="mb-6 bg-gradient-to-r from-slate-900 via-teal-950 to-cinnabar-900 rounded-3xl p-5 sm:p-6 text-white shadow-lg relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-8 opacity-10 pointer-events-none select-none">
+                <span class="hanzi-font text-[130px] font-black leading-none">检查</span>
+            </div>
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div class="space-y-1.5 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 text-amber-300 text-xs sm:text-sm font-semibold">
+                        <i class="fa-solid fa-kit-medical"></i>
+                        <span>Chủ đề Y tế & Sức khỏe: Khám bệnh (看病), Kê đơn (开药), Câu Kiêm Ngữ (兼语句) & Lời khuyên 多 + V</span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">
+                        Bài 13: Để Tôi Kiểm Tra Cho Bạn — <span class="hanzi-font text-amber-300">让我给你检查一下</span>
+                    </h2>
+                    <p class="text-slate-200 text-xs sm:text-sm leading-relaxed">
+                        Tổng hợp đầy đủ 18 từ mới + từ vựng mở rộng (<code>看病, 身体, 医院, 流血, 中药/西药/南药</code>), chiết tự bộ thủ kèm câu chuyện nhớ chữ, phân biệt từ ly hợp <strong>打针 (打一针)</strong>, cấu trúc <strong>给 + Ai + V</strong>, <strong>Câu Kiêm Ngữ (让/叫/请/派)</strong> và lời dặn của bác sĩ <strong>一天吃两次，一次吃一片药</strong>.
+                    </p>
+                </div>
+                <div class="flex flex-wrap sm:flex-nowrap gap-2 shrink-0">
+                    <button onclick="switchTab('tab-grammar')" class="px-4 py-2.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs sm:text-sm shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-code-branch"></i>
+                        <span>Học Câu Kiêm Ngữ</span>
+                    </button>
+                    <a href="http://www.youtube.com/watch?v=gEazcCSq1IQ" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-semibold text-xs sm:text-sm backdrop-blur-sm transition flex items-center gap-2 border border-white/20">
+                        <i class="fa-brands fa-youtube text-red-400"></i>
+                        <span>Xem Video Bài 13</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TAB 1: PHÒNG KHÁM TƯƠNG TÁC & 18 TỪ MỚI + TỪ MỞ RỘNG (CHIẾT TỰ)   -->
+        <!-- ================================================================= -->
+        <section id="tab-vocab" class="tab-panel space-y-8">
+
+            <!-- 1.1: MÔ PHỎNG BÁC SĨ KHÁM BỆNH & KÊ ĐƠN TƯƠNG TÁC (INTERACTIVE CLINIC SIMULATOR) -->
+            <div class="bg-white rounded-3xl p-5 sm:p-6 border-2 border-medical-500/30 shadow-sm space-y-5">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-100 pb-4">
+                    <div>
+                        <span class="px-2.5 py-0.5 rounded-full bg-medical-100 text-medical-700 text-xs font-extrabold uppercase">Phần 1.1 • Mô Phỏng Thực Chiến Tại Bệnh Viện (医院)</span>
+                        <h3 class="text-xl font-extrabold text-slate-900 mt-1">
+                            Phòng Khám Tương Tác: Chọn Triệu Chứng Để Khai Bệnh (<span class="hanzi-font text-medical-600">看病</span>) & Nhận Đơn Thuốc (<span class="hanzi-font text-cinnabar-600">开药</span>)
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+                            Bấm chọn hoặc bỏ chọn các triệu chứng bên dưới để hệ thống tự động ghép thành câu khai bệnh của bệnh nhân và lời chẩn đoán của bác sĩ kèm phát âm chuẩn:
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Symptom Toggle Pills -->
+                <div id="symptomToggleGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5"></div>
+
+                <!-- Live Patient & Doctor Interactive Output -->
+                <div id="clinicSimulatorOutput" class="grid grid-cols-1 lg:grid-cols-2 gap-4"></div>
+            </div>
+
+            <!-- 1.2: 4 LƯU Ý "BẪY NGỮ PHÁP & TỪ VỰNG" CÔ GIÁO NHẤN MẠNH TRONG BÀI 13 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-rose-600 text-white text-[11px] font-extrabold">CẤM KỴ #1 [00:46:46]</span>
+                        <button onclick="speakChinese('医生，我的病严重吗？', 'Yīshēng, wǒ de bìng yánzhòng ma?', this)" class="text-rose-700 hover:text-rose-900 text-xs font-bold"><i class="fa-solid fa-volume-high"></i> Nghe</button>
+                    </div>
+                    <div class="hanzi-font font-black text-slate-900 text-base">我的病严重吗？</div>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Hỏi <em>"Bệnh của tôi có nặng không?"</em> <strong class="text-rose-700">TUYỆT ĐỐI KHÔNG dùng chữ 有 (yǒu)</strong> (Không nói <del>我的病有严重吗</del>)!
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-amber-600 text-white text-[11px] font-extrabold">LƯU Ý #2 [01:02:48]</span>
+                        <button onclick="speakChinese('中药、西药、南药', 'Zhōngyào (Thuốc Bắc), Xīyào (Thuốc Tây), Nányào (Thuốc Nam)', this)" class="text-amber-800 hover:text-amber-950 text-xs font-bold"><i class="fa-solid fa-volume-high"></i> Nghe</button>
+                    </div>
+                    <div class="hanzi-font font-black text-slate-900 text-base">中药 = Thuốc Bắc!</div>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        <strong>Thuốc Bắc</strong> (thuốc cổ truyền Trung Quốc) phải gọi là <strong class="text-cinnabar-700">中药 (Zhōngyào)</strong>, <strong class="text-rose-600">không tồn tại từ "北药"</strong>!
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-teal-50 border border-teal-200 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-medical-600 text-white text-[11px] font-extrabold">TỪ LY HỢP #3 [00:54:57]</span>
+                        <button onclick="speakChinese('我要打两针。', 'Wǒ yào dǎ liǎng zhēn. — Tôi phải tiêm 2 mũi.', this)" class="text-medical-700 hover:text-medical-900 text-xs font-bold"><i class="fa-solid fa-volume-high"></i> Nghe</button>
+                    </div>
+                    <div class="hanzi-font font-black text-slate-900 text-base">打针 → 打一针 / 打几针</div>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        <code>打针 (dǎzhēn - tiêm)</code> là động từ ly hợp (<code>打</code> = đánh/chích, <code>针</code> = mũi kim). Số lượng phải nhét vào giữa: <strong>打一针 (tiêm 1 mũi)</strong>.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-200 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-indigo-600 text-white text-[11px] font-extrabold">ĂN VS UỐNG THUỐC [01:05:14]</span>
+                        <button onclick="speakChinese('吃药、喝中药', 'Chī yào (Uống thuốc viên) vs Hē Zhōngyào (Uống thuốc sắc)', this)" class="text-indigo-700 hover:text-indigo-900 text-xs font-bold"><i class="fa-solid fa-volume-high"></i> Nghe</button>
+                    </div>
+                    <div class="hanzi-font font-black text-slate-900 text-base">吃药 (Viên) • 喝药 (Nước)</div>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Uống thuốc nói chung / thuốc viên Tây y dùng động từ <strong>吃 (ăn): 吃药, 吃一片药</strong>. Thuốc nước/thuốc Bắc sắc mới dùng <strong>喝药</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 1.3: DANH SÁCH 18 TỪ MỚI + TỪ MỞ RỘNG BÀI 13 -->
+            <div class="bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-medical-600">Phần 1.2 • Chiết Tự Bộ Thủ & Câu Chuyện Nhớ Chữ</span>
+                        <h3 class="text-xl font-extrabold text-slate-900 mt-0.5">18 Từ Mới Chuẩn Giáo Trình + Từ Mở Rộng Trong Bài Giảng</h3>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            <input id="vocabSearchInput" oninput="filterVocab()" type="text" placeholder="Tìm chữ Hán, Pinyin, nghĩa..." class="pl-9 pr-4 py-2 rounded-xl bg-stone-100 border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-medical-500 focus:bg-white w-56">
+                        </div>
+                        <button onclick="playAllVocab()" class="px-4 py-2 rounded-xl bg-medical-600 hover:bg-medical-700 text-white text-xs sm:text-sm font-bold flex items-center gap-2 shadow-sm transition">
+                            <i class="fa-solid fa-circle-play"></i>
+                            <span>Nghe lượt 18 từ mới</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 18 Vocab Cards Grid -->
+            <div id="vocabGridContainer" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 2: NGỮ PHÁP CHUYÊN SÂU HÁN 2 (CÂU KIÊM NGỮ • 多+V • ĐƠN THUỐC)-->
+        <!-- ================================================================= -->
+        <section id="tab-grammar" class="tab-panel hidden space-y-8">
+
+            <!-- 2.1: CÂU KIÊM NGỮ (兼语句: S1 + 让/叫/请/派 + O1/S2 + V2) [01:19:03] -->
+            <div class="bg-white rounded-3xl p-5 sm:p-6 border-2 border-indigo-200 shadow-sm space-y-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-stone-100 pb-4">
+                    <div>
+                        <span class="px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-extrabold uppercase">Trọng Tâm Ngữ Pháp Hán 2 • Mốc [01:19:03]</span>
+                        <h3 class="text-xl font-extrabold text-slate-900 mt-1">
+                            Câu Kiêm Ngữ (<span class="hanzi-font text-indigo-600">兼语句</span>) Với <code class="text-cinnabar-600">让 (ràng) • 叫 (jiào) • 请 (qǐng) • 派 (pài)</code>
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                            <strong>Bản chất "Kiêm ngữ":</strong> Thành phần đứng giữa câu vừa làm <strong>Tân ngữ (O1)</strong> của động từ sai khiến thứ nhất (<code>让/叫/请/派</code>), đồng thời kiêm luôn vai trò <strong>Chủ ngữ (S2)</strong> thực hiện động từ thứ hai (<code>V2</code>)!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Visual Formula Diagram -->
+                <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white">
+                    <div class="text-xs font-bold uppercase text-amber-300 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-sitemap"></i>
+                        <span>Sơ đồ cấu trúc Câu Kiêm Ngữ (Bấm vào các câu bên dưới để phân tích trực quan):</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 text-center">
+                        <div class="p-3 rounded-xl bg-white/10 border border-white/15">
+                            <div class="text-[11px] font-bold text-slate-300 uppercase">1. Chủ ngữ 1 (S1)</div>
+                            <div id="pivS1" class="hanzi-font text-xl font-black text-white mt-1">医生</div>
+                            <div id="pivS1Sub" class="text-xs text-slate-300 mt-0.5">Người sai khiến / cho phép</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-cinnabar-600/90 border border-cinnabar-400">
+                            <div class="text-[11px] font-bold text-amber-200 uppercase">2. Động từ 1 (V1)</div>
+                            <div id="pivV1" class="hanzi-font text-xl font-black text-white mt-1">让</div>
+                            <div id="pivV1Sub" class="text-xs text-amber-100 mt-0.5">让 / 叫 / 请 / 派</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-amber-400 text-slate-950 border-2 border-white shadow-md">
+                            <div class="text-[11px] font-extrabold uppercase text-cinnabar-800">3. KIÊM NGỮ (O1 = S2)</div>
+                            <div id="pivObjSubj" class="hanzi-font text-xl font-black text-slate-950 mt-1">我</div>
+                            <div id="pivObjSubjSub" class="text-xs font-bold text-slate-800 mt-0.5">Tân ngữ của V1 = Chủ ngữ của V2</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-emerald-600/90 border border-emerald-400">
+                            <div class="text-[11px] font-bold text-emerald-100 uppercase">4. Động từ 2 + Tân ngữ (V2)</div>
+                            <div id="pivV2" class="hanzi-font text-xl font-black text-white mt-1">多喝水、多休息</div>
+                            <div id="pivV2Sub" class="text-xs text-emerald-100 mt-0.5">Hành động do Kiêm ngữ thực hiện</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Pivotal Sentence Selector -->
+                <div id="pivotalExamplesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+            </div>
+
+            <!-- 2.2: CẤU TRÚC LỜI KHUYÊN "多 + V" (NGƯỢC TRẬT TỰ TIẾNG VIỆT) [00:00:57] & "给 + AI + V" [00:34:05] -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Left 6 cols: 多 + Động từ -->
+                <div class="lg:col-span-6 bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm space-y-4 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-extrabold uppercase">Ngữ Pháp #1 • Mốc [00:00:57] & [01:14:22]</span>
+                        <h3 class="text-xl font-extrabold text-slate-900">
+                            Cấu Trúc Khuyên Nhủ: <span class="hanzi-font text-emerald-700">多 (duō) + Động Từ</span>
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Trong tiếng Việt, chữ <em>"nhiều"</em> đứng <strong>SAU</strong> động từ (<em>nghỉ ngơi nhiều, uống nước nhiều, nghe nhiều</em>). Nhưng trong tiếng Trung, <strong><code>多 (duō)</code> bắt buộc phải đứng TRƯỚC động từ</strong>!
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <button onclick="speakChinese('你多休息吧。', 'Nǐ duō xiūxi ba. — Bạn nghỉ ngơi nhiều vào nhé.', this)" class="p-3 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100 border border-emerald-200 text-left transition">
+                            <div class="hanzi-font text-lg font-black text-slate-900">多休息 <span class="pinyin-text text-xs text-emerald-700">(duō xiūxi)</span></div>
+                            <div class="text-xs text-slate-600 mt-0.5">Nghỉ ngơi nhiều (你多休息吧)</div>
+                        </button>
+                        <button onclick="speakChinese('感冒的时候要多喝水。', 'Gǎnmào de shíhou yào duō hē shuǐ. — Khi cảm cúm phải uống nhiều nước.', this)" class="p-3 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100 border border-emerald-200 text-left transition">
+                            <div class="hanzi-font text-lg font-black text-slate-900">多喝水 <span class="pinyin-text text-xs text-emerald-700">(duō hē shuǐ)</span></div>
+                            <div class="text-xs text-slate-600 mt-0.5">Uống nước nhiều vào</div>
+                        </button>
+                        <button onclick="speakChinese('你要多吃水果。', 'Nǐ yào duō chī shuǐguǒ. — Bạn phải ăn nhiều hoa quả.', this)" class="p-3 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100 border border-emerald-200 text-left transition">
+                            <div class="hanzi-font text-lg font-black text-slate-900">多吃水果 <span class="pinyin-text text-xs text-emerald-700">(duō chī shuǐguǒ)</span></div>
+                            <div class="text-xs text-slate-600 mt-0.5">Ăn nhiều hoa quả</div>
+                        </button>
+                        <button onclick="speakChinese('学外语要多听、多说、多读、多写。', 'Xué wàiyǔ yào duō tīng, duō shuō, duō dú, duō xiě. — Học ngoại ngữ phải nghe nhiều, nói nhiều, đọc nhiều, viết nhiều.', this)" class="p-3 rounded-2xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-left transition">
+                            <div class="hanzi-font text-base font-black text-slate-900">多听、多说、多读、多写</div>
+                            <div class="text-xs text-amber-900 mt-0.5">Nghe, nói, đọc, viết nhiều [00:01:28]</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right 6 cols: 给 + Ai + Động từ + 一下 -->
+                <div class="lg:col-span-6 bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm space-y-4 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <span class="px-2.5 py-0.5 rounded-full bg-cinnabar-100 text-cinnabar-800 text-xs font-extrabold uppercase">Ngữ Pháp #2 • Mốc [00:34:05] & [01:02:14]</span>
+                        <h3 class="text-xl font-extrabold text-slate-900">
+                            Làm Gì Cho Ai: <span class="hanzi-font text-cinnabar-600">给 (gěi) + Ai + Động Từ (+ 一下)</span>
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Tiếng Việt nói <em>"kiểm tra <strong>cho bạn</strong>", "kê thuốc <strong>cho tôi</strong>"</em> ở cuối câu, nhưng tiếng Trung phải đưa cụm <strong><code>给 + Người nhận</code> lên TRƯỚC động từ chính</strong>! Thêm <code>一下 (yíxià)</code> sau động từ để chỉ hành động diễn ra nhanh, nhẹ nhàng.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <button onclick="speakChinese('让我给你检查一下。', 'Ràng wǒ gěi nǐ jiǎnchá yíxià. — Để tôi kiểm tra cho bạn một chút.', this)" class="p-3 rounded-2xl bg-cinnabar-50/70 hover:bg-cinnabar-100 border border-cinnabar-200 text-left transition">
+                            <div class="hanzi-font text-base font-black text-slate-900">让我<span class="text-cinnabar-600 underline">给你</span>检查一下</div>
+                            <div class="pinyin-text text-[11px] font-bold text-cinnabar-700">Ràng wǒ gěi nǐ jiǎnchá yíxià</div>
+                            <div class="text-xs text-slate-600 mt-0.5">Để tôi kiểm tra cho bạn một chút</div>
+                        </button>
+                        <button onclick="speakChinese('医生给我看病。', 'Yīshēng gěi wǒ kànbìng. — Bác sĩ khám bệnh cho tôi.', this)" class="p-3 rounded-2xl bg-cinnabar-50/70 hover:bg-cinnabar-100 border border-cinnabar-200 text-left transition">
+                            <div class="hanzi-font text-base font-black text-slate-900">医生<span class="text-cinnabar-600 underline">给我</span>看病</div>
+                            <div class="pinyin-text text-[11px] font-bold text-cinnabar-700">Yīshēng gěi wǒ kànbìng</div>
+                            <div class="text-xs text-slate-600 mt-0.5">Bác sĩ khám bệnh cho tôi</div>
+                        </button>
+                        <button onclick="speakChinese('医生给我开药。', 'Yīshēng gěi wǒ kāiyào. — Bác sĩ kê đơn thuốc cho tôi.', this)" class="p-3 rounded-2xl bg-cinnabar-50/70 hover:bg-cinnabar-100 border border-cinnabar-200 text-left transition">
+                            <div class="hanzi-font text-base font-black text-slate-900">医生<span class="text-cinnabar-600 underline">给我</span>开药</div>
+                            <div class="pinyin-text text-[11px] font-bold text-cinnabar-700">Yīshēng gěi wǒ kāiyào</div>
+                            <div class="text-xs text-slate-600 mt-0.5">Bác sĩ kê đơn thuốc cho tôi</div>
+                        </button>
+                        <button onclick="speakChinese('护士给我打针。', 'Hùshi gěi wǒ dǎzhēn. — Y tá tiêm cho tôi.', this)" class="p-3 rounded-2xl bg-cinnabar-50/70 hover:bg-cinnabar-100 border border-cinnabar-200 text-left transition">
+                            <div class="hanzi-font text-base font-black text-slate-900">护士<span class="text-cinnabar-600 underline">给我</span>打针</div>
+                            <div class="pinyin-text text-[11px] font-bold text-cinnabar-700">Hùshi gěi wǒ dǎzhēn</div>
+                            <div class="text-xs text-slate-600 mt-0.5">Y tá tiêm cho tôi</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2.3: BỘ TẠO ĐƠN THUỐC & LIỀU LƯỢNG TƯƠNG TÁC (次 - LẦN & 片 - VIÊN & 针 - MŨI TIÊM) [01:07:35 - 01:12:35] -->
+            <div class="bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm space-y-5">
+                <div class="border-b border-stone-100 pb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-medical-600">Phần 2.3 • Bổ Ngữ Động Lượng (次 - Lần) & Lượng Từ Thuốc Viên (片 - Viên)</span>
+                    <h3 class="text-xl font-extrabold text-slate-900 mt-0.5">
+                        Bộ Kê Đơn Thuốc Tương Tác: <span class="hanzi-font text-cinnabar-600">一天吃几次？一次吃几片药？打几针？</span>
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                        Lưu ý lượng từ số 2: Khi đi với <code>次 (lần)</code>, <code>片 (viên)</code>, <code>针 (mũi tiêm)</code> bắt buộc dùng <strong><code>两 (liǎng)</code></strong> chứ không dùng <code>二 (èr)</code>: <code>两次, 两片药, 打两针</code>!
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <div class="lg:col-span-5 space-y-4 bg-stone-50 p-4 rounded-2xl border border-stone-200">
+                        <div>
+                            <label class="text-xs font-extrabold uppercase text-slate-700 block mb-1.5">1. Số lần uống trong 1 ngày (一天吃几次？):</label>
+                            <div class="grid grid-cols-3 gap-2" id="timesPerDayBtns"></div>
+                        </div>
+                        <div>
+                            <label class="text-xs font-extrabold uppercase text-slate-700 block mb-1.5">2. Số viên thuốc mỗi lần (一次吃几片药？):</label>
+                            <div class="grid grid-cols-4 gap-2" id="pillsPerTimeBtns"></div>
+                        </div>
+                        <div>
+                            <label class="text-xs font-extrabold uppercase text-slate-700 block mb-1.5">3. Số mũi tiêm (要打几针？ - Động từ ly hợp):</label>
+                            <div class="grid grid-cols-4 gap-2" id="injectionsBtns"></div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7" id="dosagePrescriptionCard"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 3: TẬP VIẾT Ô CHỮ MỄ (24 CHỮ BÀI 13) & 16 BỘ THỦ              -->
+        <!-- ================================================================= -->
+        <section id="tab-hanzi" class="tab-panel hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Left 5 Columns: Interactive Mi Zi Ge Canvas for 24 Characters -->
+                <div class="lg:col-span-5 bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between gap-2">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-cinnabar-600">Phần 3.1 • Luyện Viết Chữ Hán Bài 13</span>
+                                <h3 class="text-lg font-extrabold text-slate-900">Bảng Tập Viết Ô Chữ Mễ (24 Chữ)</h3>
+                            </div>
+                            <button id="canvasSpeakBtn" onclick="speakCurrentCanvasChar(this)" class="px-3.5 py-2 rounded-xl bg-medical-600 hover:bg-medical-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition shrink-0">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <span id="canvasCharLabel">Phát âm: 头 (tóu)</span>
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Chọn một trong 24 chữ Hán Bài 13 bên dưới để xem lưu ý nét viết của cô giáo và luyện viết trực tiếp.</p>
+
+                        <!-- 24 Character Picker Pills -->
+                        <div class="mt-3">
+                            <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Chọn chữ Hán Bài 13 (24 chữ):</span>
+                            <div id="canvasCharPicker" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+                    </div>
+
+                    <!-- Mi Zi Ge Canvas Box -->
+                    <div class="flex flex-col items-center justify-center my-2">
+                        <div class="mizige-container w-64 h-64 sm:w-72 sm:h-72 rounded-2xl overflow-hidden select-none touch-none relative">
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 200 200">
+                                <line x1="0" y1="100" x2="200" y2="100" stroke="#fca5a5" stroke-width="1.5" stroke-dasharray="5,5"/>
+                                <line x1="100" y1="0" x2="100" y2="200" stroke="#fca5a5" stroke-width="1.5" stroke-dasharray="5,5"/>
+                                <line x1="0" y1="0" x2="200" y2="200" stroke="#fecaca" stroke-width="1" stroke-dasharray="4,6"/>
+                                <line x1="200" y1="0" x2="0" y2="200" stroke="#fecaca" stroke-width="1" stroke-dasharray="4,6"/>
+                            </svg>
+                            <div id="watermarkChar" class="absolute inset-0 flex items-center justify-center pointer-events-none select-none kaiti-font text-[175px] sm:text-[190px] text-stone-200/85 leading-none">
+                                头
+                            </div>
+                            <canvas id="hanziCanvas" class="relative z-10 w-full h-full cursor-crosshair"></canvas>
+                        </div>
+                        <div id="canvasCharHint" class="mt-2.5 text-center text-xs font-semibold text-slate-700 bg-amber-50 border border-amber-200 px-3 py-2 rounded-xl w-full">
+                            头 (tóu - Cái đầu): Lưu ý nét cuối cùng là nét CHẤM DÀI (丶), tuyệt đối không viết dính thành chữ Đại (大)!
+                        </div>
+                    </div>
+
+                    <!-- Canvas Toolbar -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-stone-100">
+                        <div class="flex items-center gap-2">
+                            <label for="brushSize" class="text-xs font-semibold text-slate-600">Cỡ bút:</label>
+                            <input id="brushSize" type="range" min="6" max="18" value="11" class="w-20 accent-medical-600 cursor-pointer">
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="toggleWatermark()" class="px-2.5 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-700 text-xs font-bold transition" title="Ẩn/Hiện chữ mờ">
+                                <i class="fa-solid fa-eye-slash"></i>
+                            </button>
+                            <button onclick="undoHanziStroke()" class="px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold transition flex items-center gap-1">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                <span>Hoàn tác</span>
+                            </button>
+                            <button onclick="clearHanziCanvas()" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1">
+                                <i class="fa-solid fa-eraser"></i>
+                                <span>Xóa</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right 7 Columns: 16 Key Radicals of Lesson 13 -->
+                <div class="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm space-y-4">
+                    <div class="border-b border-stone-100 pb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-medical-600">Phần 3.2 • Hệ Thống Bộ Thủ Y Tế & Cơ Thể Bài 13</span>
+                        <h3 class="text-xl font-extrabold text-slate-900 mt-0.5">16 Bộ Thủ Trọng Tâm Bài 13 (Bấm vào để nghe & nạp chữ mẫu)</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                            Đặc biệt chú ý: <strong>Bộ Bệnh (疒)</strong> xuất hiện trong mọi chữ chỉ bệnh tật đau ốm (<code>疼, 病</code>); và phân biệt <strong>Bộ Sĩ (士 - nét ngang dưới ngắn hơn, trong 护士 y tá)</strong> với <strong>Bộ Thổ (土 - đất)</strong>!
+                        </p>
+                    </div>
+
+                    <div id="radicalsLesson13Grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[620px] overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 4: HỘI THOẠI KHÁM BỆNH & TIMELINE VIDEO CHI TIẾT              -->
+        <!-- ================================================================= -->
+        <section id="tab-dialogue" class="tab-panel hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Left 7 Columns: 3 Clinic Roleplay Dialogues -->
+                <div class="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between flex-wrap gap-2 border-b border-stone-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-medical-600">Phần 4.1 • Bài Khóa & Hội Thoại Thực Tế</span>
+                            <h3 class="text-xl font-extrabold text-slate-900 mt-0.5">3 Tình Huống Hội Thoại Khám Bệnh & Hỏi Thăm</h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="playAllDialogues()" class="px-3.5 py-2 rounded-xl bg-medical-600 hover:bg-medical-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+                                <i class="fa-solid fa-play"></i>
+                                <span>Nghe toàn bộ hội thoại</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="dialogueListContainer" class="space-y-4"></div>
+                </div>
+
+                <!-- Right 5 Columns: Video Lecture Timestamp Breakdown -->
+                <div class="lg:col-span-5 bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm space-y-4">
+                    <div class="border-b border-stone-100 pb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-cinnabar-600">Phần 4.2 • Bản Đồ Mốc Thời Gian Video Bài 13</span>
+                        <h3 class="text-xl font-extrabold text-slate-900 mt-0.5">Tóm Tắt Theo Từng Phút Bài Giảng (00:00 → 01:29:15)</h3>
+                        <p class="text-xs text-slate-500 mt-1">Bấm vào từng mốc để nghe câu mẫu trọng tâm cô giáo giảng tại thời điểm đó.</p>
+                    </div>
+
+                    <div id="timelineContainer" class="space-y-2.5 max-h-[760px] overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 5: 12 CÂU TRẮC NGHIỆM PHẢN XẠ HÁN NGỮ 2                      -->
+        <!-- ================================================================= -->
+        <section id="tab-quiz" class="tab-panel hidden space-y-6">
+            <div class="bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-100 pb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Phần 5 • Kiểm Tra Toàn Diện Bài 13 (Hán Ngữ 2)</span>
+                        <h3 class="text-xl font-extrabold text-slate-900 mt-0.5">12 Câu Trắc Nghiệm Từ Vựng, Bộ Thủ, Câu Kiêm Ngữ & Bẫy Dịch Thuật</h3>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span id="quizScoreBadge" class="px-4 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-extrabold text-sm border border-indigo-200">
+                            Điểm: 0 / 12
+                        </span>
+                        <button onclick="resetQuiz()" class="px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate-right"></i>
+                            <span>Làm lại</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quizContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-stone-200 mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-lg bg-medical-600 text-white font-bold hanzi-font inline-flex items-center justify-center">医</span>
+                <span>Tóm tắt & Số hóa tương tác từ bài giảng <strong>Giáo trình Hán Ngữ 2 (2022) - Bài 13: Để Tôi Kiểm Tra Cho Bạn (让我给你检查一下)</strong>.</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="downloadStandaloneHTML()" class="text-cinnabar-600 font-bold hover:underline flex items-center gap-1">
+                    <i class="fa-solid fa-download"></i> Tải file HTML Bài 13 về máy
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================================================================= -->
+    <!-- JAVASCRIPT: 4-LAYER AUDIO ENGINE, LESSON 13 DATA & INTERACTIVITY  -->
+    <!-- ================================================================= -->
+    <script>
+        // =====================================================================
+        // 1. HỆ THỐNG ÂM THANH ĐA NGUỒN 4 LỚP (ĐẢM BẢO 100% PHÁT ÂM)
+        // =====================================================================
+        let speechRate = 1.0; // 1.0 (Chuẩn) or 0.65 (Chậm)
+        let audioEngineMode = 'auto'; // 'auto' | 'vn' | 'synth'
+        let activeButton = null;
+        let selectedChineseVoice = null;
+        let selectedVietnameseVoice = null;
+        let currentHtmlAudio = null;
+        window._activeUtterance = null; // Anti-GC reference for Chrome/Edge SpeechSynthesis
+
+        // Comprehensive Phonetic & Tone Lookup Map for Lesson 13 (Hán Ngữ 2)
+        const phoneticFallbackMap = {
+            // 18 Từ mới & Từ mở rộng Bài 13
+            '头': { vn: 'thấu', pinyin: 'tóu', tone: 2 },
+            '疼': { vn: 'thấng', pinyin: 'téng', tone: 2 },
+            '头疼': { vn: 'thấu thấng', pinyin: 'tóuténg', tone: 2 },
+            '舒服': { vn: 'su phu', pinyin: 'shūfu', tone: 1 },
+            '不舒服': { vn: 'pù su phu', pinyin: 'bù shūfu', tone: 4 },
+            '流': { vn: 'liấu', pinyin: 'liú', tone: 2 },
+            '鼻涕': { vn: 'pí thi', pinyin: 'bítì', tone: 4 },
+            '流鼻涕': { vn: 'liấu pí thi', pinyin: 'liú bítì', tone: 4 },
+            '流口水': { vn: 'liấu khẩu suẩy', pinyin: 'liú kǒushuǐ', tone: 3 },
+            '流血': { vn: 'liấu xía', pinyin: 'liúxiě', tone: 3 },
+            '发烧': { vn: 'pha sao', pinyin: 'fāshāo', tone: 1 },
+            '让': { vn: 'rang', pinyin: 'ràng', tone: 4 },
+            '不让': { vn: 'pú rang', pinyin: 'bú ràng', tone: 2 },
+            '检查': { vn: 'chiển chá', pinyin: 'jiǎnchá', tone: 2 },
+            '身体': { vn: 'sân thỉ', pinyin: 'shēntǐ', tone: 3 },
+            '医院': { vn: 'y doan', pinyin: 'yīyuàn', tone: 4 },
+            '病': { vn: 'ping', pinyin: 'bìng', tone: 4 },
+            '看病': { vn: 'khan ping', pinyin: 'kànbìng', tone: 4 },
+            '严重': { vn: 'diến trung', pinyin: 'yánzhòng', tone: 4 },
+            '感冒': { vn: 'cản mao', pinyin: 'gǎnmào', tone: 4 },
+            '护士': { vn: 'khu sư', pinyin: 'hùshi', tone: 4 },
+            '打针': { vn: 'tả chân', pinyin: 'dǎzhēn', tone: 1 },
+            '打一针': { vn: 'tả y chân', pinyin: 'dǎ yì zhēn', tone: 1 },
+            '打两针': { vn: 'tả lẻng chân', pinyin: 'dǎ liǎng zhēn', tone: 1 },
+            '开': { vn: 'khai', pinyin: 'kāi', tone: 1 },
+            '开药': { vn: 'khai giao', pinyin: 'kāiyào', tone: 4 },
+            '药': { vn: 'giao', pinyin: 'yào', tone: 4 },
+            '吃药': { vn: 'trư giao', pinyin: 'chī yào', tone: 4 },
+            '中药': { vn: 'trung giao', pinyin: 'Zhōngyào', tone: 4 },
+            '西药': { vn: 'xi giao', pinyin: 'xīyào', tone: 4 },
+            '南药': { vn: 'nán giao', pinyin: 'nányào', tone: 4 },
+            '次': { vn: 'chư', pinyin: 'cì', tone: 4 },
+            '片': { vn: 'phiên', pinyin: 'piàn', tone: 4 },
+            '休息': { vn: 'xiâu xi', pinyin: 'xiūxi', tone: 1 },
+            '多休息': { vn: 'tuô xiâu xi', pinyin: 'duō xiūxi', tone: 1 },
+            '多喝水': { vn: 'tuô khưa suẩy', pinyin: 'duō hē shuǐ', tone: 3 },
+            // Các chữ Hán đơn lẻ trong bảng viết
+            '舒': { vn: 'su', pinyin: 'shū', tone: 1 },
+            '服': { vn: 'phú', pinyin: 'fú', tone: 2 },
+            '鼻': { vn: 'pí', pinyin: 'bí', tone: 2 },
+            '涕': { vn: 'thi', pinyin: 'tì', tone: 4 },
+            '发': { vn: 'pha', pinyin: 'fā', tone: 1 },
+            '烧': { vn: 'sao', pinyin: 'shāo', tone: 1 },
+            '检': { vn: 'chiển', pinyin: 'jiǎn', tone: 3 },
+            '查': { vn: 'chá', pinyin: 'chá', tone: 2 },
+            '严': { vn: 'diến', pinyin: 'yán', tone: 2 },
+            '重': { vn: 'trung', pinyin: 'zhòng', tone: 4 },
+            '感': { vn: 'cản', pinyin: 'gǎn', tone: 3 },
+            '冒': { vn: 'mao', pinyin: 'mào', tone: 4 },
+            '护': { vn: 'khu', pinyin: 'hù', tone: 4 },
+            '士': { vn: 'sư', pinyin: 'shì', tone: 4 },
+            '打': { vn: 'tả', pinyin: 'dǎ', tone: 3 },
+            '针': { vn: 'chân', pinyin: 'zhēn', tone: 1 },
+            '休': { vn: 'xiâu', pinyin: 'xiū', tone: 1 },
+            '息': { vn: 'xi', pinyin: 'xī', tone: 1 },
+            // Các câu mẫu & Hội thoại Bài 13
+            '让我给你检查一下。': { vn: 'rang úo cẩy nỉ chiển chá ý xia', pinyin: 'Ràng wǒ gěi nǐ jiǎnchá yíxià.', tone: 4 },
+            '你的头怎么了？': { vn: 'nỉ tơ thấu chẩn mơ lơ', pinyin: 'Nǐ de tóu zěnme le?', tone: 3 },
+            '今天你怎么了？': { vn: 'chin thiên nỉ chẩn mơ lơ', pinyin: 'Jīntiān nǐ zěnme le?', tone: 3 },
+            '我的头很疼。': { vn: 'ủa tơ thấu khẩn thấng', pinyin: 'Wǒ de tóu hěn téng.', tone: 2 },
+            '我很头疼。': { vn: 'ủa khẩn thấu thấng', pinyin: 'Wǒ hěn tóuténg.', tone: 2 },
+            '这几天我觉得很不舒服。': { vn: 'chưa chỉ thiên ủa chuế tơ khẩn pù su phu', pinyin: 'Zhè jǐ tiān wǒ juéde hěn bù shūfu.', tone: 1 },
+            '你哪儿不舒服？': { vn: 'nỉ nả rờ pù su phu', pinyin: 'Nǐ nǎr bù shūfu?', tone: 1 },
+            '你的手流血了，你疼吗？': { vn: 'nỉ tơ sẩu liấu xía lơ, nỉ thấng ma', pinyin: 'Nǐ de shǒu liúxiě le, nǐ téng ma?', tone: 2 },
+            '我头疼、流鼻涕，我还发烧。': { vn: 'ủa thấu thấng, liấu pí thi, ủa khái pha sao', pinyin: 'Wǒ tóuténg, liú bítì, wǒ hái fāshāo.', tone: 1 },
+            '他不让我喝可乐。': { vn: 'tha pú rang ủa khưa khửa lưa', pinyin: 'Tā bú ràng wǒ hē kělè.', tone: 4 },
+            '我的病好了。': { vn: 'ủa tơ ping khảo lơ', pinyin: 'Wǒ de bìng hǎo le.', tone: 3 },
+            '医生，我的病严重吗？': { vn: 'y sâng, ủa tơ ping diến trung ma', pinyin: 'Yīshēng, wǒ de bìng yánzhòng ma?', tone: 4 },
+            '你的病不严重，只是感冒。': { vn: 'nỉ tơ ping pù diến trung, chử sư cản mao', pinyin: 'Nǐ de bìng bù yánzhòng, zhǐshì gǎnmào.', tone: 4 },
+            '我只是一个护士。': { vn: 'ủa chử sư ý cưa khu sư', pinyin: 'Wǒ zhǐshì yí gè hùshi.', tone: 4 },
+            '我要打几针？': { vn: 'ủa giao tả chỉ chân', pinyin: 'Wǒ yào dǎ jǐ zhēn?', tone: 1 },
+            '我不想打针。': { vn: 'ủa pù xẻng tả chân', pinyin: 'Wǒ bù xiǎng dǎzhēn.', tone: 1 },
+            '一天要吃几次？': { vn: 'y thiên giao trư chỉ chư', pinyin: 'Yì tiān yào chī jǐ cì?', tone: 4 },
+            '一天吃两次，一次吃一片药。': { vn: 'y thiên trư lẻng chư, ý chư trư ý phiên giao', pinyin: 'Yì tiān chī liǎng cì, yí cì chī yí piàn yào.', tone: 4 },
+            '医生让我在家休息。': { vn: 'y sâng rang ủa chai che xiâu xi', pinyin: 'Yīshēng ràng wǒ zài jiā xiūxi.', tone: 1 },
+            '医生让我多喝水、多休息。': { vn: 'y sâng rang ủa tuô khưa suẩy, tuô xiâu xi', pinyin: 'Yīshēng ràng wǒ duō hē shuǐ, duō xiūxi.', tone: 1 },
+            '妈妈叫我回家吃饭。': { vn: 'ma ma treo ủa khuấy che trư phan', pinyin: 'Māma jiào wǒ huí jiā chīfàn.', tone: 4 },
+            '他请我喝咖啡。': { vn: 'tha chỉnh ủa khưa kha phây', pinyin: 'Tā qǐng wǒ hē kāfēi.', tone: 1 },
+            '公司派他去中国工作。': { vn: 'cung xư phai tha chuy trung của cung chua', pinyin: 'Gōngsī pài tā qù Zhōngguó gōngzuò.', tone: 4 },
+            '你多休息吧。': { vn: 'nỉ tuô xiâu xi pa', pinyin: 'Nǐ duō xiūxi ba.', tone: 1 },
+            '感冒的时候要多喝水。': { vn: 'cản mao tơ sứ khâu giao tuô khưa suẩy', pinyin: 'Gǎnmào de shíhou yào duō hē shuǐ.', tone: 3 },
+            '学外语要多听、多说、多读、多写。': { vn: 'xuế oai ủy giao tuô thinh, tuô suô, tuô tú, tuô xỉa', pinyin: 'Xué wàiyǔ yào duō tīng, duō shuō, duō dú, duō xiě.', tone: 3 }
+        };
+
+        let audioCtx = null;
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function initSystemVoices() {
+            if (!('speechSynthesis' in window)) return;
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                selectedChineseVoice =
+                    voices.find(v => v.lang === 'zh-CN' && (v.name.includes('Xiaoxiao') || v.name.includes('Google') || v.name.includes('Ting-Ting') || v.name.includes('Huihui'))) ||
+                    voices.find(v => v.lang === 'zh-CN') ||
+                    voices.find(v => v.lang.toLowerCase().startsWith('zh'));
+
+                selectedVietnameseVoice =
+                    voices.find(v => v.lang.toLowerCase().startsWith('vi')) ||
+                    voices[0];
+            }
+        }
+
+        if ('speechSynthesis' in window) {
+            initSystemVoices();
+            window.speechSynthesis.onvoiceschanged = initSystemVoices;
+        }
+
+        function changeAudioEngine(mode) {
+            audioEngineMode = mode;
+            const names = {
+                auto: '🌐 Giọng Chuẩn MP3 + Trình Duyệt (Tự động)',
+                vn: '🇻🇳 Đọc Bồi Tiếng Việt + Cao Độ',
+                synth: '🎵 Chỉ phát Giai Điệu Thanh Điệu'
+            };
+            updateStatusIndicator('Chế độ: ' + (names[mode] || mode), false);
+            playInstantClickFeedback(540, 0.05);
+        }
+
+        function toggleSpeechSpeed() {
+            speechRate = speechRate === 1.0 ? 0.65 : 1.0;
+            const label = document.getElementById('speedLabel');
+            if (label) {
+                label.textContent = speechRate === 0.65 ? '0.65x Chậm' : '1.0x Chuẩn';
+            }
+            playInstantClickFeedback(460, 0.05);
+        }
+
+        function toggleGlobalPinyin() {
+            document.body.classList.toggle('hide-pinyin');
+            const isHidden = document.body.classList.contains('hide-pinyin');
+            const label = document.getElementById('globalPinyinLabel');
+            if (label) {
+                label.textContent = isHidden ? 'Hiện Pinyin' : 'Ẩn Pinyin';
+            }
+            playInstantClickFeedback(500, 0.05);
+        }
+
+        // One-Click Standalone HTML File Download for Lesson 13
+        function downloadStandaloneHTML() {
+            playInstantClickFeedback(660, 0.06);
+            try {
+                const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+                const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Bai_13_Han_Ngu_2_De_Toi_Kiem_Tra_Cho_Ban.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 1500);
+                updateStatusIndicator('Đã tải file Bai_13_Han_Ngu_2.html!', false);
+            } catch (e) {
+                updateStatusIndicator('Không thể tạo file tải xuống.', false);
+            }
+        }
+
+        function updateStatusIndicator(text, isSpeaking) {
+            const dot = document.getElementById('ttsStatusDot');
+            const label = document.getElementById('ttsStatusText');
+            if (!dot || !label) return;
+            if (isSpeaking) {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-medical-600 animate-ping shrink-0';
+                label.textContent = '🔊 ' + text;
+                label.className = 'truncate font-bold text-medical-700';
+            } else {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0';
+                label.textContent = text || 'Sẵn sàng phát âm';
+                label.className = 'truncate text-slate-700';
+            }
+        }
+
+        function clearActiveButton() {
+            if (activeButton) {
+                activeButton.classList.remove('speaking-active');
+                activeButton = null;
+            }
+        }
+
+        function playInstantClickFeedback(freq = 590, dur = 0.045) {
+            const toggle = document.getElementById('clickSoundToggle');
+            if (toggle && !toggle.checked) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + dur);
+            } catch (e) {}
+        }
+
+        function testSpeakerBeep(btnEl) {
+            try {
+                const ctx = getAudioContext();
+                if (ctx) {
+                    const notes = [523.25, 659.25, 783.99];
+                    notes.forEach((freq, idx) => {
+                        const now = ctx.currentTime + idx * 0.11;
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now);
+                        gain.gain.setValueAtTime(0.22, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.22);
+                    });
+                }
+            } catch (e) {}
+            setTimeout(() => {
+                speakChinese('让我给你检查一下。', 'Loa tốt! 让我给你检查一下 (Để tôi kiểm tra cho bạn)', btnEl);
+            }, 340);
+        }
+
+        /**
+         * Master 4-Layer Pronunciation Function
+         */
+        function speakChinese(textToSpeak, displayLabel = '', btnEl = null, customVnPhonetic = '') {
+            clearActiveButton();
+            if (btnEl) {
+                activeButton = btnEl;
+                btnEl.classList.add('speaking-active');
+            }
+
+            const cleanKey = textToSpeak.trim();
+            const fallbackInfo = phoneticFallbackMap[cleanKey] || {
+                vn: customVnPhonetic || displayLabel || cleanKey,
+                pinyin: displayLabel || cleanKey,
+                tone: 4
+            };
+            const statusText = displayLabel || `${cleanKey} (${fallbackInfo.vn})`;
+            updateStatusIndicator(statusText, true);
+
+            playInstantClickFeedback(620, 0.04);
+
+            if (currentHtmlAudio) {
+                try {
+                    currentHtmlAudio.pause();
+                    currentHtmlAudio.currentTime = 0;
+                } catch (e) {}
+                currentHtmlAudio = null;
+            }
+
+            if (audioEngineMode === 'synth') {
+                playToneContourSynth(fallbackInfo.tone || 4, true, statusText);
+                return;
+            }
+
+            if (audioEngineMode === 'vn') {
+                speakVietnamesePhoneticLayer(fallbackInfo, statusText);
+                return;
+            }
+
+            playCloudMp3Layer(cleanKey, fallbackInfo, statusText);
+        }
+
+        function playCloudMp3Layer(hanziText, fallbackInfo, statusText) {
+            const encoded = encodeURIComponent(hanziText);
+            const youdaoUrl = `https://dict.youdao.com/dictvoice?audio=${encoded}&le=zh`;
+            const googleUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=${encoded}`;
+
+            let settled = false;
+            const audio = new Audio();
+            audio.referrerPolicy = 'no-referrer';
+            currentHtmlAudio = audio;
+            audio.playbackRate = speechRate;
+
+            const timeoutId = setTimeout(() => {
+                if (!settled) {
+                    settled = true;
+                    try { audio.pause(); } catch (e) {}
+                    tryGoogleMp3OrFallback(googleUrl, hanziText, fallbackInfo, statusText);
+                }
+            }, 1150);
+
+            audio.onplaying = () => {
+                settled = true;
+                clearTimeout(timeoutId);
+                updateStatusIndicator(`${statusText} [MP3 Chuẩn]`, true);
+            };
+
+            audio.onended = () => {
+                clearTimeout(timeoutId);
+                clearActiveButton();
+                updateStatusIndicator(`Đã phát: ${statusText}`, false);
+            };
+
+            audio.onerror = () => {
+                if (!settled) {
+                    settled = true;
+                    clearTimeout(timeoutId);
+                    tryGoogleMp3OrFallback(googleUrl, hanziText, fallbackInfo, statusText);
+                }
+            };
+
+            audio.src = youdaoUrl;
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    if (!settled) {
+                        settled = true;
+                        clearTimeout(timeoutId);
+                        tryGoogleMp3OrFallback(googleUrl, hanziText, fallbackInfo, statusText);
+                    }
+                });
+            }
+        }
+
+        function tryGoogleMp3OrFallback(googleUrl, hanziText, fallbackInfo, statusText) {
+            let settled = false;
+            const audio2 = new Audio();
+            audio2.referrerPolicy = 'no-referrer';
+            currentHtmlAudio = audio2;
+            audio2.playbackRate = speechRate;
+
+            const timeoutId = setTimeout(() => {
+                if (!settled) {
+                    settled = true;
+                    try { audio2.pause(); } catch (e) {}
+                    speakBrowserTTSLayer(hanziText, fallbackInfo, statusText, true);
+                }
+            }, 1050);
+
+            audio2.onplaying = () => {
+                settled = true;
+                clearTimeout(timeoutId);
+                updateStatusIndicator(`${statusText} [Cloud TTS]`, true);
+            };
+
+            audio2.onended = () => {
+                clearTimeout(timeoutId);
+                clearActiveButton();
+                updateStatusIndicator(`Đã phát: ${statusText}`, false);
+            };
+
+            audio2.onerror = () => {
+                if (!settled) {
+                    settled = true;
+                    clearTimeout(timeoutId);
+                    speakBrowserTTSLayer(hanziText, fallbackInfo, statusText, true);
+                }
+            };
+
+            audio2.src = googleUrl;
+            const playPromise = audio2.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    if (!settled) {
+                        settled = true;
+                        clearTimeout(timeoutId);
+                        speakBrowserTTSLayer(hanziText, fallbackInfo, statusText, true);
+                    }
+                });
+            }
+        }
+
+        function speakBrowserTTSLayer(hanziText, fallbackInfo, statusText, allowSynthBackup = true) {
+            if (!('speechSynthesis' in window)) {
+                playToneContourSynth(fallbackInfo.tone || 4, true, statusText);
+                return;
+            }
+
+            if (!selectedChineseVoice) initSystemVoices();
+
+            const hasChineseVoice = Boolean(selectedChineseVoice);
+            const textToRead = hasChineseVoice ? hanziText : (fallbackInfo.vn || hanziText);
+
+            try {
+                if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+                    window.speechSynthesis.cancel();
+                }
+
+                setTimeout(() => {
+                    const utterance = new SpeechSynthesisUtterance(textToRead);
+                    window._activeUtterance = utterance;
+
+                    if (hasChineseVoice) {
+                        utterance.lang = 'zh-CN';
+                        utterance.voice = selectedChineseVoice;
+                    } else {
+                        utterance.lang = 'vi-VN';
+                        if (selectedVietnameseVoice) utterance.voice = selectedVietnameseVoice;
+                        playToneContourSynth(fallbackInfo.tone || 4, false);
+                    }
+
+                    utterance.rate = speechRate;
+                    utterance.pitch = 1.0;
+
+                    let started = false;
+                    const guardTimer = setTimeout(() => {
+                        if (!started && allowSynthBackup) {
+                            playToneContourSynth(fallbackInfo.tone || 4, true, statusText);
+                        }
+                    }, 800);
+
+                    utterance.onstart = () => {
+                        started = true;
+                        clearTimeout(guardTimer);
+                        const tag = hasChineseVoice ? '[Giọng Hệ Thống]' : `[Đọc bồi: ${fallbackInfo.vn}]`;
+                        updateStatusIndicator(`${statusText} ${tag}`, true);
+                    };
+
+                    utterance.onend = () => {
+                        clearTimeout(guardTimer);
+                        clearActiveButton();
+                        updateStatusIndicator(`Đã đọc: ${statusText}`, false);
+                    };
+
+                    utterance.onerror = () => {
+                        clearTimeout(guardTimer);
+                        if (allowSynthBackup) {
+                            playToneContourSynth(fallbackInfo.tone || 4, true, statusText);
+                        } else {
+                            clearActiveButton();
+                            updateStatusIndicator('Sẵn sàng phát âm', false);
+                        }
+                    };
+
+                    window.speechSynthesis.speak(utterance);
+                }, 60);
+            } catch (e) {
+                playToneContourSynth(fallbackInfo.tone || 4, true, statusText);
+            }
+        }
+
+        function speakVietnamesePhoneticLayer(fallbackInfo, statusText) {
+            playToneContourSynth(fallbackInfo.tone || 4, false);
+            if ('speechSynthesis' in window) {
+                try {
+                    if (window.speechSynthesis.speaking) window.speechSynthesis.cancel();
+                    setTimeout(() => {
+                        const u = new SpeechSynthesisUtterance(fallbackInfo.vn);
+                        window._activeUtterance = u;
+                        u.lang = 'vi-VN';
+                        if (selectedVietnameseVoice) u.voice = selectedVietnameseVoice;
+                        u.rate = speechRate;
+                        u.onend = () => {
+                            clearActiveButton();
+                            updateStatusIndicator(`Đã đọc bồi: "${fallbackInfo.vn}"`, false);
+                        };
+                        u.onerror = () => {
+                            clearActiveButton();
+                            updateStatusIndicator(`Đã phát cao độ: "${fallbackInfo.vn}"`, false);
+                        };
+                        window.speechSynthesis.speak(u);
+                    }, 60);
+                    return;
+                } catch (e) {}
+            }
+            setTimeout(() => {
+                clearActiveButton();
+                updateStatusIndicator(`Đã phát: ${statusText}`, false);
+            }, 700);
+        }
+
+        function playToneContourSynth(toneNumber, updateUiStatus = true, customLabel = '') {
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+
+                const now = ctx.currentTime;
+                const duration = speechRate === 1.0 ? 0.62 : 0.90;
+                const osc = ctx.createOscillator();
+                const formantFilter = ctx.createBiquadFilter();
+                const gain = ctx.createGain();
+
+                osc.type = 'sawtooth';
+                formantFilter.type = 'lowpass';
+                formantFilter.frequency.setValueAtTime(950, now);
+                formantFilter.Q.setValueAtTime(3.5, now);
+
+                if (toneNumber === 1) {
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.linearRampToValueAtTime(320, now + duration);
+                } else if (toneNumber === 2) {
+                    osc.frequency.setValueAtTime(210, now);
+                    osc.frequency.exponentialRampToValueAtTime(335, now + duration);
+                } else if (toneNumber === 3) {
+                    osc.frequency.setValueAtTime(190, now);
+                    osc.frequency.linearRampToValueAtTime(145, now + duration * 0.45);
+                    osc.frequency.exponentialRampToValueAtTime(285, now + duration);
+                } else {
+                    osc.frequency.setValueAtTime(340, now);
+                    osc.frequency.exponentialRampToValueAtTime(145, now + duration * 0.75);
+                }
+
+                gain.gain.setValueAtTime(0.01, now);
+                gain.gain.linearRampToValueAtTime(0.22, now + 0.04);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+                osc.connect(formantFilter);
+                formantFilter.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + duration);
+
+                if (updateUiStatus) {
+                    setTimeout(() => {
+                        clearActiveButton();
+                        updateStatusIndicator(customLabel ? `Đã phát: ${customLabel}` : 'Đã phát cao độ', false);
+                    }, duration * 1000);
+                }
+            } catch (err) {
+                clearActiveButton();
+            }
+        }
+
+        // =====================================================================
+        // 2. DỮ LIỆU TOÀN DIỆN BÀI 13: ĐỂ TÔI KIỂM TRA CHO BẠN (让我给你检查一下)
+        // =====================================================================
+
+        // 6 Triệu chứng cho Phòng Khám Tương Tác (Tab 1.1)
+        const clinicSymptoms = [
+            { id: 'touteng', icon: '🤕', hanzi: '头疼', pinyin: 'tóuténg', vn: 'Đau đầu', active: true },
+            { id: 'fashao', icon: '🤒', hanzi: '发烧', pinyin: 'fāshāo', vn: 'Bị sốt', active: true },
+            { id: 'liubiti', icon: '🤧', hanzi: '流鼻涕', pinyin: 'liú bítì', vn: 'Chảy nước mũi', active: true },
+            { id: 'bushufu', icon: '😣', hanzi: '身体不舒服', pinyin: 'shēntǐ bù shūfu', vn: 'Cơ thể khó chịu', active: false },
+            { id: 'liuxie', icon: '🩸', hanzi: '手流血', pinyin: 'shǒu liúxiě', vn: 'Chảy máu tay', active: false },
+            { id: 'ganmao', icon: '😷', hanzi: '感冒', pinyin: 'gǎnmào', vn: 'Cảm cúm', active: false }
+        ];
+
+        // 18 Từ mới chuẩn giáo trình + Từ mở rộng cô giáo dạy trong video Bài 13
+        const vocabLesson13 = [
+            {
+                id: 1,
+                timestamp: '00:02:11',
+                hanzi: '头',
+                pinyin: 'tóu',
+                hanViet: 'Đầu',
+                type: 'Danh từ',
+                meaning: 'Cái đầu (Mở rộng: 怎么了 zěnme le - Làm sao thế?)',
+                radicals: [
+                    { r: '头', name: 'Bộ Đầu', desc: 'Hai nét chấm tượng trưng cho tóc, nét cuối là chấm dài (không phải chữ Đại 大)' }
+                ],
+                mnemonic: 'Cấu trúc hỏi thăm cực hay ở [00:03:49]: Chủ ngữ + 怎么了？ (Làm sao thế / Bị sao vậy?). Ví dụ: 你的头怎么了？ (Đầu bạn sao thế?), 今天你怎么了？ (Hôm nay bạn sao thế?), 你的手怎么了？ (Tay bạn bị sao vậy?).',
+                exampleHanzi: '你的头怎么了？',
+                examplePinyin: 'Nǐ de tóu zěnme le?',
+                exampleMeaning: 'Đầu của bạn bị làm sao thế?'
+            },
+            {
+                id: 2,
+                timestamp: '00:06:16',
+                hanzi: '疼',
+                pinyin: 'téng',
+                hanViet: 'Đông / Thống',
+                type: 'Động từ / Tính từ',
+                meaning: 'Đau, nhức (头疼 tóuténg: đau đầu / nhức đầu)',
+                radicals: [
+                    { r: '疒', name: 'Bộ Bệnh', desc: 'Giường bệnh (mọi chữ chỉ bệnh tật đều có bộ này)' },
+                    { r: '冬', name: 'Chữ Đông', desc: 'Mùa đông lạnh giá (dưới có 2 giọt băng đá)' }
+                ],
+                mnemonic: 'Câu chuyện nhớ chữ [00:06:44]: Mùa đông lạnh giá (冬) mà mắc bệnh nằm trên giường (疒) thì vô cùng Đau nhức (疼 téng)! Lưu ý cả 2 cách nói đều đúng: 我的头很疼 hoặc 我很头疼.',
+                exampleHanzi: '我的头很疼。',
+                examplePinyin: 'Wǒ de tóu hěn téng.',
+                exampleMeaning: 'Đầu của tôi rất đau.'
+            },
+            {
+                id: 3,
+                timestamp: '00:10:02',
+                hanzi: '舒服',
+                pinyin: 'shūfu',
+                hanViet: 'Thư phục',
+                type: 'Tính từ',
+                meaning: 'Thoải mái, dễ chịu (不舒服 bù shūfu: khó chịu, mệt trong người)',
+                radicals: [
+                    { r: '舌+予', name: 'Chữ Thư (舒)', desc: 'Cái lưỡi (舌) + Cho (予)' },
+                    { r: '月+卩+又', name: 'Chữ Phục (服)', desc: 'Bộ Nguyệt/Nhục (月) chỉ cơ thể + Bộ Tiết (卩) + Bộ Hựu (又)' }
+                ],
+                mnemonic: 'Lưu ý chữ 服 khi đứng riêng đọc là fú (trong 衣服 yīfu quần áo), khi ghép vào 舒服 đọc thanh nhẹ là shūfu [00:10:20]. Khi đi khám bác sĩ hay hỏi: 你哪儿不舒服？ (Bạn khó chịu ở đâu?).',
+                exampleHanzi: '这几天我觉得很不舒服。',
+                examplePinyin: 'Zhè jǐ tiān wǒ juéde hěn bù shūfu.',
+                exampleMeaning: 'Mấy ngày nay tôi cảm thấy rất khó chịu (không khỏe).'
+            },
+            {
+                id: 4,
+                timestamp: '00:17:04',
+                hanzi: '流',
+                pinyin: 'liú',
+                hanViet: 'Lưu',
+                type: 'Động từ',
+                meaning: 'Chảy (Mở rộng: 流口水 chảy nước miếng • 流血 chảy máu)',
+                radicals: [
+                    { r: '氵', name: 'Bộ Chấm Thủy', desc: '3 giọt nước chảy' },
+                    { r: '充/川', name: 'Phần phải', desc: 'Dòng sông nước chảy xuôi (川)' }
+                ],
+                mnemonic: 'Cô giáo mở rộng 3 cụm cực thực tế [00:17:41]: 流水 (nước chảy), 流口水 (liú kǒushuǐ - chảy nước dãi/nước miếng), 流血 (liúxiě - chảy máu: 你的手流血了，你疼吗？).',
+                exampleHanzi: '你的手流血了，你疼吗？',
+                examplePinyin: 'Nǐ de shǒu liúxiě le, nǐ téng ma?',
+                exampleMeaning: 'Tay của bạn chảy máu rồi, bạn có đau không?'
+            },
+            {
+                id: 5,
+                timestamp: '00:22:36',
+                hanzi: '鼻涕',
+                pinyin: 'bítì',
+                hanViet: 'Tị thế',
+                type: 'Danh từ',
+                meaning: 'Nước mũi (流鼻涕 liú bítì: chảy nước mũi, sổ mũi)',
+                radicals: [
+                    { r: '自+田+廾', name: 'Chữ Tị (鼻 - Cái mũi)', desc: 'Bộ Tự (自 - cái mũi) + Bộ Điền (田) + Bộ Củng (廾)' },
+                    { r: '氵+弟', name: 'Chữ Thế (涕)', desc: 'Nước (氵) mũi của thằng em trai (弟)' }
+                ],
+                mnemonic: 'Người Trung Quốc khi chỉ vào bản thân (自 - tự mình) thường chỉ ngón trỏ vào cái mũi (鼻)! Chữ 涕 gồm nước (氵) + em trai (弟): Em nhỏ hay chảy nước mũi (流鼻涕).',
+                exampleHanzi: '我头疼、流鼻涕。',
+                examplePinyin: 'Wǒ tóuténg, liú bítì.',
+                exampleMeaning: 'Tôi bị đau đầu và chảy nước mũi.'
+            },
+            {
+                id: 6,
+                timestamp: '00:26:52',
+                hanzi: '发烧',
+                pinyin: 'fāshāo',
+                hanViet: 'Phát thiêu',
+                type: 'Động từ',
+                meaning: 'Sốt, bị sốt (Cơ thể phát nhiệt nóng như lửa đốt)',
+                radicals: [
+                    { r: '发', name: 'Chữ Phát', desc: 'Phát ra, tỏa ra' },
+                    { r: '火+尧', name: 'Chữ Thiêu (烧)', desc: 'Bộ Hỏa (火 - lửa) + Chữ Nghiêu (尧 - KHÔNG có chấm trên đầu!)' }
+                ],
+                mnemonic: 'Bị sốt (发烧 fāshāo) là người nóng bừng như lửa đốt (火). Lưu ý tiếng Trung nói thẳng "我发烧" chứ không thêm từ "bị" ở trước.',
+                exampleHanzi: '我头疼、流鼻涕，我还发烧。',
+                examplePinyin: 'Wǒ tóuténg, liú bítì, wǒ hái fāshāo.',
+                exampleMeaning: 'Tôi đau đầu, chảy nước mũi, tôi còn bị sốt nữa.'
+            },
+            {
+                id: 7,
+                timestamp: '00:29:47',
+                hanzi: '让',
+                pinyin: 'ràng',
+                hanViet: 'Nhượng',
+                type: 'Động từ sai khiến',
+                meaning: 'Bảo, kêu, để, cho phép, nhường (Phủ định: 不让 bú ràng)',
+                radicals: [
+                    { r: '讠', name: 'Bộ Ngôn', desc: 'Dùng lời nói để bảo/cho phép' },
+                    { r: '上', name: 'Chữ Thượng', desc: 'Ở trên / Nhường người khác lên trên' }
+                ],
+                mnemonic: 'Vừa mang nghĩa bảo/sai khiến (医生让我多喝水), vừa mang nghĩa để/cho phép (让我给你检查一下; 他不让我喝可乐 - Anh ấy không cho tôi uống Coca [00:31:07]).',
+                exampleHanzi: '他不让我喝可乐。',
+                examplePinyin: 'Tā bú ràng wǒ hē kělè.',
+                exampleMeaning: 'Anh ấy không cho phép tôi uống Coca.'
+            },
+            {
+                id: 8,
+                timestamp: '00:32:10',
+                hanzi: '检查',
+                pinyin: 'jiǎnchá',
+                hanViet: 'Kiểm tra',
+                type: 'Động từ',
+                meaning: 'Kiểm tra (Mở rộng: 身体 shēntǐ cơ thể/sức khỏe • 医院 yīyuàn bệnh viện)',
+                radicals: [
+                    { r: '木+佥', name: 'Chữ Kiểm (检)', desc: 'Bộ Mộc (木 - cây gỗ) + Chữ Thiêm (佥)' },
+                    { r: '木+旦', name: 'Chữ Tra (查)', desc: 'Bộ Mộc (木 - cây) đặt trên chữ Đán (旦 - buổi sáng)' }
+                ],
+                mnemonic: 'Cả 2 chữ 检 và 查 đều có Bộ Mộc (木 - cây gỗ). Kết hợp cấu trúc 给 + Ai + V: 让我给你检查一下 (Để tôi kiểm tra cho bạn một chút), 检查身体 (kiểm tra sức khỏe).',
+                exampleHanzi: '让我给你检查一下。',
+                examplePinyin: 'Ràng wǒ gěi nǐ jiǎnchá yíxià.',
+                exampleMeaning: 'Để tôi kiểm tra cho bạn một chút.'
+            },
+            {
+                id: 9,
+                timestamp: '00:40:14',
+                hanzi: '病',
+                pinyin: 'bìng',
+                hanViet: 'Bệnh',
+                type: 'Danh từ / Động từ',
+                meaning: 'Bệnh, ốm (Mở rộng: 看病 kànbìng = Khám bệnh)',
+                radicals: [
+                    { r: '疒', name: 'Bộ Bệnh', desc: 'Giường bệnh' },
+                    { r: '丙', name: 'Chữ Bính', desc: 'Biểu âm đọc bìng (Một nét ngang + chữ Nội 内)' }
+                ],
+                mnemonic: 'Chú ý [00:42:37]: 看病 (kànbìng) dùng cho cả Bác sĩ khám cho bệnh nhân (医生给我看病) LẪN Bệnh nhân đi khám bệnh tại bệnh viện (我去医院看病)! Bệnh khỏi rồi: 我的病好了.',
+                exampleHanzi: '我的病好了。',
+                examplePinyin: 'Wǒ de bìng hǎo le.',
+                exampleMeaning: 'Bệnh của tôi khỏi (đỡ) rồi.'
+            },
+            {
+                id: 10,
+                timestamp: '00:45:12',
+                hanzi: '严重',
+                pinyin: 'yánzhòng',
+                hanViet: 'Nghiêm trọng',
+                type: 'Tính từ',
+                meaning: 'Nghiêm trọng, (bệnh) nặng (Chữ 重 zhòng đứng riêng = nặng về trọng lượng)',
+                radicals: [
+                    { r: '严', name: 'Chữ Nghiêm', desc: 'Nghiêm khắc, nghiêm ngặt' },
+                    { r: '重', name: 'Chữ Trọng (zhòng)', desc: 'Nặng (VD: 我的书包很重 - Cặp sách của tôi rất nặng)' }
+                ],
+                mnemonic: 'BẪY DỊCH THUẬT [00:46:46]: Tiếng Việt hỏi "Bệnh của tôi CÓ nặng không?" nhưng tiếng Trung chỉ nói "我的病严重吗？", TUYỆT ĐỐI KHÔNG dịch chữ "có" thành 有!',
+                exampleHanzi: '医生，我的病严重吗？',
+                examplePinyin: 'Yīshēng, wǒ de bìng yánzhòng ma?',
+                exampleMeaning: 'Bác sĩ ơi, bệnh của tôi có nặng (nghiêm trọng) không?'
+            },
+            {
+                id: 11,
+                timestamp: '00:47:37',
+                hanzi: '感冒',
+                pinyin: 'gǎnmào',
+                hanViet: 'Cảm mạo',
+                type: 'Danh từ / Động từ',
+                meaning: 'Cảm, cảm cúm (Mở rộng: 只是 zhǐshì = chỉ là)',
+                radicals: [
+                    { r: '咸+心', name: 'Chữ Cảm (感)', desc: 'Chữ Hàm (咸) ở trên + Bộ Tâm (心 - trái tim cảm nhận) ở dưới' },
+                    { r: '曰+目', name: 'Chữ Mạo (冒)', desc: 'Cái mũ trùm xuống tận Bộ Mục (目 - con mắt)' }
+                ],
+                mnemonic: 'Khi bị cảm cúm chỉ nói "我感冒了" (không thêm từ bị). Bác sĩ trấn an [00:50:21]: 你的病不严重，只是感冒 (Bệnh của bạn không nặng đâu, chỉ là cảm cúm thôi).',
+                exampleHanzi: '你的病不严重，只是感冒。',
+                examplePinyin: 'Nǐ de bìng bù yánzhòng, zhǐshì gǎnmào.',
+                exampleMeaning: 'Bệnh của bạn không nghiêm trọng đâu, chỉ là cảm cúm thôi.'
+            },
+            {
+                id: 12,
+                timestamp: '00:51:44',
+                hanzi: '护士',
+                pinyin: 'hùshi',
+                hanViet: 'Hộ sĩ',
+                type: 'Danh từ',
+                meaning: 'Y tá, điều dưỡng (Chữ 士 đọc thanh nhẹ)',
+                radicals: [
+                    { r: '扌+户', name: 'Chữ Hộ (护)', desc: 'Bộ Tài gảy (扌- đôi tay) bảo vệ từng hộ gia đình (户)' },
+                    { r: '士', name: 'Bộ Sĩ (士)', desc: 'Kẻ sĩ / Nhân viên chuyên môn (Ngang dưới NGẮN hơn ngang trên!)' }
+                ],
+                mnemonic: 'Người dùng đôi tay (扌) chăm sóc bảo hộ (护) bệnh nhân với chuyên môn (士) là cô Y tá (护士 hùshi). Phân biệt Bộ Sĩ (士) với Bộ Thổ (土).',
+                exampleHanzi: '我只是一个护士。',
+                examplePinyin: 'Wǒ zhǐshì yí gè hùshi.',
+                exampleMeaning: 'Tôi chỉ là một y tá thôi.'
+            },
+            {
+                id: 13,
+                timestamp: '00:54:57',
+                hanzi: '打针',
+                pinyin: 'dǎzhēn',
+                hanViet: 'Đả châm',
+                type: 'Động từ ly hợp',
+                meaning: 'Tiêm, chích thuốc (Ly hợp: 打一针 tiêm 1 mũi • 打两针 tiêm 2 mũi)',
+                radicals: [
+                    { r: '扌+丁', name: 'Chữ Đả (打)', desc: 'Bộ Tài gảy (扌- tay) + Chữ Đinh (丁)' },
+                    { r: '钅+十', name: 'Chữ Châm (针)', desc: 'Bộ Kim (钅- kim loại) + Bộ Thập (十): cây kim tiêm' }
+                ],
+                mnemonic: 'Vì 打 (đánh/đâm) là động từ còn 针 (cây kim) là tân ngữ nên khi nói "tiêm mấy mũi" phải tách đôi nhét số vào giữa [00:57:49]: 我要打几针？ (Tôi phải tiêm mấy mũi?), 打一针 (tiêm 1 mũi).',
+                exampleHanzi: '我要打几针？',
+                examplePinyin: 'Wǒ yào dǎ jǐ zhēn?',
+                exampleMeaning: 'Tôi phải tiêm mấy mũi?'
+            },
+            {
+                id: 14,
+                timestamp: '00:59:59',
+                hanzi: '开',
+                pinyin: 'kāi',
+                hanViet: 'Khai',
+                type: 'Động từ',
+                meaning: 'Mở (开门), Kê đơn thuốc (开药 kāiyào)',
+                radicals: [
+                    { r: '一+廾', name: 'Chữ Khai (开)', desc: 'Hai tay (廾) kéo thanh chắn cửa ra để mở' }
+                ],
+                mnemonic: 'Ngoài nghĩa mở cửa (开门), trong bệnh viện 开 đi với 药 thành 开药 (kāiyào - kê đơn thuốc): 医生给我开药 (Bác sĩ kê đơn thuốc cho tôi).',
+                exampleHanzi: '医生给我开药。',
+                examplePinyin: 'Yīshēng gěi wǒ kāiyào.',
+                exampleMeaning: 'Bác sĩ kê đơn thuốc cho tôi.'
+            },
+            {
+                id: 15,
+                timestamp: '01:02:33',
+                hanzi: '药',
+                pinyin: 'yào',
+                hanViet: 'Dược',
+                type: 'Danh từ',
+                meaning: 'Thuốc (中药 Thuốc Bắc • 西药 Thuốc Tây • 南药 Thuốc Nam)',
+                radicals: [
+                    { r: '艹', name: 'Bộ Thảo đầu', desc: 'Cỏ cây thảo dược trên đầu' },
+                    { r: '约', name: 'Chữ Ước (yuē)', desc: 'Bộ Mịch (纟) + Bộ Bao (勺)' }
+                ],
+                mnemonic: 'Thuốc (药) thời xưa làm từ cỏ cây thảo mộc nên có Bộ Thảo đầu (艹). CỰC LƯU Ý [01:02:48]: Thuốc Bắc phải dịch là 中药 (Zhōngyào), KHÔNG nói 北药! Uống thuốc viên dùng 吃药 (chī yào).',
+                exampleHanzi: '我不喜欢喝中药，我喜欢吃西药。',
+                examplePinyin: 'Wǒ bù xǐhuan hē Zhōngyào, wǒ xǐhuan chī xīyào.',
+                exampleMeaning: 'Tôi không thích uống thuốc Bắc, tôi thích uống thuốc Tây.'
+            },
+            {
+                id: 16,
+                timestamp: '01:07:35',
+                hanzi: '次',
+                pinyin: 'cì',
+                hanViet: 'Thứ',
+                type: 'Động lượng từ',
+                meaning: 'Lần (Công thức: Động từ + Số đếm + 次)',
+                radicals: [
+                    { r: '冫', name: 'Bộ Băng', desc: 'Hai nét chấm băng bên trái' },
+                    { r: '欠', name: 'Bộ Khiếm', desc: 'Người há miệng ngáp / thiếu nợ bên phải' }
+                ],
+                mnemonic: 'Đứng sau động từ để đếm số lần thực hiện hành động: 一次 (1 lần), 两次 (2 lần - dùng 两), 一天要吃几次？ (Một ngày phải uống mấy lần?), 一天吃两次 (Một ngày uống 2 lần).',
+                exampleHanzi: '一天要吃几次？',
+                examplePinyin: 'Yì tiān yào chī jǐ cì?',
+                exampleMeaning: 'Một ngày phải uống (thuốc) mấy lần?'
+            },
+            {
+                id: 17,
+                timestamp: '01:10:02',
+                hanzi: '片',
+                pinyin: 'piàn',
+                hanViet: 'Phiến',
+                type: 'Lượng từ',
+                meaning: 'Viên (thuốc), lát, mảnh, tấm (一片药: 1 viên thuốc)',
+                radicals: [
+                    { r: '片', name: 'Bộ Phiến', desc: 'Mảnh gỗ mỏng xẻ ra từ thân cây (木)' }
+                ],
+                mnemonic: 'Dùng cho vật mỏng dẹt hoặc viên thuốc nén: 一片药 (yí piàn yào - 1 viên thuốc), 两片药 (liǎng piàn yào - 2 viên thuốc). Câu mẫu kinh điển: 一天吃两次，一次吃一片药.',
+                exampleHanzi: '一天吃两次，一次吃一片药。',
+                examplePinyin: 'Yì tiān chī liǎng cì, yí cì chī yí piàn yào.',
+                exampleMeaning: 'Một ngày uống 2 lần, một lần uống 1 viên thuốc.'
+            },
+            {
+                id: 18,
+                timestamp: '01:12:41',
+                hanzi: '休息',
+                pinyin: 'xiūxi',
+                hanViet: 'Hưu tức',
+                type: 'Động từ',
+                meaning: 'Nghỉ ngơi (休息一下 / 休息一会儿: nghỉ một lát; 多休息: nghỉ ngơi nhiều)',
+                radicals: [
+                    { r: '亻+木', name: 'Chữ Hưu (休)', desc: 'Người (亻) tựa lưng vào gốc cây (木) để nghỉ mát' },
+                    { r: '自+心', name: 'Chữ Tức (息)', desc: 'Hơi thở từ mũi (自) đi thẳng xuống trái tim (心)' }
+                ],
+                mnemonic: 'Câu chuyện chữ Hán đẹp nhất bài [01:13:02]: Người đi đường mệt mỏi (亻) dựa lưng vào gốc cây (木) là Nghỉ (休), điều hòa hơi thở từ mũi (自) đến tim (心) là Ngơi (息)!',
+                exampleHanzi: '医生让我在家休息。',
+                examplePinyin: 'Yīshēng ràng wǒ zài jiā xiūxi.',
+                exampleMeaning: 'Bác sĩ bảo tôi ở nhà nghỉ ngơi.'
+            }
+        ];
+
+        // Dữ liệu Câu Kiêm Ngữ (Tab 2.1)
+        const pivotalSentencesData = [
+            {
+                tag: 'Động từ 让 (Bảo / Khuyên)',
+                s1: '医生', s1Sub: 'Bác sĩ (S1)',
+                v1: '让', v1Sub: 'Bảo / Khuyên (V1)',
+                pivot: '我', pivotSub: 'Tôi (O1 = S2)',
+                v2: '多喝水、多休息', v2Sub: 'Uống nhiều nước, nghỉ nhiều (V2)',
+                fullHanzi: '医生让我多喝水、多休息。',
+                fullPinyin: 'Yīshēng ràng wǒ duō hē shuǐ, duō xiūxi.',
+                fullVN: 'Bác sĩ bảo tôi uống nhiều nước, nghỉ ngơi nhiều.'
+            },
+            {
+                tag: 'Tiêu đề Bài 13 (让 = Để cho)',
+                s1: '(你)', s1Sub: '(Bạn)',
+                v1: '让', v1Sub: 'Để cho (V1)',
+                pivot: '我', pivotSub: 'Tôi (O1 = S2)',
+                v2: '给你检查一下', v2Sub: 'Kiểm tra cho bạn 1 chút (V2)',
+                fullHanzi: '让我给你检查一下。',
+                fullPinyin: 'Ràng wǒ gěi nǐ jiǎnchá yíxià.',
+                fullVN: 'Để tôi kiểm tra cho bạn một chút.'
+            },
+            {
+                tag: 'Phủ định 不让 (Không cho phép)',
+                s1: '他', s1Sub: 'Anh ấy (S1)',
+                v1: '不让', v1Sub: 'Không cho phép (V1)',
+                pivot: '我', pivotSub: 'Tôi (O1 = S2)',
+                v2: '喝可乐', v2Sub: 'Uống Coca (V2)',
+                fullHanzi: '他不让我喝可乐。',
+                fullPinyin: 'Tā bú ràng wǒ hē kělè.',
+                fullVN: 'Anh ấy không cho phép tôi uống Coca.'
+            },
+            {
+                tag: 'Động từ 叫 (Gọi / Bảo)',
+                s1: '妈妈', s1Sub: 'Mẹ (S1)',
+                v1: '叫', v1Sub: 'Bảo / Gọi (V1)',
+                pivot: '我', pivotSub: 'Tôi (O1 = S2)',
+                v2: '回家吃饭', v2Sub: 'Về nhà ăn cơm (V2)',
+                fullHanzi: '妈妈叫我回家吃饭。',
+                fullPinyin: 'Māma jiào wǒ huí jiā chīfàn.',
+                fullVN: 'Mẹ bảo tôi về nhà ăn cơm.'
+            },
+            {
+                tag: 'Động từ 请 (Mời)',
+                s1: '他', s1Sub: 'Anh ấy (S1)',
+                v1: '请', v1Sub: 'Mời (V1)',
+                pivot: '我', pivotSub: 'Tôi (O1 = S2)',
+                v2: '喝咖啡', v2Sub: 'Uống cà phê (V2)',
+                fullHanzi: '他请我喝咖啡。',
+                fullPinyin: 'Tā qǐng wǒ hē kāfēi.',
+                fullVN: 'Anh ấy mời tôi uống cà phê.'
+            },
+            {
+                tag: 'Động từ 派 (Cử / Phái đi)',
+                s1: '公司', s1Sub: 'Công ty (S1)',
+                v1: '派', v1Sub: 'Cử / Phái (V1)',
+                pivot: '他', pivotSub: 'Anh ấy (O1 = S2)',
+                v2: '去中国工作', v2Sub: 'Đi Trung Quốc làm việc (V2)',
+                fullHanzi: '公司派他去中国工作。',
+                fullPinyin: 'Gōngsī pài tā qù Zhōngguó gōngzuò.',
+                fullVN: 'Công ty cử anh ấy đi Trung Quốc làm việc.'
+            }
+        ];
+
+        // 24 Chữ Hán Bài 13 cho Bảng Tập Viết Ô Chữ Mễ (Tab 3.1)
+        const canvasCharsLesson13 = [
+            { char: '头', pinyin: 'tóu', hint: '头 (tóu - Cái đầu): 2 nét chấm trên đầu, nét cuối là CHẤM DÀI (丶), không viết thành chữ Đại (大)!' },
+            { char: '疼', pinyin: 'téng', hint: '疼 (téng - Đau): Ngoài là Bộ Bệnh (疒), trong là chữ Đông (冬 - mùa đông bị bệnh thì đau).' },
+            { char: '舒', pinyin: 'shū', hint: '舒 (shū - Thoải mái): Trái là Bộ Thiệt (舌 - cái lưỡi), phải là chữ Dư (予).' },
+            { char: '服', pinyin: 'fú', hint: '服 (fú/fu - Cơ thể/Phục): Trái là Bộ Nguyệt/Nhục (月), phải là Bộ Tiết (卩) + Bộ Hựu (又).' },
+            { char: '流', pinyin: 'liú', hint: '流 (liú - Chảy): Trái là Bộ Chấm Thủy (氵- 3 giọt nước), phải là dòng sông chảy.' },
+            { char: '鼻', pinyin: 'bí', hint: '鼻 (bí - Mũi): Trên là Bộ Tự (自), giữa là Bộ Điền (田), dưới là Bộ Củng (廾).' },
+            { char: '涕', pinyin: 'tì', hint: '涕 (tì - Nước mũi): Trái là Bộ Thủy (氵), phải là chữ Đệ (弟 - em trai chảy nước mũi).' },
+            { char: '发', pinyin: 'fā', hint: '发 (fā - Phát ra): Phẩy gập → Phẩy → Ngang phẩy + Mác (又) → Chấm trên phải.' },
+            { char: '烧', pinyin: 'shāo', hint: '烧 (shāo - Sốt/Đốt): Trái là Bộ Hỏa (火), phải là chữ Nghiêu (尧 - Lưu ý KHÔNG có chấm trên đầu!).' },
+            { char: '让', pinyin: 'ràng', hint: '让 (ràng - Bảo/Để/Nhường): Trái là Bộ Ngôn (讠), phải là chữ Thượng (上).' },
+            { char: '检', pinyin: 'jiǎn', hint: '检 (jiǎn - Kiểm): Trái là Bộ Mộc (木), phải là chữ Thiêm (佥).' },
+            { char: '查', pinyin: 'chá', hint: '查 (chá - Tra xét): Trên là Bộ Mộc (木), dưới là chữ Đán (旦 - mặt trời mọc trên vạch ngang).' },
+            { char: '病', pinyin: 'bìng', hint: '病 (bìng - Bệnh): Ngoài là Bộ Bệnh (疒), trong là chữ Bính (丙 = Một nét ngang + chữ Nội 内).' },
+            { char: '严', pinyin: 'yán', hint: '严 (yán - Nghiêm trọng): Ngang trên → Chấm + Phẩy → Ngang dưới + Phẩy dài.' },
+            { char: '重', pinyin: 'zhòng', hint: '重 (zhòng - Nặng/Trọng): Phẩy nằm → Ngang → Chữ Nhật (日) → Sổ thẳng xuyên suốt + 2 nét ngang đáy.' },
+            { char: '感', pinyin: 'gǎn', hint: '感 (gǎn - Cảm): Trên là chữ Hàm (咸), dưới là Bộ Tâm (心 - trái tim cảm nhận).' },
+            { char: '冒', pinyin: 'mào', hint: '冒 (mào - Mạo/Cảm cúm): Trên là cái mũ (曰), dưới là Bộ Mục (目 - con mắt).' },
+            { char: '护', pinyin: 'hù', hint: '护 (hù - Bảo hộ/Y tá): Trái là Bộ Tài gảy (扌- cái tay), phải là Bộ Hộ (户).' },
+            { char: '士', pinyin: 'shì', hint: '士 (shì - Bộ Sĩ trong 护士): Nét ngang dưới NGẮN HƠN nét ngang trên (ngược với Bộ Thổ 土)!' },
+            { char: '打', pinyin: 'dǎ', hint: '打 (dǎ - Đánh/Tiêm): Trái là Bộ Tài gảy (扌), phải là chữ Đinh (丁).' },
+            { char: '针', pinyin: 'zhēn', hint: '针 (zhēn - Cây kim tiêm): Trái là Bộ Kim (钅- kim loại), phải là Bộ Thập (十).' },
+            { char: '开', pinyin: 'kāi', hint: '开 (kāi - Mở/Kê đơn): Ngang trên → Ngang dưới dài hơn → Phẩy trái → Sổ phải.' },
+            { char: '药', pinyin: 'yào', hint: '药 (yào - Thuốc): Trên là Bộ Thảo đầu (艹- cỏ cây), dưới là chữ Ước (约).' },
+            { char: '休', pinyin: 'xiū', hint: '休 (xiū - Nghỉ ngơi): Trái là Bộ Nhân đứng (亻), phải là Bộ Mộc (木) — Người dựa gốc cây nghỉ mát!' }
+        ];
+
+        // 16 Bộ thủ trọng tâm Bài 13 (Tab 3.2)
+        const radicalsLesson13 = [
+            { r: '疒', name: '1. Bộ Bệnh (Nạch - Giường bệnh)', desc: 'Hình người nằm trên giường bệnh đổ mồ hôi, có mặt trong mọi chữ bệnh tật (疼, 病)', exChar: '病', exPinyin: 'bìng' },
+            { r: '钅', name: '2. Bộ Kim (Kim loại)', desc: 'Vật làm bằng kim loại sắc nhọn như mũi kim tiêm (针 zhēn)', exChar: '针', exPinyin: 'zhēn' },
+            { r: '扌', name: '3. Bộ Tài Gảy (Cái tay)', desc: 'Động tác dùng bàn tay: chăm sóc bảo hộ (护) hoặc tiêm chích (打)', exChar: '护', exPinyin: 'hù' },
+            { r: '氵', name: '4. Bộ Chấm Thủy (3 giọt nước)', desc: 'Liên quan đến chất lỏng chảy ra (流 chảy, 涕 nước mũi)', exChar: '流', exPinyin: 'liú' },
+            { r: '火', name: '5. Bộ Hỏa (Ngọn lửa)', desc: 'Sức nóng như lửa đốt khi cơ thể bị sốt (烧 shāo)', exChar: '烧', exPinyin: 'shāo' },
+            { r: '艹', name: '6. Bộ Thảo Đầu (Cỏ cây)', desc: 'Thảo dược cây cỏ dùng làm thuốc chữa bệnh (药 yào)', exChar: '药', exPinyin: 'yào' },
+            { r: '冫', name: '7. Bộ Băng (2 chấm băng)', desc: 'Khí lạnh giá buốt (nằm bên trái chữ 次 cì - lần)', exChar: '头', exPinyin: 'tóu' },
+            { r: '欠', name: '8. Bộ Khiếm (Há miệng/Thiếu)', desc: 'Hình người há miệng ngáp hoặc thở (nằm bên phải chữ 次)', exChar: '舒', exPinyin: 'shū' },
+            { r: '自', name: '9. Bộ Tự (Cái mũi / Tự mình)', desc: 'Hình dáng chiếc mũi chính diện (nằm trên chữ 鼻 và chữ 息)', exChar: '鼻', exPinyin: 'bí' },
+            { r: '心', name: '10. Bộ Tâm (Trái tim)', desc: 'Trái tim cảm nhận và nhịp thở nghỉ ngơi (trong chữ 感 và chữ 息)', exChar: '感', exPinyin: 'gǎn' },
+            { r: '目', name: '11. Bộ Mục (Con mắt)', desc: 'Đôi mắt mệt mỏi khi bị cảm mạo (nằm dưới chữ 冒 mào)', exChar: '冒', exPinyin: 'mào' },
+            { r: '木', name: '12. Bộ Mộc (Cây gỗ)', desc: 'Cây gỗ (trong 检, 查 và người dựa gốc cây nghỉ ngơi 休)', exChar: '休', exPinyin: 'xiū' },
+            { r: '讠', name: '13. Bộ Ngôn (Lời nói)', desc: 'Dùng lời nói để bảo, cho phép hoặc nhường nhịn (让 ràng)', exChar: '让', exPinyin: 'ràng' },
+            { r: '舌', name: '14. Bộ Thiệt (Cái lưỡi)', desc: 'Cái lưỡi nếm vị thoải mái dễ chịu (nằm trái chữ 舒 shū)', exChar: '舒', exPinyin: 'shū' },
+            { r: '户', name: '15. Bộ Hộ (Cửa 1 cánh / Hộ gia đình)', desc: 'Bảo vệ sự an toàn (nằm bên phải chữ 护 hù)', exChar: '护', exPinyin: 'hù' },
+            { r: '士', name: '16. Bộ Sĩ (Kẻ sĩ / Nhân viên y tế)', desc: 'Nét ngang dưới NGẮN hơn ngang trên (trong từ 护士 hùshi - y tá)', exChar: '士', exPinyin: 'shì' }
+        ];
+
+        // 3 Hội thoại thực tế tại Phòng Khám (Tab 4.1)
+        const dialoguesLesson13 = [
+            {
+                title: 'Hội thoại 1: Hỏi thăm bạn bị ốm & Khuyên đi bệnh viện khám bệnh (看病)',
+                lines: [
+                    { speaker: 'A', hanzi: '今天你怎么了？哪儿不舒服？', pinyin: 'Jīntiān nǐ zěnme le? Nǎr bù shūfu?', vn: 'Hôm nay bạn làm sao thế? Khó chịu ở đâu vậy?', note: 'Mẫu câu hỏi thăm kinh điển: Chủ ngữ + 怎么了？ / 哪儿不舒服？' },
+                    { speaker: 'B', hanzi: '这几天我觉得很不舒服。我头疼、流鼻涕，我还发烧。', pinyin: 'Zhè jǐ tiān wǒ juéde hěn bù shūfu. Wǒ tóuténg, liú bítì, wǒ hái fāshāo.', vn: 'Mấy hôm nay mình thấy rất khó chịu. Mình đau đầu, chảy nước mũi, lại còn bị sốt nữa.', note: 'Liệt kê chuỗi triệu chứng: 头疼, 流鼻涕, 发烧.' },
+                    { speaker: 'A', hanzi: '那你快去医院看病吧！', pinyin: 'Nà nǐ kuài qù yīyuàn kànbìng ba!', vn: 'Vậy bạn mau đi bệnh viện khám bệnh đi nhé!', note: '去医院看病 = Đi bệnh viện khám bệnh.' }
+                ]
+            },
+            {
+                title: 'Hội thoại 2: Bác sĩ kiểm tra sức khỏe (检查) & Chẩn đoán cảm cúm (感冒)',
+                lines: [
+                    { speaker: 'A', hanzi: '请坐，让我给你检查一下。', pinyin: 'Qǐng zuò, ràng wǒ gěi nǐ jiǎnchá yíxià.', vn: 'Mời ngồi, để tôi kiểm tra cho bạn một chút.', note: 'Câu Kiêm Ngữ 让我... kết hợp 给你检查一下.' },
+                    { speaker: 'B', hanzi: '医生，我的病严重吗？', pinyin: 'Yīshēng, wǒ de bìng yánzhòng ma?', vn: 'Bác sĩ ơi, bệnh của cháu có nặng (nghiêm trọng) không ạ?', note: 'Tuyệt đối KHÔNG thêm chữ 有 trước 严重!' },
+                    { speaker: 'A', hanzi: '你的病不严重，只是感冒。', pinyin: 'Nǐ de bìng bù yánzhòng, zhǐshì gǎnmào.', vn: 'Bệnh của bạn không nặng đâu, chỉ là bị cảm cúm thôi.', note: '只是 (zhǐshì) = chỉ là.' }
+                ]
+            },
+            {
+                title: 'Hội thoại 3: Tiêm thuốc (打针), Kê đơn (开药) & Lời dặn của Bác sĩ (多喝水、多休息)',
+                lines: [
+                    { speaker: 'B', hanzi: '医生，我要打针吗？我不想打针。', pinyin: 'Yīshēng, wǒ yào dǎzhēn ma? Wǒ bù xiǎng dǎzhēn.', vn: 'Bác sĩ ơi, cháu có phải tiêm không ạ? Cháu không muốn tiêm.', note: '打针 = tiêm.' },
+                    { speaker: 'A', hanzi: '不用打针，我给你开药。', pinyin: 'Búyòng dǎzhēn, wǒ gěi nǐ kāiyào.', vn: 'Không cần tiêm đâu, tôi kê đơn thuốc cho bạn.', note: '给我/给你开药 = Kê đơn thuốc cho tôi/bạn.' },
+                    { speaker: 'B', hanzi: '这药一天要吃几次？', pinyin: 'Zhè yào yì tiān yào chī jǐ cì?', vn: 'Thuốc này một ngày phải uống mấy lần ạ?', note: 'Động từ 吃 + Số lần + 次.' },
+                    { speaker: 'A', hanzi: '一天吃两次，一次吃两片药。你要多喝水、多休息！', pinyin: 'Yì tiān chī liǎng cì, yí cì chī liǎng piàn yào. Nǐ yào duō hē shuǐ, duō xiūxi!', vn: 'Một ngày uống 2 lần, mỗi lần uống 2 viên thuốc. Bạn phải uống nhiều nước, nghỉ ngơi nhiều nhé!', note: 'Cấu trúc khuyên nhủ 多 + V: 多喝水, 多休息.' }
+                ]
+            }
+        ];
+
+        // Bản đồ Timeline Video Bài 13 (Tab 4.2)
+        const videoTimelineLesson13 = [
+            { time: '00:00:27', title: 'Phương pháp học Hán Ngữ 2 & Cấu trúc 多 + V', sampleHanzi: '你多休息吧。', samplePinyin: 'Nǐ duō xiūxi ba.', desc: 'Cô giáo dặn hạn chế nhìn Pinyin và giải thích cấu trúc 多 + Động từ (多听、多说、多读、多写).' },
+            { time: '00:02:11', title: 'Từ mới #1–#2: 头 (Đầu), 怎么了 & 疼 (Đau)', sampleHanzi: '你的头怎么了？', samplePinyin: 'Nǐ de tóu zěnme le?', desc: 'Lưu ý nét chấm cuối của 头; chiết tự chữ 疼 (Bộ Bệnh 疒 + Đông 冬).' },
+            { time: '00:10:02', title: 'Từ mới #3: 舒服 (Thoải mái) & 不舒服 (Khó chịu)', sampleHanzi: '这几天我觉得很不舒服。', samplePinyin: 'Zhè jǐ tiān wǒ juéde hěn bù shūfu.', desc: 'Phân biệt 服 (fú) trong 衣服 và đọc thanh nhẹ trong 舒服 (shūfu).' },
+            { time: '00:17:04', title: 'Từ mới #4–#6: 流 (流血, 流口水), 鼻涕 & 发烧', sampleHanzi: '我头疼、流鼻涕，我还发烧。', samplePinyin: 'Wǒ tóuténg, liú bítì, wǒ hái fāshāo.', desc: 'Mở rộng chảy máu (流血 liúxiě), chảy nước miếng (流口水) và sốt (发烧).' },
+            { time: '00:29:47', title: 'Từ mới #7–#8: 让 (Bảo/Để) & 检查 (Kiểm tra)', sampleHanzi: '让我给你检查一下。', samplePinyin: 'Ràng wǒ gěi nǐ jiǎnchá yíxià.', desc: 'Mở rộng 身体 (sức khỏe), 医院 (bệnh viện) và cấu trúc 给 + Ai + V.' },
+            { time: '00:40:14', title: 'Từ mới #9–#11: 病 (看病), 严重 & 感冒 (Cảm cúm)', sampleHanzi: '医生，我的病严重吗？', samplePinyin: 'Yīshēng, wǒ de bìng yánzhòng ma?', desc: 'Nhấn mạnh lỗi sai kinh điển: Không được thêm 有 trước 严重!' },
+            { time: '00:51:44', title: 'Từ mới #12–#13: 护士 (Y tá) & Từ ly hợp 打针 (Tiêm)', sampleHanzi: '我要打几针？', samplePinyin: 'Wǒ yào dǎ jǐ zhēn?', desc: 'Phân biệt Bộ Sĩ (士) và cách tách từ ly hợp 打一针, 打两针.' },
+            { time: '00:59:59', title: 'Từ mới #14–#15: 开药 (Kê đơn) & 药 (中药/西药/南药)', sampleHanzi: '医生给我开药。', samplePinyin: 'Yīshēng gěi wǒ kāiyào.', desc: 'Phân biệt Thuốc Bắc = 中药 (không có 北药) và 吃药 vs 喝药.' },
+            { time: '01:07:35', title: 'Từ mới #16–#18: 次 (Lần), 片 (Viên) & 休息 (Nghỉ ngơi)', sampleHanzi: '一天吃两次，一次吃一片药。', samplePinyin: 'Yì tiān chī liǎng cì, yí cì chī yí piàn yào.', desc: 'Công thức đọc liều lượng thuốc và câu chuyện chữ 休 (Người dựa gốc cây).' },
+            { time: '01:19:03', title: 'Tổng kết Ngữ pháp Câu Kiêm Ngữ (兼语句)', sampleHanzi: '医生让我多喝水、多休息。', samplePinyin: 'Yīshēng ràng wǒ duō hē shuǐ, duō xiūxi.', desc: 'Phân tích công thức S1 + 让/叫/请/派 + O1(S2) + V2.' }
+        ];
+
+        // 12 Câu hỏi Trắc nghiệm Phản xạ Hán 2 (Tab 5)
+        const quizQuestionsLesson13 = [
+            {
+                q: 'Câu 1 [00:46:46]: Khi muốn hỏi bác sĩ "Bác sĩ ơi, bệnh của tôi có nặng (nghiêm trọng) không?", câu nào dưới đây là ĐÚNG ngữ pháp tiếng Trung?',
+                speakWord: '医生，我的病严重吗？',
+                options: [
+                    '医生，我的病有严重吗？ (Dịch từng chữ "có" = 有)',
+                    '医生，我的病严重吗？ (Yīshēng, wǒ de bìng yánzhòng ma? — Tuyệt đối không thêm 有)',
+                    '医生，我的病很严重吗？',
+                    '医生，严重我的病吗？'
+                ],
+                correct: 1,
+                explanation: 'Trong tiếng Trung, tính từ 严重 (yánzhòng) làm vị ngữ trực tiếp. Khi hỏi nghi vấn chỉ dùng "我的病严重吗？", tuyệt đối không được ghép chữ 有 (yǒu) đứng trước tính từ như tiếng Việt!'
+            },
+            {
+                q: 'Câu 2 [01:02:48]: Trong tiếng Trung, "Thuốc Bắc" (thuốc Đông y cổ truyền Trung Hoa) được gọi là gì?',
+                speakWord: '中药',
+                options: [
+                    '北药 (Běiyào)',
+                    '中药 (Zhōngyào — Còn thuốc Tây là 西药, thuốc Nam là 南药)',
+                    '东药 (Dōngyào)',
+                    '上药 (Shàngyào)'
+                ],
+                correct: 1,
+                explanation: 'Người Việt gọi là "Thuốc Bắc" (thuốc từ phương Bắc truyền sang), nhưng bản chất đó là thuốc y học cổ truyền Trung Quốc nên tiếng Trung bắt buộc gọi là 中药 (Zhōngyào), hoàn toàn không có từ "北药"!'
+            },
+            {
+                q: 'Câu 3 [00:00:57]: Để khuyên bạn đang bị ốm "Bạn uống nhiều nước, nghỉ ngơi nhiều vào nhé!", cách sắp xếp từ nào dưới đây là ĐÚNG?',
+                speakWord: '医生让我多喝水、多休息。',
+                options: [
+                    '你喝水多、休息多吧！ (Đặt 多 ở sau giống tiếng Việt)',
+                    '你要多喝水、多休息！ (Đặt phó từ 多 đứng TRƯỚC động từ: 多 + V)',
+                    '你喝多水、休息多吧！',
+                    '你很喝水、很休息吧！'
+                ],
+                correct: 1,
+                explanation: 'Khác với tiếng Việt ("uống nhiều, nghỉ nhiều"), trong tiếng Trung chữ 多 (duō) khi khuyên nhủ phải đứng TRƯỚC động từ: 多喝水 (uống nhiều nước), 多休息 (nghỉ ngơi nhiều), 多听多说 (nghe nhiều nói nhiều).'
+            },
+            {
+                q: 'Câu 4 [00:54:57]: Vì "打针" (dǎzhēn - tiêm) là một Động từ ly hợp (打 = chích, 针 = mũi kim), nên khi muốn nói "Tiêm 2 mũi" hoặc hỏi "Phải tiêm mấy mũi?" ta phải nói thế nào?',
+                speakWord: '我要打几针？',
+                options: [
+                    '打针两 / 要打针几？ (Đặt số lượng ở sau 针)',
+                    '打两针 (dǎ liǎng zhēn) / 我要打几针？ (Nhét số lượng vào GIỮA chữ 打 và chữ 针)',
+                    '两打针 / 几打针？',
+                    '打二针'
+                ],
+                correct: 1,
+                explanation: 'Với từ ly hợp 打针, chữ 针 vốn là danh từ (mũi kim/mũi tiêm) đóng vai trò tân ngữ của 打, nên số lượng phải đặt ở giữa: 打一针 (tiêm 1 mũi), 打两针 (tiêm 2 mũi), 打几针 (tiêm mấy mũi).'
+            },
+            {
+                q: 'Câu 5 [01:19:03]: Trong câu Kiêm Ngữ "医生让我多休息" (Bác sĩ bảo tôi nghỉ ngơi nhiều), chữ "我" đóng vai trò ngữ pháp gì?',
+                speakWord: '医生让我在家休息。',
+                options: [
+                    'Chỉ làm Chủ ngữ của cả câu',
+                    'Chỉ làm Định ngữ',
+                    'Là "Kiêm ngữ": Vừa làm Tân ngữ của động từ thứ nhất (让), vừa làm Chủ ngữ thực hiện động từ thứ hai (多休息)',
+                    'Là Trạng ngữ chỉ thời gian'
+                ],
+                correct: 2,
+                explanation: 'Đúng tên gọi "Kiêm ngữ" (兼语 = kiêm nhiệm 2 chức năng): "我" vừa là đối tượng bị "医生让" (Tân ngữ 1), vừa là người trực tiếp thực hiện hành động "多休息" (Chủ ngữ 2).'
+            },
+            {
+                q: 'Câu 6 [00:06:44]: Chữ "疼" (téng - đau) và chữ "病" (bìng - bệnh) đều có chung bộ thủ nào bao quanh ở bên ngoài?',
+                speakWord: '疼',
+                options: [
+                    'Bộ Quảng (广 - mái nhà rộng)',
+                    'Bộ Bệnh / Nạch (疒 - hình chiếc giường bệnh có 2 nét chấm mồ hôi bên trái)',
+                    'Bộ Miên (宀 - mái nhà)',
+                    'Bộ Thi (尸 - thi thể)'
+                ],
+                correct: 1,
+                explanation: 'Mọi chữ Hán liên quan đến ốm đau, bệnh tật (疼 đau, 病 bệnh, 痛 thống, 疯 điên...) đều mang Bộ Bệnh (疒).'
+            },
+            {
+                q: 'Câu 7 [01:13:02]: Câu chuyện chiết tự của từ "休息" (xiūxi - nghỉ ngơi) được cấu tạo từ những bộ thủ nào?',
+                speakWord: '休息',
+                options: [
+                    'Chữ 休 gồm Người (亻) dựa vào Cây (木); chữ 息 gồm cái Mũi (自) điều hòa hơi thở xuống Trái tim (心)',
+                    'Bộ Thủy (氵) và Bộ Hỏa (火)',
+                    'Bộ Kim (钅) và Bộ Thổ (土)',
+                    'Bộ Ngôn (讠) và Bộ Khẩu (口)'
+                ],
+                correct: 0,
+                explanation: 'Hình ảnh vô cùng sinh động: Người (亻) tựa vào gốc cây (木) là Nghỉ (休); hít thở từ mũi (自) xuống tim (心) là Ngơi (息).'
+            },
+            {
+                q: 'Câu 8 [01:11:36]: Câu dặn liều lượng thuốc "Một ngày uống 2 lần, mỗi lần uống 1 viên thuốc" nói bằng tiếng Trung chuẩn là gì?',
+                speakWord: '一天吃两次，一次吃一片药。',
+                options: [
+                    '一天喝二次，一次喝一片药。',
+                    '一天吃两次，一次吃一片药。 (Yì tiān chī liǎng cì, yí cì chī yí piàn yào.)',
+                    '一天两次吃，一片药吃一次。',
+                    '两次一天吃，一片一次吃。'
+                ],
+                correct: 1,
+                explanation: 'Bổ ngữ động lượng (两次 - 2 lần) và tân ngữ (一片药 - 1 viên thuốc) đều đặt SAU động từ 吃 (chī): 一天吃两次，一次吃一片药.'
+            },
+            {
+                q: 'Câu 9 [00:34:05]: Để nói "Để tôi kiểm tra cho bạn một chút", vị trí của cụm "cho bạn (给你)" phải đặt ở đâu?',
+                speakWord: '让我给你检查一下。',
+                options: [
+                    '让我检查一下给你。 (Đặt 给你 ở cuối câu giống tiếng Việt)',
+                    '让我给你检查一下。 (Đặt 给你 đứng TRƯỚC động từ 检查)',
+                    '给我让你检查一下。',
+                    '让给你我检查一下。'
+                ],
+                correct: 1,
+                explanation: 'Theo cấu trúc "给 + Ai + Động từ", đối tượng nhận hành động phải đưa lên trước động từ: 给你检查一下 (kiểm tra cho bạn), 给我开药 (kê thuốc cho tôi).'
+            },
+            {
+                q: 'Câu 10 [00:18:17]: Khi nhìn thấy bạn bị đứt tay chảy máu, câu hỏi thăm "Tay của bạn chảy máu rồi, bạn có đau không?" nói thế nào?',
+                speakWord: '你的手流血了，你疼吗？',
+                options: [
+                    '你的手流鼻涕了，你疼吗？',
+                    '你的手流口水了，你疼吗？',
+                    '你的手流血了，你疼吗？ (Nǐ de shǒu liúxiě le, nǐ téng ma?)',
+                    '你的手发烧了，你疼吗？'
+                ],
+                correct: 2,
+                explanation: '流血 (liúxiě) là chảy máu; còn 流鼻涕 là chảy nước mũi, 流口水 là chảy nước miếng, 发烧 là bị sốt.'
+            },
+            {
+                q: 'Câu 11 [00:53:09]: Trong từ "护士" (hùshi - y tá), chữ "士" là bộ thủ gì và khác với chữ "土" (Thổ - đất) ở điểm nào?',
+                speakWord: '护士',
+                options: [
+                    'Chữ 士 là Bộ Sĩ, có nét ngang dưới NGẮN HƠN nét ngang trên (còn Bộ Thổ 土 có nét ngang dưới dài hơn)',
+                    'Chữ 士 là Bộ Thổ, hai nét ngang bằng nhau',
+                    'Chữ 士 là Bộ Thập (十)',
+                    'Chữ 士 là Bộ Vương (王)'
+                ],
+                correct: 0,
+                explanation: 'Bộ Sĩ (士 - người có học thức/chuyên môn) có nét ngang trên dài, nét ngang dưới ngắn. Còn Bộ Thổ (土 - mặt đất) có nét ngang dưới dài hơn để làm nền đất vững chắc.'
+            },
+            {
+                q: 'Câu 12 [00:42:37]: Từ mở rộng "看病" (kànbìng) trong tiếng Trung có điểm gì đặc biệt về chủ thể sử dụng?',
+                speakWord: '看病',
+                options: [
+                    'Chỉ dùng cho bác sĩ, bệnh nhân không được dùng',
+                    'Chỉ dùng cho bệnh nhân, bác sĩ không được dùng',
+                    'Dùng được cho CẢ HAI phía: Bác sĩ khám bệnh cho bệnh nhân (医生给我看病) VÀ Bệnh nhân đi bệnh viện khám bệnh (我去医院看病)',
+                    'Chỉ có nghĩa là nhìn người ốm'
+                ],
+                correct: 2,
+                explanation: 'Cô giáo nhấn mạnh tại [00:42:37]: 看病 vừa có nghĩa là bác sĩ khám chữa bệnh cho mình (给你看病), vừa có nghĩa là bệnh nhân đi khám bệnh ở bệnh viện (去医院看病).'
+            }
+        ];
+
+        // =====================================================================
+        // 3. HÀM RENDER CÁC CÔNG CỤ TƯƠNG TÁC (PHÒNG KHÁM, KIÊM NGỮ, ĐƠN THUỐC)
+        // =====================================================================
+
+        // Tab 1.1: Interactive Clinic Simulator
+        function toggleSymptom(id) {
+            const sym = clinicSymptoms.find(s => s.id === id);
+            if (sym) {
+                sym.active = !sym.active;
+                // Ensure at least 1 symptom is selected
+                if (!clinicSymptoms.some(s => s.active)) {
+                    sym.active = true;
+                }
+                renderClinicSimulator();
+                speakChinese(sym.hanzi, `${sym.hanzi} (${sym.pinyin} - ${sym.vn})`);
+            }
+        }
+
+        function renderClinicSimulator() {
+            const grid = document.getElementById('symptomToggleGrid');
+            grid.innerHTML = clinicSymptoms.map(s => `
+                <button onclick="toggleSymptom('${s.id}')" class="p-3 rounded-2xl border-2 text-left transition flex flex-col justify-between ${s.active ? 'border-medical-600 bg-medical-50/90 shadow-sm' : 'border-stone-200 bg-stone-50/60 hover:bg-white opacity-75'}">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl">${s.icon}</span>
+                        <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${s.active ? 'bg-medical-600 text-white' : 'bg-stone-200 text-slate-500'}">
+                            ${s.active ? '✓' : '+'}
+                        </span>
+                    </div>
+                    <div class="mt-2">
+                        <div class="hanzi-font text-base font-black text-slate-900">${s.hanzi}</div>
+                        <div class="pinyin-text text-[11px] font-bold text-medical-700">${s.pinyin}</div>
+                        <div class="text-[11px] text-slate-600 font-medium">${s.vn}</div>
+                    </div>
+                </button>
+            `).join('');
+
+            const activeList = clinicSymptoms.filter(s => s.active);
+            const hanziParts = activeList.map(s => s.hanzi).join('、');
+            const pinyinParts = activeList.map(s => s.pinyin).join(', ');
+            const vnParts = activeList.map(s => s.vn.toLowerCase()).join(', ');
+
+            const patientSentenceHanzi = `医生，这几天我觉得很不舒服：我${hanziParts}。我的病严重吗？`;
+            const patientSentencePinyin = `Yīshēng, zhè jǐ tiān wǒ juéde hěn bù shūfu: wǒ ${pinyinParts}. Wǒ de bìng yánzhòng ma?`;
+            const patientSentenceVN = `Bác sĩ ơi, mấy hôm nay tôi cảm thấy rất khó chịu: tôi bị ${vnParts}. Bệnh của tôi có nặng không ạ?`;
+
+            const hasFeverOrBleeding = activeList.some(s => s.id === 'fashao' || s.id === 'liuxie');
+            const doctorSentenceHanzi = hasFeverOrBleeding
+                ? `让我给你检查一下。你的病不太严重，我给你开药、打一针。你要多喝水、多休息！`
+                : `让我给你检查一下。你的病不严重，只是感冒。我给你开药，一天吃两次，一次吃一片药。`;
+            const doctorSentencePinyin = hasFeverOrBleeding
+                ? `Ràng wǒ gěi nǐ jiǎnchá yíxià. Nǐ de bìng bú tài yánzhòng, wǒ gěi nǐ kāiyào, dǎ yì zhēn. Nǐ yào duō hē shuǐ, duō xiūxi!`
+                : `Ràng wǒ gěi nǐ jiǎnchá yíxià. Nǐ de bìng bù yánzhòng, zhǐshì gǎnmào. Wǒ gěi nǐ kāiyào, yì tiān chī liǎng cì, yí cì chī yí piàn yào.`;
+            const doctorSentenceVN = hasFeverOrBleeding
+                ? `Để tôi kiểm tra cho bạn một chút. Bệnh của bạn không quá nặng đâu, tôi kê đơn thuốc và tiêm 1 mũi cho bạn. Bạn phải uống nhiều nước, nghỉ ngơi nhiều nhé!`
+                : `Để tôi kiểm tra cho bạn một chút. Bệnh của bạn không nặng đâu, chỉ là cảm cúm thôi. Tôi kê đơn thuốc cho bạn, 1 ngày uống 2 lần, 1 lần uống 1 viên.`;
+
+            const out = document.getElementById('clinicSimulatorOutput');
+            out.innerHTML = `
+                <div class="p-4 sm:p-5 rounded-2xl bg-amber-50/80 border border-amber-200 flex flex-col justify-between space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-0.5 rounded-lg bg-amber-500 text-slate-950 text-xs font-extrabold uppercase">🙋‍♂️ Lời Khai Của Bệnh Nhân (病人)</span>
+                            <span class="text-xs font-bold text-amber-800">${activeList.length} triệu chứng đã chọn</span>
+                        </div>
+                        <div class="hanzi-font text-lg sm:text-xl font-black text-slate-900 mt-2 leading-relaxed">${patientSentenceHanzi}</div>
+                        <div class="pinyin-text text-xs font-bold text-cinnabar-700 mt-1">${patientSentencePinyin}</div>
+                        <p class="text-xs text-slate-600 mt-1 italic">"${patientSentenceVN}"</p>
+                    </div>
+                    <button onclick="speakChinese('${patientSentenceHanzi}', '${patientSentencePinyin}', this)" class="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>🔊 Nghe Bệnh Nhân Khai Bệnh</span>
+                    </button>
+                </div>
+
+                <div class="p-4 sm:p-5 rounded-2xl bg-teal-900 text-white border border-teal-700 flex flex-col justify-between space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-0.5 rounded-lg bg-emerald-400 text-slate-950 text-xs font-extrabold uppercase">👨‍⚕️ Chẩn Đoán & Đơn Thuốc Của Bác Sĩ (医生)</span>
+                            <span class="text-xs font-bold text-emerald-300">看病 & 开药</span>
+                        </div>
+                        <div class="hanzi-font text-lg sm:text-xl font-black text-white mt-2 leading-relaxed">${doctorSentenceHanzi}</div>
+                        <div class="pinyin-text text-xs font-bold text-amber-300 mt-1">${doctorSentencePinyin}</div>
+                        <p class="text-xs text-teal-100 mt-1 italic">"${doctorSentenceVN}"</p>
+                    </div>
+                    <button onclick="speakChinese('${doctorSentenceHanzi}', '${doctorSentencePinyin}', this)" class="w-full py-2.5 px-4 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>🔊 Nghe Bác Sĩ Chẩn Đoán & Dặn Dò</span>
+                    </button>
+                </div>
+            `;
+        }
+
+        // Tab 2.1: Interactive Pivotal Sentence Analyzer
+        let selectedPivotalIdx = 0;
+
+        function selectPivotalSentence(idx) {
+            selectedPivotalIdx = idx;
+            renderPivotalAnalyzer();
+            const item = pivotalSentencesData[idx];
+            speakChinese(item.fullHanzi, `${item.fullPinyin} — ${item.fullVN}`);
+        }
+
+        function renderPivotalAnalyzer() {
+            const cur = pivotalSentencesData[selectedPivotalIdx];
+            document.getElementById('pivS1').textContent = cur.s1;
+            document.getElementById('pivS1Sub').textContent = cur.s1Sub;
+            document.getElementById('pivV1').textContent = cur.v1;
+            document.getElementById('pivV1Sub').textContent = cur.v1Sub;
+            document.getElementById('pivObjSubj').textContent = cur.pivot;
+            document.getElementById('pivObjSubjSub').textContent = cur.pivotSub;
+            document.getElementById('pivV2').textContent = cur.v2;
+            document.getElementById('pivV2Sub').textContent = cur.v2Sub;
+
+            const grid = document.getElementById('pivotalExamplesGrid');
+            grid.innerHTML = pivotalSentencesData.map((item, idx) => {
+                const active = idx === selectedPivotalIdx;
+                return `
+                    <button onclick="selectPivotalSentence(${idx})" class="p-4 rounded-2xl border-2 text-left transition flex flex-col justify-between ${active ? 'border-indigo-600 bg-indigo-50/70 shadow-sm' : 'border-stone-200 bg-stone-50/60 hover:bg-white'}">
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <span class="px-2 py-0.5 rounded text-[11px] font-extrabold ${active ? 'bg-indigo-600 text-white' : 'bg-stone-200 text-slate-700'}">${item.tag}</span>
+                                <i class="fa-solid fa-volume-high ${active ? 'text-indigo-600' : 'text-slate-400'}"></i>
+                            </div>
+                            <div class="hanzi-font text-lg font-black text-slate-900 mt-2">${item.fullHanzi}</div>
+                            <div class="pinyin-text text-xs font-bold text-indigo-700 mt-0.5">${item.fullPinyin}</div>
+                        </div>
+                        <div class="text-xs text-slate-600 mt-2 pt-2 border-t border-stone-200/70">
+                            ${item.fullVN}
+                        </div>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        // Tab 2.3: Interactive Dosage & Prescription Builder
+        let selectedTimesPerDay = 2;
+        let selectedPillsPerTime = 1;
+        let selectedInjections = 0;
+
+        const measureWordNum = {
+            0: { hanzi: '不用', pinyin: 'búyòng' },
+            1: { hanzi: '一', pinyin: 'yí' },
+            2: { hanzi: '两', pinyin: 'liǎng' },
+            3: { hanzi: '三', pinyin: 'sān' },
+            4: { hanzi: '四', pinyin: 'sì' }
+        };
+
+        function setDosageParams(times, pills, inj) {
+            if (times !== null) selectedTimesPerDay = times;
+            if (pills !== null) selectedPillsPerTime = pills;
+            if (inj !== null) selectedInjections = inj;
+            renderDosageBuilder(true);
+        }
+
+        function renderDosageBuilder(speakNow = false) {
+            const timesContainer = document.getElementById('timesPerDayBtns');
+            timesContainer.innerHTML = [1, 2, 3].map(n => `
+                <button onclick="setDosageParams(${n}, null, null)" class="py-2 px-3 rounded-xl font-bold text-xs border transition ${selectedTimesPerDay === n ? 'bg-medical-600 text-white border-medical-600 shadow-sm' : 'bg-white text-slate-700 border-stone-200 hover:bg-stone-100'}">
+                    ${n} lần/ngày (${measureWordNum[n].hanzi}次)
+                </button>
+            `).join('');
+
+            const pillsContainer = document.getElementById('pillsPerTimeBtns');
+            pillsContainer.innerHTML = [1, 2, 3, 4].map(n => `
+                <button onclick="setDosageParams(null, ${n}, null)" class="py-2 px-2.5 rounded-xl font-bold text-xs border transition ${selectedPillsPerTime === n ? 'bg-cinnabar-600 text-white border-cinnabar-600 shadow-sm' : 'bg-white text-slate-700 border-stone-200 hover:bg-stone-100'}">
+                    ${n} viên (${measureWordNum[n].hanzi}片)
+                </button>
+            `).join('');
+
+            const injContainer = document.getElementById('injectionsBtns');
+            injContainer.innerHTML = [0, 1, 2, 3].map(n => `
+                <button onclick="setDosageParams(null, null, ${n})" class="py-2 px-2.5 rounded-xl font-bold text-xs border transition ${selectedInjections === n ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm' : 'bg-white text-slate-700 border-stone-200 hover:bg-stone-100'}">
+                    ${n === 0 ? 'Không tiêm' : `${n} mũi (打${measureWordNum[n].hanzi}针)`}
+                </button>
+            `).join('');
+
+            const tWord = measureWordNum[selectedTimesPerDay];
+            const pWord = measureWordNum[selectedPillsPerTime];
+            const injHanzi = selectedInjections === 0
+                ? '不用打针。'
+                : `还要打${measureWordNum[selectedInjections].hanzi}针。`;
+            const injPinyin = selectedInjections === 0
+                ? 'Búyòng dǎzhēn.'
+                : `Hái yào dǎ ${measureWordNum[selectedInjections].pinyin} zhēn.`;
+            const injVN = selectedInjections === 0
+                ? 'Không cần tiêm.'
+                : `Còn phải tiêm ${selectedInjections} mũi.`;
+
+            const rxHanzi = `一天吃${tWord.hanzi}次，一次吃${pWord.hanzi}片药。${injHanzi}`;
+            const rxPinyin = `Yì tiān chī ${tWord.pinyin} cì, yí cì chī ${pWord.pinyin} piàn yào. ${injPinyin}`;
+            const rxVN = `Một ngày uống ${selectedTimesPerDay} lần, một lần uống ${selectedPillsPerTime} viên thuốc. ${injVN}`;
+
+            const card = document.getElementById('dosagePrescriptionCard');
+            card.innerHTML = `
+                <div class="p-5 rounded-3xl bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 text-white space-y-4 shadow-md border border-teal-700">
+                    <div class="flex items-center justify-between border-b border-white/15 pb-3">
+                        <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-xs font-extrabold uppercase">📋 Phiếu Chỉ Định Liều Dùng (处方单)</span>
+                        <span class="text-xs text-emerald-300 font-bold">Động lượng từ 次 & Lượng từ 片</span>
+                    </div>
+                    <div>
+                        <div class="hanzi-font text-2xl sm:text-3xl font-black text-amber-300 leading-snug">${rxHanzi}</div>
+                        <div class="pinyin-text text-sm font-bold text-emerald-300 mt-1">${rxPinyin}</div>
+                        <p class="text-xs sm:text-sm text-slate-200 mt-1.5">${rxVN}</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <button onclick="speakChinese('${rxHanzi}', '${rxPinyin} — ${rxVN}', this)" class="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs flex items-center gap-2 shadow-sm transition">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span>🔊 Nghe Bác Sĩ Đọc Liều Thuốc</span>
+                        </button>
+                        <button onclick="speakChinese('一天要吃几次？一次吃几片药？', 'Yì tiān yào chī jǐ cì? Yí cì chī jǐ piàn yào? — Một ngày uống mấy lần, mỗi lần mấy viên?', this)" class="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs flex items-center gap-2 border border-white/20 transition">
+                            <i class="fa-solid fa-circle-question text-amber-300"></i>
+                            <span>Nghe câu hỏi liều dùng</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            if (speakNow) {
+                speakChinese(rxHanzi, `${rxPinyin} — ${rxVN}`);
+            }
+        }
+
+        // =====================================================================
+        // 4. RENDER 18 TỪ MỚI, BỘ THỦ, HỘI THOẠI, TIMELINE & TRẮC NGHIỆM
+        // =====================================================================
+        function renderVocab(filterText = '') {
+            const container = document.getElementById('vocabGridContainer');
+            const q = filterText.trim().toLowerCase();
+            const filtered = vocabLesson13.filter(v =>
+                v.hanzi.includes(q) ||
+                v.pinyin.toLowerCase().includes(q) ||
+                v.hanViet.toLowerCase().includes(q) ||
+                v.meaning.toLowerCase().includes(q)
+            );
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-2 p-8 text-center bg-white rounded-3xl border border-stone-200 text-slate-500">Không tìm thấy từ vựng phù hợp với "${filterText}".</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(v => `
+                <div class="bg-white rounded-3xl p-5 border border-stone-200 shadow-sm hover:border-medical-500 transition flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-3.5">
+                                <div onclick="speakChinese('${v.hanzi}', '${v.hanzi} (${v.pinyin} - ${v.meaning})')" class="min-w-[68px] h-16 px-3 rounded-2xl bg-stone-50 border-2 border-medical-500/30 flex items-center justify-center cursor-pointer hover:bg-medical-50 transition shrink-0">
+                                    <span class="hanzi-font text-2xl sm:text-3xl font-black text-slate-900">${v.hanzi}</span>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <span class="text-xs font-extrabold px-2 py-0.5 rounded-md bg-stone-100 text-slate-600">Từ #${v.id}</span>
+                                        <span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-red-50 text-red-700 border border-red-200"><i class="fa-regular fa-clock mr-1"></i>${v.timestamp}</span>
+                                        <span class="pinyin-text text-lg font-extrabold text-medical-700">${v.pinyin}</span>
+                                        <span class="text-xs font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-900">Hán Việt: ${v.hanViet}</span>
+                                    </div>
+                                    <h4 class="text-base font-extrabold text-slate-900 mt-1">${v.meaning}</h4>
+                                    <span class="text-[11px] text-slate-400 font-medium">${v.type}</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1.5 shrink-0">
+                                <button onclick="speakChinese('${v.hanzi}', '${v.hanzi} (${v.pinyin} — ${v.meaning})', this)" class="px-3.5 py-2 rounded-xl bg-medical-600 hover:bg-medical-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                    <span>Phát âm</span>
+                                </button>
+                                <button onclick="switchTab('tab-hanzi'); selectCanvasChar('${v.hanzi.charAt(0)}');" class="px-3 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-slate-700 text-[11px] font-semibold transition text-center">
+                                    <i class="fa-solid fa-pen mr-1"></i>Tập viết
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-2">
+                            <div class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                                <i class="fa-solid fa-puzzle-piece text-medical-600"></i>
+                                <span>Chiết tự bộ thủ & Giảng giải của cô giáo:</span>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                ${v.radicals.map(rad => `
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-stone-200 text-xs">
+                                        <strong class="hanzi-font text-cinnabar-600 text-sm">${rad.r}</strong>
+                                        <span class="font-bold text-slate-800">${rad.name}:</span>
+                                        <span class="text-slate-500">${rad.desc}</span>
+                                    </span>
+                                `).join('')}
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed pt-1">
+                                <i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i>${v.mnemonic}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+                        <div class="text-xs">
+                            <span class="text-slate-400 font-semibold">Câu mẫu: </span>
+                            <span class="hanzi-font font-bold text-slate-900 text-sm">${v.exampleHanzi}</span>
+                            <span class="pinyin-text text-indigo-600 font-semibold ml-1">(${v.examplePinyin})</span>
+                            <span class="text-slate-600"> — ${v.exampleMeaning}</span>
+                        </div>
+                        <button onclick="speakChinese('${v.exampleHanzi}', '${v.examplePinyin} — ${v.exampleMeaning}', this)" class="px-2.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center gap-1 shrink-0 transition">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span>Nghe câu</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterVocab() {
+            const val = document.getElementById('vocabSearchInput').value;
+            renderVocab(val);
+        }
+
+        function renderRadicalsLesson13() {
+            const grid = document.getElementById('radicalsLesson13Grid');
+            grid.innerHTML = radicalsLesson13.map(rad => `
+                <button onclick="selectCanvasChar('${rad.exChar}'); speakChinese('${rad.exChar}', '${rad.name} — Chữ mẫu: ${rad.exChar} (${rad.exPinyin})', this)" class="p-3.5 rounded-2xl bg-stone-50 hover:bg-medical-50 border border-stone-200 hover:border-medical-500 text-left transition flex items-start justify-between gap-3 group">
+                    <div class="flex items-start gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-white border border-stone-200 flex items-center justify-center shrink-0 hanzi-font text-2xl font-black text-cinnabar-600 shadow-sm">
+                            ${rad.r}
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-medical-700">${rad.name}</div>
+                            <p class="text-[11px] text-slate-600 mt-0.5 leading-snug">${rad.desc}</p>
+                        </div>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="hanzi-font text-lg font-black text-indigo-700 block">${rad.exChar}</span>
+                        <span class="pinyin-text text-[10px] font-bold text-slate-400">${rad.exPinyin}</span>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function renderDialogues() {
+            const container = document.getElementById('dialogueListContainer');
+            container.innerHTML = dialoguesLesson13.map(d => `
+                <div class="rounded-2xl border border-stone-200 bg-stone-50/70 p-4 space-y-3">
+                    <h4 class="font-extrabold text-xs uppercase tracking-wider text-medical-700">${d.title}</h4>
+                    <div class="space-y-2.5">
+                        ${d.lines.map(line => `
+                            <div class="p-3 rounded-2xl bg-white border border-stone-200/90 flex items-start justify-between gap-3 hover:border-medical-500 transition">
+                                <div class="flex items-start gap-2.5">
+                                    <span class="w-7 h-7 rounded-xl ${line.speaker === 'A' ? 'bg-medical-600 text-white' : 'bg-amber-500 text-slate-950'} font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                                        ${line.speaker}
+                                    </span>
+                                    <div>
+                                        <div class="hanzi-font text-lg font-bold text-slate-900">${line.hanzi}</div>
+                                        <div class="pinyin-text text-xs font-bold text-medical-700">${line.pinyin}</div>
+                                        <div class="text-xs text-slate-700 font-medium mt-0.5">${line.vn}</div>
+                                        <div class="text-[11px] text-slate-500 mt-1 bg-stone-50 px-2 py-0.5 rounded-md inline-block border border-stone-200/60">
+                                            <i class="fa-solid fa-circle-info text-amber-500 mr-1"></i>${line.note}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button onclick="speakChinese('${line.hanzi}', '${line.pinyin} — ${line.vn}', this)" class="px-3 py-2 rounded-xl bg-medical-50 hover:bg-medical-600 text-medical-700 hover:text-white text-xs font-bold flex items-center gap-1.5 shrink-0 transition">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                    <span>Nghe</span>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTimeline() {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = videoTimelineLesson13.map(item => `
+                <div class="p-3.5 rounded-2xl bg-stone-50 hover:bg-amber-50/70 border border-stone-200 transition flex items-start justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded bg-cinnabar-600 text-white text-[11px] font-extrabold font-mono">${item.time}</span>
+                            <h4 class="font-extrabold text-xs sm:text-sm text-slate-900">${item.title}</h4>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">${item.desc}</p>
+                        <div class="hanzi-font text-sm font-bold text-medical-700 pt-0.5">
+                            Mẫu câu: ${item.sampleHanzi} <span class="pinyin-text text-xs font-normal text-slate-500">(${item.samplePinyin})</span>
+                        </div>
+                    </div>
+                    <button onclick="speakChinese('${item.sampleHanzi}', '${item.samplePinyin}', this)" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-medical-600 text-medical-700 hover:text-white border border-stone-200 text-xs font-bold shrink-0 transition">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // =====================================================================
+        // 5. TRẮC NGHIỆM PHẢN XẠ 12 CÂU (TAB 5)
+        // =====================================================================
+        let userAnswers = {};
+
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = quizQuestionsLesson13.map((item, qIdx) => {
+                const answered = userAnswers[qIdx] !== undefined;
+                const selectedOpt = userAnswers[qIdx];
+                return `
+                    <div class="p-4 rounded-2xl border ${answered ? (selectedOpt === item.correct ? 'border-emerald-300 bg-emerald-50/30' : 'border-rose-300 bg-rose-50/30') : 'border-stone-200 bg-stone-50/60'} space-y-3 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-start justify-between gap-2">
+                                <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-snug">${item.q}</h4>
+                                <button onclick="speakChinese('${item.speakWord}', 'Nghe phát âm mẫu câu ${qIdx + 1}', this)" class="px-2.5 py-1 rounded-lg bg-white border border-stone-200 hover:border-medical-500 text-medical-700 text-xs font-bold shrink-0 flex items-center gap-1">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                    <span>Nghe</span>
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 gap-2">
+                                ${item.options.map((opt, oIdx) => {
+                                    let btnStyle = 'bg-white hover:bg-indigo-50 border-stone-200 text-slate-700';
+                                    if (answered) {
+                                        if (oIdx === item.correct) {
+                                            btnStyle = 'bg-emerald-600 text-white border-emerald-600 font-bold';
+                                        } else if (oIdx === selectedOpt) {
+                                            btnStyle = 'bg-rose-600 text-white border-rose-600 font-bold';
+                                        } else {
+                                            btnStyle = 'bg-white/60 border-stone-200 text-slate-400';
+                                        }
+                                    }
+                                    return `
+                                        <button onclick="answerQuiz(${qIdx}, ${oIdx})" ${answered ? 'disabled' : ''} class="w-full p-2.5 rounded-xl border text-left text-xs sm:text-sm transition flex items-center justify-between ${btnStyle}">
+                                            <span>${String.fromCharCode(65 + oIdx)}. ${opt}</span>
+                                            ${answered && oIdx === item.correct ? '<i class="fa-solid fa-circle-check"></i>' : ''}
+                                            ${answered && oIdx === selectedOpt && oIdx !== item.correct ? '<i class="fa-solid fa-circle-xmark"></i>' : ''}
+                                        </button>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                        ${answered ? `
+                            <div class="p-3 rounded-xl bg-white border border-stone-200 text-xs text-slate-700 leading-relaxed mt-2">
+                                <strong class="${selectedOpt === item.correct ? 'text-emerald-700' : 'text-rose-700'}">
+                                    ${selectedOpt === item.correct ? '✔ Chính xác!' : '✘ Chưa đúng!'}
+                                </strong>
+                                ${item.explanation}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            const correctCount = Object.keys(userAnswers).filter(k => userAnswers[k] === quizQuestionsLesson13[k].correct).length;
+            document.getElementById('quizScoreBadge').textContent = `Điểm: ${correctCount} / ${quizQuestionsLesson13.length}`;
+        }
+
+        function answerQuiz(qIdx, oIdx) {
+            if (userAnswers[qIdx] !== undefined) return;
+            userAnswers[qIdx] = oIdx;
+            renderQuiz();
+            speakChinese(quizQuestionsLesson13[qIdx].speakWord, `Đáp án câu ${qIdx + 1}`);
+        }
+
+        function resetQuiz() {
+            userAnswers = {};
+            renderQuiz();
+        }
+
+        // =====================================================================
+        // 6. BẢNG TẬP VIẾT Ô CHỮ MỄ (CÓ HOÀN TÁC UNDO & XÓA)
+        // =====================================================================
+        let currentCanvasChar = canvasCharsLesson13[0];
+        let isDrawing = false;
+        let canvas, ctx;
+        let strokeHistory = [];
+
+        function initHanziCanvas() {
+            const picker = document.getElementById('canvasCharPicker');
+            picker.innerHTML = canvasCharsLesson13.map(c => `
+                <button onclick="selectCanvasChar('${c.char}')" class="char-pick-btn px-2.5 py-1 rounded-lg border text-sm font-bold hanzi-font transition ${c.char === currentCanvasChar.char ? 'bg-medical-600 text-white border-medical-600' : 'bg-stone-50 hover:bg-stone-100 text-slate-800 border-stone-200'}" data-char="${c.char}">
+                    ${c.char}
+                </button>
+            `).join('');
+
+            canvas = document.getElementById('hanziCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', drawStroke);
+            window.addEventListener('mouseup', endDraw);
+
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                startDraw(e.touches[0]);
+            }, { passive: false });
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                drawStroke(e.touches[0]);
+            }, { passive: false });
+            canvas.addEventListener('touchend', endDraw);
+        }
+
+        function resizeCanvas() {
+            if (!canvas) return;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                strokeHistory = [];
+            }
+        }
+
+        function getCanvasPos(evt) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        function startDraw(evt) {
+            if (!ctx || !canvas) return;
+            strokeHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+            if (strokeHistory.length > 25) strokeHistory.shift();
+
+            isDrawing = true;
+            const pos = getCanvasPos(evt);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        function drawStroke(evt) {
+            if (!isDrawing) return;
+            const pos = getCanvasPos(evt);
+            const size = document.getElementById('brushSize').value || 11;
+            ctx.lineWidth = size;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function endDraw() {
+            isDrawing = false;
+        }
+
+        function undoHanziStroke() {
+            if (!ctx || !canvas || strokeHistory.length === 0) return;
+            const previousState = strokeHistory.pop();
+            ctx.putImageData(previousState, 0, 0);
+            playInstantClickFeedback(420, 0.04);
+        }
+
+        function clearHanziCanvas() {
+            if (!ctx || !canvas) return;
+            strokeHistory = [];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            playInstantClickFeedback(380, 0.04);
+        }
+
+        function toggleWatermark() {
+            const wm = document.getElementById('watermarkChar');
+            wm.classList.toggle('opacity-0');
+        }
+
+        function selectCanvasChar(char) {
+            const found = canvasCharsLesson13.find(c => c.char === char) || canvasCharsLesson13[0];
+            currentCanvasChar = found;
+            document.getElementById('watermarkChar').textContent = found.char;
+            document.getElementById('canvasCharLabel').textContent = `Phát âm: ${found.char} (${found.pinyin})`;
+            document.getElementById('canvasCharHint').textContent = found.hint;
+            clearHanziCanvas();
+
+            document.querySelectorAll('.char-pick-btn').forEach(btn => {
+                if (btn.getAttribute('data-char') === found.char) {
+                    btn.className = 'char-pick-btn px-2.5 py-1 rounded-lg border text-sm font-bold hanzi-font transition bg-medical-600 text-white border-medical-600';
+                } else {
+                    btn.className = 'char-pick-btn px-2.5 py-1 rounded-lg border text-sm font-bold hanzi-font transition bg-stone-50 hover:bg-stone-100 text-slate-800 border-stone-200';
+                }
+            });
+        }
+
+        function speakCurrentCanvasChar(btnEl) {
+            speakChinese(currentCanvasChar.char, `${currentCanvasChar.char} (${currentCanvasChar.pinyin})`, btnEl);
+        }
+
+        // =====================================================================
+        // 7. SEQUENTIAL PLAYLIST PLAYERS & TAB NAVIGATION
+        // =====================================================================
+        let playlistTimeout = null;
+
+        function stopPlaylist() {
+            if (playlistTimeout) {
+                clearTimeout(playlistTimeout);
+                playlistTimeout = null;
+            }
+        }
+
+        function playSequence(items, index = 0) {
+            stopPlaylist();
+            if (index >= items.length) return;
+            const current = items[index];
+            speakChinese(current.speak, current.label);
+            playlistTimeout = setTimeout(() => {
+                playSequence(items, index + 1);
+            }, speechRate === 1.0 ? 1650 : 2200);
+        }
+
+        function playAllVocab() {
+            const list = vocabLesson13.map(v => ({
+                speak: v.hanzi,
+                label: `${v.hanzi} (${v.pinyin} - ${v.meaning})`
+            }));
+            playSequence(list);
+        }
+
+        function playAllDialogues() {
+            const list = dialoguesLesson13.flatMap(d => d.lines.map(l => ({ speak: l.hanzi, label: `${l.pinyin} — ${l.vn}` })));
+            playSequence(list);
+        }
+
+        function switchTab(tabId) {
+            stopPlaylist();
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.add('hidden');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+                btn.className = 'nav-tab-btn shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-stone-100 hover:bg-stone-200 text-slate-700';
+            });
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.className = 'nav-tab-btn shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-medical-600 text-white shadow-sm';
+            }
+
+            if (tabId === 'tab-hanzi') {
+                setTimeout(resizeCanvas, 60);
+            }
+        }
+
+        window.onload = function () {
+            renderClinicSimulator();
+            renderVocab();
+            renderPivotalAnalyzer();
+            renderDosageBuilder(false);
+            renderRadicalsLesson13();
+            renderDialogues();
+            renderTimeline();
+            renderQuiz();
+            initHanziCanvas();
+        };
+    </script>
+</body>
+</html>
