@@ -52,13 +52,13 @@ export const Navbar: React.FC<Props> = ({
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
           
           {/* Logo & Modular Curriculum Picker Dropdown */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 shrink-0">
             <div
               onClick={() => onSelectMainMode('lessons')}
-              className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cinnabar-600 to-cinnabar-800 flex items-center justify-center text-white shadow-md shadow-cinnabar-600/20 shrink-0 cursor-pointer hover:scale-105 transition active:scale-95"
+              className="w-10 h-10 rounded-xl bg-gradient-to-br from-cinnabar-600 to-cinnabar-700 flex items-center justify-center text-white shadow-xs shrink-0 cursor-pointer hover:opacity-90 transition active:scale-95"
               title="Trang chủ Giáo trình"
             >
-              <span className="hanzi-font text-2xl font-bold">汉</span>
+              <span className="hanzi-font text-xl font-bold">汉</span>
             </div>
 
             <CurriculumDropdown
@@ -72,49 +72,48 @@ export const Navbar: React.FC<Props> = ({
             />
           </div>
 
-          {/* Mode Switcher Tabs: Lessons vs Thematic Hub */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center p-1 rounded-2xl bg-stone-100 border border-stone-200 shadow-inner">
+          {/* Mode Switcher Tabs: Sleek Segmented Control */}
+          <div className="flex items-center justify-center shrink-0">
+            <div className="inline-flex items-center p-1 rounded-2xl bg-stone-100 border border-stone-200/90 shadow-inner">
               <button
                 onClick={() => onSelectMainMode('lessons')}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition active:scale-95 ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs whitespace-nowrap shrink-0 transition active:scale-95 ${
                   mainMode === 'lessons'
-                    ? 'bg-white text-cinnabar-700 shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white text-slate-900 font-black shadow-xs ring-1 ring-black/5'
+                    : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-stone-200/50'
                 }`}
               >
-                <BookOpen size={14} />
-                <span>Giáo Trình Theo Bài</span>
+                <BookOpen size={14} className={mainMode === 'lessons' ? 'text-cinnabar-600' : 'text-slate-500'} />
+                <span>Giáo Trình</span>
               </button>
 
               <button
                 onClick={() => onSelectMainMode('thematic')}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition active:scale-95 ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs whitespace-nowrap shrink-0 transition active:scale-95 ${
                   mainMode === 'thematic'
-                    ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white text-slate-900 font-black shadow-xs ring-1 ring-black/5'
+                    : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-stone-200/50'
                 }`}
               >
-                <Keyboard size={14} />
-                <span>Từ Vựng & Luyện Gõ</span>
-                <span className="px-1.5 py-0.2 rounded-md bg-amber-400 text-slate-950 text-[10px] font-black uppercase">
-                  Mới
-                </span>
+                <Keyboard size={14} className={mainMode === 'thematic' ? 'text-indigo-600' : 'text-slate-500'} />
+                <span>Luyện Gõ</span>
               </button>
 
               <button
                 onClick={() => onSelectMainMode('bucket')}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition active:scale-95 ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs whitespace-nowrap shrink-0 transition active:scale-95 ${
                   mainMode === 'bucket'
-                    ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black shadow-xs ring-1 ring-amber-300'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white text-slate-900 font-black shadow-xs ring-1 ring-black/5'
+                    : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-stone-200/50'
                 }`}
                 title="Hộp từ vựng ôn tập cá nhân & tạo bài kiểm tra"
               >
-                <Bookmark size={14} className={mainMode === 'bucket' ? 'text-slate-950' : 'text-amber-600'} />
+                <Bookmark size={14} className={mainMode === 'bucket' ? 'text-amber-600' : 'text-slate-500'} />
                 <span>Giỏ Ôn Tập</span>
-                <span className={`px-1.5 py-0.2 rounded-md text-[10px] font-black ${
-                  mainMode === 'bucket' ? 'bg-black/20 text-slate-950' : 'bg-amber-100 text-amber-800'
+                <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-black leading-none shrink-0 ${
+                  mainMode === 'bucket'
+                    ? 'bg-amber-100 text-amber-800'
+                    : 'bg-stone-200/80 text-slate-600'
                 }`}>
                   {bucketCount}
                 </span>

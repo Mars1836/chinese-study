@@ -144,10 +144,10 @@ export default function App() {
                 <div className="flex flex-wrap sm:flex-nowrap gap-2 shrink-0">
                   <button
                     onClick={() => setActiveTab('tones')}
-                    className="px-4 py-2.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs sm:text-sm shadow-md transition flex items-center gap-2 active:scale-95"
+                    className="px-4 py-2.5 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-semibold text-xs sm:text-sm backdrop-blur-sm transition flex items-center gap-2 border border-white/20 active:scale-95"
                   >
-                    <Clock size={16} />
-                    <span>Xem mốc 01:00:38</span>
+                    <AudioWaveform size={16} />
+                    <span>Luyện Thanh Điệu</span>
                   </button>
                   <a
                     href={lessonData.videoUrl}
@@ -162,77 +162,70 @@ export default function App() {
               </div>
             </div>
 
-            {/* Navigation Tabs (5 Modules) */}
-            <nav className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" aria-label="Tabs">
+            {/* Navigation Tabs (5 Modules): Sleek Segmented Pill Bar */}
+            <nav className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-stone-100 border border-stone-200/90 overflow-x-auto scrollbar-none" aria-label="Tabs">
               <button
                 onClick={() => setActiveTab('pinyin')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm whitespace-nowrap shrink-0 transition active:scale-95 ${
                   activeTab === 'pinyin'
-                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
+                    ? 'bg-white text-slate-900 font-black shadow-xs ring-1 ring-black/5'
+                    : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-stone-200/50'
                 }`}
               >
-                <Mic size={15} />
+                <Mic size={15} className={activeTab === 'pinyin' ? 'text-cinnabar-600' : 'text-slate-500'} />
                 <span>1. Ngữ Âm Pinyin</span>
               </button>
 
               <button
                 onClick={() => setActiveTab('tones')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm whitespace-nowrap shrink-0 transition active:scale-95 ${
                   activeTab === 'tones'
-                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
+                    ? 'bg-white text-slate-900 font-black shadow-xs ring-1 ring-black/5'
+                    : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-stone-200/50'
                 }`}
               >
-                <AudioWaveform size={15} />
+                <AudioWaveform size={15} className={activeTab === 'tones' ? 'text-cinnabar-600' : 'text-slate-500'} />
                 <span>2. Thanh Điệu & Biến Điệu</span>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ml-0.5 transition ${
-                  activeTab === 'tones'
-                    ? 'bg-black/25 text-amber-200 border border-amber-300/40'
-                    : 'bg-amber-100 text-amber-800'
-                }`}>
-                  01:00:38
-                </span>
               </button>
 
               <button
                 onClick={() => setActiveTab('hanzi')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm whitespace-nowrap shrink-0 transition active:scale-95 ${
                   activeTab === 'hanzi'
-                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
+                    ? 'bg-white text-slate-900 font-black shadow-xs ring-1 ring-black/5'
+                    : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-stone-200/50'
                 }`}
               >
-                <PenTool size={15} />
+                <PenTool size={15} className={activeTab === 'hanzi' ? 'text-cinnabar-600' : 'text-slate-500'} />
                 <span>3. Nét Chữ & Tập Viết</span>
               </button>
 
               <button
                 onClick={() => setActiveTab('vocab')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm whitespace-nowrap shrink-0 transition active:scale-95 ${
                   activeTab === 'vocab'
-                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
+                    ? 'bg-white text-slate-900 font-black shadow-xs ring-1 ring-black/5'
+                    : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-stone-200/50'
                 }`}
               >
-                <BookOpen size={15} />
+                <BookOpen size={15} className={activeTab === 'vocab' ? 'text-cinnabar-600' : 'text-slate-500'} />
                 <span>4. Từ Mới & Bộ Thủ</span>
-                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
-                  activeTab === 'vocab' ? 'bg-white/20 text-white' : 'bg-stone-100 text-slate-500'
+                <span className={`px-1.5 py-0.5 rounded-md text-[10px] font-bold leading-none ${
+                  activeTab === 'vocab' ? 'bg-stone-200/90 text-slate-900' : 'bg-stone-200/70 text-slate-600'
                 }`}>
-                  {lessonData.vocab.length}
+                  {lessonData.vocab.length} từ
                 </span>
               </button>
 
               <button
                 onClick={() => setActiveTab('dialogue')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm whitespace-nowrap shrink-0 transition active:scale-95 ${
                   activeTab === 'dialogue'
-                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
+                    ? 'bg-white text-slate-900 font-black shadow-xs ring-1 ring-black/5'
+                    : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-stone-200/50'
                 }`}
               >
-                <MessageSquare size={15} />
+                <MessageSquare size={15} className={activeTab === 'dialogue' ? 'text-cinnabar-600' : 'text-slate-500'} />
                 <span>5. Hội Thoại & Trắc Nghiệm</span>
               </button>
             </nav>
