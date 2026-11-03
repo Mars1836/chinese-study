@@ -35,11 +35,16 @@ const locations = [
   { hanzi: '在超市', pinyin: 'zài chāoshì', vn: 'ở siêu thị' },
   { hanzi: '在饭馆', pinyin: 'zài fànguǎn', vn: 'ở quán ăn' },
   { hanzi: '在中国银行', pinyin: 'zài Zhōngguó Yínháng', vn: 'ở Ngân hàng Trung Quốc' },
+  { hanzi: '在越南', pinyin: 'zài Yuènán', vn: 'ở Việt Nam' },
+  { hanzi: '在中国', pinyin: 'zài Zhōngguó', vn: 'ở Trung Quốc' },
   { hanzi: '去北京', pinyin: 'qù Běijīng', vn: 'đi Bắc Kinh' }
 ];
 
 const actions = [
   { hanzi: '学中文。', pinyin: 'xué Zhōngwén.', vn: 'học tiếng Trung.' },
+  { hanzi: '说汉语。', pinyin: 'shuō Hànyǔ.', vn: 'nói tiếng Hán.' },
+  { hanzi: '学越南语。', pinyin: 'xué Yuènányǔ.', vn: 'học tiếng Việt.' },
+  { hanzi: '练习英语。', pinyin: 'liànxí Yīngyǔ.', vn: 'luyện tập tiếng Anh.' },
   { hanzi: '买三个苹果。', pinyin: 'mǎi sān gè píngguǒ.', vn: 'mua ba quả táo.' },
   { hanzi: '看医生。', pinyin: 'kàn yīshēng.', vn: 'khám bác sĩ.' },
   { hanzi: '吃一碗牛肉面。', pinyin: 'chī yì wǎn niúròumiàn.', vn: 'ăn một bát mì bò.' },

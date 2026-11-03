@@ -47,7 +47,7 @@ export const ThematicBanner: React.FC<ThematicBannerProps> = ({
 
           <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl">
             {isAllTopics
-              ? 'Luyện tập tổng hợp 100+ mẫu câu giao tiếp đời sống thực tế (Số đếm, Lịch thứ ngày, Động vật, Nghề nghiệp, Gia đình, Đồ ăn, Du lịch, Động từ và Tính từ). Hỗ trợ chế độ Thử Thách Ẩn Đáp Án và Sinh câu ngẫu nhiên.'
+              ? 'Luyện tập tổng hợp mẫu câu giao tiếp đời sống thực tế (Số đếm, Lịch thứ ngày, Động vật, Nghề nghiệp, Gia đình, Đồ ăn, Du lịch, Quốc gia & Ngôn ngữ, Động từ và Tính từ). Hỗ trợ chế độ Thử Thách Ẩn Chữ Hán và Sinh câu ngẫu nhiên.'
               : currentTopic.desc}
           </p>
         </div>

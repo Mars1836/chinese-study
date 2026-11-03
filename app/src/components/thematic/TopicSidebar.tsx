@@ -15,7 +15,8 @@ import {
   Search,
   X,
   Layers,
-  PanelLeftClose
+  PanelLeftClose,
+  Globe
 } from 'lucide-react';
 import { ThematicTopic } from '../../types/thematic';
 
@@ -61,6 +62,8 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
         return <Zap size={18} className={isSelected ? 'text-white' : 'text-teal-500'} />;
       case 'adjectives':
         return <Smile size={18} className={isSelected ? 'text-white' : 'text-amber-500'} />;
+      case 'countries_languages':
+        return <Globe size={18} className={isSelected ? 'text-white' : 'text-blue-500'} />;
       default:
         return <BookOpen size={18} className={isSelected ? 'text-white' : 'text-indigo-500'} />;
     }
@@ -103,7 +106,7 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
             <span>Chủ Đề Luyện Tập</span>
           </h3>
           <p className="text-[11px] text-slate-500 mt-0.5">
-            10 chuyên đề thực tế + Kho luyện gõ
+            {topics.length} chuyên đề thực tế + Kho luyện gõ
           </p>
         </div>
         <div className="flex items-center gap-1.5">
@@ -151,7 +154,7 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
         {showAllCard && (
           <button
             onClick={() => onSelectTopic('all')}
-            title={`Toàn Bộ Chủ Đề (Trộn ngẫu nhiên)\nTổng hợp ${allSentencesCount}+ câu mẫu từ tất cả 10 chuyên đề để luyện phản xạ`}
+            title={`Toàn Bộ Chủ Đề (Trộn ngẫu nhiên)\nTổng hợp ${allSentencesCount}+ câu mẫu từ tất cả ${topics.length} chuyên đề để luyện phản xạ`}
             className={`w-full text-left p-3 rounded-2xl flex items-center justify-between gap-3 transition-all active:scale-95 group ${
               isAllTopics
                 ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black shadow-md shadow-amber-500/25 ring-2 ring-amber-300'

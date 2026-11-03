@@ -10,6 +10,7 @@ import {
   Dices,
   Sparkles,
   Volume2,
+  VolumeX,
   Lightbulb,
   Shuffle
 } from 'lucide-react';
@@ -26,6 +27,8 @@ interface TypingStudioProps {
   onSelectSentenceIndex: (index: number) => void;
   onSpeak: (text: string, tone?: number) => void;
   onCompleted: () => void;
+  autoSpeakEnabled?: boolean;
+  onToggleAutoSpeak?: (enabled: boolean) => void;
 }
 
 export const TypingStudio: React.FC<TypingStudioProps> = ({
@@ -38,7 +41,9 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
   onGenerateDynamic,
   onSelectSentenceIndex,
   onSpeak,
-  onCompleted
+  onCompleted,
+  autoSpeakEnabled = true,
+  onToggleAutoSpeak
 }) => {
   const [userInput, setUserInput] = useState<string>('');
   // 2 independent clean switches as requested
@@ -161,6 +166,38 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
             </button>
           </div>
 
+          {/* 3. Toggle Tắt / Bật phát âm tự động khi gõ xong */}
+          <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-2xl border border-stone-200">
+            <span className="text-[11px] font-bold text-slate-500 pl-2">Phát âm:</span>
+            <button
+              onClick={() => onToggleAutoSpeak?.(false)}
+              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold transition active:scale-95 ${
+                !autoSpeakEnabled
+                  ? 'bg-rose-500 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+              title="Tắt tự động đọc âm thanh khi gõ xong câu"
+            >
+              <VolumeX size={13} />
+              <span>Tắt</span>
+            </button>
+            <button
+              onClick={() => {
+                onToggleAutoSpeak?.(true);
+                onSpeak(currentSentence.hanzi);
+              }}
+              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold transition active:scale-95 ${
+                autoSpeakEnabled
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+              title="Bật tự động phát âm chuẩn khi gõ xong câu"
+            >
+              <Volume2 size={13} />
+              <span>Bật</span>
+            </button>
+          </div>
+
           {/* Random Sentence Button */}
           <button
             onClick={onRandomSentence}
@@ -202,25 +239,40 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
         </div>
       </div>
 
-      {/* 2. Target Display Box with Clean Real-Time Toggle */}
+      {/* 2. Target Display Box with Clean Real-Time Toggle & Audio Button */}
       <div className={`p-6 rounded-3xl transition-all space-y-4 border ${
         !showTargetHanzi
           ? 'bg-slate-900 text-white border-slate-800 shadow-inner'
           : 'bg-stone-50 border-stone-200/80'
       }`}>
-        {/* Vietnamese Prompt */}
-        <div className="space-y-1">
-          <div className={`text-xs font-black uppercase tracking-wider flex items-center gap-1.5 ${
-            !showTargetHanzi ? 'text-amber-400' : 'text-slate-500'
-          }`}>
-            <Lightbulb size={14} />
-            <span>{!showTargetHanzi ? 'Thử thách: Nhớ chữ Hán dựa theo nghĩa tiếng Việt:' : 'Dịch nghĩa tiếng Việt:'}</span>
+        {/* Vietnamese Prompt & Quick Listen Button */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-1">
+            <div className={`text-xs font-black uppercase tracking-wider flex items-center gap-1.5 ${
+              !showTargetHanzi ? 'text-amber-400' : 'text-slate-500'
+            }`}>
+              <Lightbulb size={14} />
+              <span>{!showTargetHanzi ? 'Thử thách: Nhớ chữ Hán dựa theo nghĩa tiếng Việt:' : 'Dịch nghĩa tiếng Việt:'}</span>
+            </div>
+            <div className={`text-base sm:text-xl font-black ${
+              !showTargetHanzi ? 'text-white' : 'text-slate-900'
+            }`}>
+              👉 {currentSentence.meaning}
+            </div>
           </div>
-          <div className={`text-base sm:text-xl font-black ${
-            !showTargetHanzi ? 'text-white' : 'text-slate-900'
-          }`}>
-            👉 {currentSentence.meaning}
-          </div>
+
+          <button
+            onClick={() => onSpeak(currentSentence.hanzi)}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs font-bold transition active:scale-95 shrink-0 shadow-xs ${
+              !showTargetHanzi
+                ? 'bg-slate-800 hover:bg-slate-700 text-white border border-slate-700'
+                : 'bg-white hover:bg-stone-100 text-slate-800 border border-stone-200 shadow-2xs'
+            }`}
+            title="Bấm để nghe phát âm cả câu này"
+          >
+            <Volume2 size={15} className="text-amber-400 shrink-0" />
+            <span>Nghe câu</span>
+          </button>
         </div>
 
         {/* Character-by-Character Tiles */}
@@ -367,7 +419,16 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0 flex-wrap">
+            <button
+              onClick={() => onSpeak(currentSentence.hanzi)}
+              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs sm:text-sm font-extrabold flex items-center gap-1.5 shadow-xs transition active:scale-95"
+              title="Phát lại âm thanh câu vừa hoàn thành"
+            >
+              <Volume2 size={16} className="text-emerald-700" />
+              <span>Nghe lại phát âm</span>
+            </button>
+
             <button
               onClick={onRandomSentence}
               className="px-4 py-2.5 rounded-2xl bg-white hover:bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs sm:text-sm font-extrabold flex items-center gap-1.5 shadow-xs transition active:scale-95"
@@ -406,23 +467,35 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
           {sentencePool.map((sent, idx) => {
             const isCurrent = !isDynamic && idx === selectedSentenceIndex;
             return (
-              <button
+              <div
                 key={sent.id}
                 onClick={() => onSelectSentenceIndex(idx)}
-                className={`p-3 rounded-2xl border text-left transition flex items-center justify-between gap-2 ${
+                className={`p-3 rounded-2xl border text-left transition flex items-center justify-between gap-2 cursor-pointer ${
                   isCurrent
                     ? 'border-indigo-500 bg-indigo-50/90 shadow-xs ring-2 ring-indigo-400'
                     : 'border-stone-200 bg-white hover:bg-stone-50'
                 }`}
               >
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="hanzi-font text-sm font-bold text-slate-900 truncate">{sent.hanzi}</div>
                   <div className="text-[11px] text-slate-500 truncate">{sent.meaning}</div>
                 </div>
-                <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md bg-stone-100 text-slate-600 shrink-0">
-                  #{idx + 1}
-                </span>
-              </button>
+                <div className="flex items-center gap-1 shrink-0">
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSpeak(sent.hanzi);
+                    }}
+                    className="p-1 rounded-lg hover:bg-stone-200/60 text-slate-400 hover:text-indigo-600 transition"
+                    title="Nghe câu này"
+                  >
+                    <Volume2 size={13} />
+                  </span>
+                  <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md bg-stone-100 text-slate-600">
+                    #{idx + 1}
+                  </span>
+                </div>
+              </div>
             );
           })}
         </div>

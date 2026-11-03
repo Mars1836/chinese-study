@@ -9,6 +9,7 @@ import { foodTopic } from './topics/food';
 import { placesTopic } from './topics/places';
 import { verbsTopic } from './topics/verbs';
 import { adjectivesTopic } from './topics/adjectives';
+import { countriesTopic } from './topics/countries';
 
 export { generateRandomSentence } from './generator';
 export { playlistSections } from './sections';
@@ -23,7 +24,8 @@ export const thematicTopics: ThematicTopic[] = [
   foodTopic,
   placesTopic,
   verbsTopic,
-  adjectivesTopic
+  adjectivesTopic,
+  countriesTopic
 ];
 
 export const allTypingSentences: ThematicSentence[] = thematicTopics.flatMap(t => t.sampleSentences);

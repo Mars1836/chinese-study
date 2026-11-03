@@ -31,6 +31,20 @@ export const ThematicSection: React.FC<Props> = ({ onSpeak }) => {
   const [selectedSentenceIndex, setSelectedSentenceIndex] = useState<number>(0);
   const [dynamicSentence, setDynamicSentence] = useState<ThematicSentence | null>(null);
   const [streak, setStreak] = useState<number>(0);
+  const [autoSpeakEnabled, setAutoSpeakEnabled] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('chinese_sentence_autospeak') !== 'false';
+    } catch {
+      return true;
+    }
+  });
+
+  const toggleAutoSpeak = (enabled: boolean) => {
+    setAutoSpeakEnabled(enabled);
+    try {
+      localStorage.setItem('chinese_sentence_autospeak', String(enabled));
+    } catch {}
+  };
 
   // WriteModal state for thematic words
   const [activeWritingVocab, setActiveWritingVocab] = useState<VocabItem | null>(null);
@@ -62,7 +76,9 @@ export const ThematicSection: React.FC<Props> = ({ onSpeak }) => {
 
   const handleCompleted = () => {
     setStreak(prev => prev + 1);
-    onSpeak(currentSentence.hanzi);
+    if (autoSpeakEnabled) {
+      onSpeak(currentSentence.hanzi);
+    }
   };
 
   // Convert thematic word to VocabItem for WriteModal
@@ -197,6 +213,8 @@ export const ThematicSection: React.FC<Props> = ({ onSpeak }) => {
               }}
               onSpeak={onSpeak}
               onCompleted={handleCompleted}
+              autoSpeakEnabled={autoSpeakEnabled}
+              onToggleAutoSpeak={toggleAutoSpeak}
             />
           )}
 

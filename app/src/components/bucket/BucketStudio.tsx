@@ -221,7 +221,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
               🧺 Giỏ Từ Vựng & Bộ Đề Luyện Tập Thông Minh
             </h2>
             <p className="text-amber-100 text-xs sm:text-sm leading-relaxed">
-              Gom bất kỳ từ vựng nào bạn muốn từ các bài học và 10 chuyên đề vào một giỏ. Sau đó tự cấu hình các dạng bài kiểm tra (Dịch nghĩa, Điền từ, Luyện gõ, Nghe phát âm) để rèn luyện trí nhớ!
+              Gom bất kỳ từ vựng nào bạn muốn từ các bài học và các chuyên đề thực tế vào một giỏ. Sau đó tự cấu hình các dạng bài kiểm tra (Dịch nghĩa, Điền từ, Luyện gõ, Nghe phát âm) để rèn luyện trí nhớ!
             </p>
           </div>
 
@@ -353,7 +353,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                   Giỏ từ vựng của bạn đang trống!
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
-                  Hãy bấm biểu tượng <strong>+ Giỏ ôn tập</strong> ở bất kỳ thẻ từ vựng nào trong mục <strong>Giáo Trình Theo Bài</strong> hoặc <strong>10 Chuyên Đề Từ Vựng</strong> để thêm các từ bạn muốn ôn luyện vào đây.
+                  Hãy bấm biểu tượng <strong>+ Giỏ ôn tập</strong> ở bất kỳ thẻ từ vựng nào trong mục <strong>Giáo Trình Theo Bài</strong> hoặc <strong>Kho Chuyên Đề Từ Vựng</strong> để thêm các từ bạn muốn ôn luyện vào đây.
                 </p>
               </div>
 
