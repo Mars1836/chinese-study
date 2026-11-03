@@ -15,6 +15,9 @@ interface Props {
   onSelectMainMode: (mode: 'lessons' | 'thematic') => void;
   hasChineseVoice: boolean;
   chineseVoiceName: string;
+  availableVoices: SpeechSynthesisVoice[];
+  selectedVoiceURI: string;
+  onSelectVoice: (voiceURI: string) => void;
   rate: number;
   onToggleRate: () => void;
   onTestSpeaker: () => void;
@@ -31,6 +34,9 @@ export const Navbar: React.FC<Props> = ({
   onSelectMainMode,
   hasChineseVoice,
   chineseVoiceName,
+  availableVoices,
+  selectedVoiceURI,
+  onSelectVoice,
   rate,
   onToggleRate,
   onTestSpeaker,
@@ -100,6 +106,9 @@ export const Navbar: React.FC<Props> = ({
           <AudioControls
             hasChineseVoice={hasChineseVoice}
             chineseVoiceName={chineseVoiceName}
+            availableVoices={availableVoices}
+            selectedVoiceURI={selectedVoiceURI}
+            onSelectVoice={onSelectVoice}
             rate={rate}
             onToggleRate={onToggleRate}
             onTestSpeaker={onTestSpeaker}

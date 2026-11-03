@@ -57,22 +57,50 @@ export const phoneticMap: Record<string, { vn: string; tone: number }> = {
 
 export function useAudio() {
   const [chineseVoice, setChineseVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [rate, setRate] = useState<number>(1.0);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [currentlySpeakingText, setCurrentlySpeakingText] = useState<string>('');
   const audioCtxRef = useRef<AudioContext | null>(null);
 
-  // Initialize Voices with preference for offline Windows voices
+  // Initialize Voices with support for selecting user-preferred voice
   useEffect(() => {
     const updateVoices = () => {
       if ('speechSynthesis' in window) {
         const voices = window.speechSynthesis.getVoices();
-        // Priority 1: Local offline Chinese voice (e.g. Microsoft Huihui, Yaoyao, Kangkang)
-        const localZh = voices.find(v => (v.lang === 'zh-CN' || v.lang.startsWith('zh')) && v.localService);
-        // Priority 2: Any Chinese voice (e.g. Google 普通话)
-        const anyZh = voices.find(v => v.lang === 'zh-CN' || v.lang.startsWith('zh'));
-        const zh = localZh || anyZh;
-        if (zh) setChineseVoice(zh);
+        if (!voices || voices.length === 0) return;
+
+        // Chinese voices list
+        const zhVoices = voices.filter(v =>
+          v.lang.toLowerCase().startsWith('zh') ||
+          v.lang.toLowerCase().includes('cmn') ||
+          v.name.toLowerCase().includes('chinese') ||
+          v.name.toLowerCase().includes('mandarin') ||
+          v.name.toLowerCase().includes('huihui') ||
+          v.name.toLowerCase().includes('yaoyao') ||
+          v.name.toLowerCase().includes('kangkang')
+        );
+
+        // Sort so zh-CN and localService come first
+        zhVoices.sort((a, b) => {
+          if (a.lang === 'zh-CN' && b.lang !== 'zh-CN') return -1;
+          if (b.lang === 'zh-CN' && a.lang !== 'zh-CN') return 1;
+          if (a.localService && !b.localService) return -1;
+          if (!a.localService && b.localService) return 1;
+          return a.name.localeCompare(b.name);
+        });
+
+        setAvailableVoices(zhVoices);
+
+        // Check if user previously selected a preferred voice in localStorage
+        const savedURI = localStorage.getItem('chinese_tts_voice_uri');
+        const matchedSaved = savedURI ? zhVoices.find(v => v.voiceURI === savedURI) : null;
+
+        if (matchedSaved) {
+          setChineseVoice(matchedSaved);
+        } else if (zhVoices.length > 0) {
+          setChineseVoice(zhVoices[0]);
+        }
       }
     };
 
@@ -81,6 +109,35 @@ export function useAudio() {
       window.speechSynthesis.onvoiceschanged = updateVoices;
     }
   }, []);
+
+  // Function to change current voice and save preference
+  const selectVoice = useCallback((voiceURI: string) => {
+    const target = availableVoices.find(v => v.voiceURI === voiceURI);
+    if (target) {
+      setChineseVoice(target);
+      try {
+        localStorage.setItem('chinese_tts_voice_uri', voiceURI);
+      } catch {
+        // ignore
+      }
+
+      // Audio preview of newly selected voice
+      setTimeout(() => {
+        try {
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance('你好！');
+            u.voice = target;
+            u.lang = target.lang || 'zh-CN';
+            u.rate = rate;
+            window.speechSynthesis.speak(u);
+          }
+        } catch {
+          // ignore
+        }
+      }, 50);
+    }
+  }, [availableVoices, rate]);
 
   const getAudioContext = useCallback(() => {
     if (!audioCtxRef.current) {
@@ -265,6 +322,9 @@ export function useAudio() {
 
   return {
     chineseVoice,
+    availableVoices,
+    selectVoice,
+    selectedVoiceURI: chineseVoice?.voiceURI || '',
     rate,
     toggleRate,
     isSpeaking,

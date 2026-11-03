@@ -35,7 +35,10 @@ export default function App() {
     rate,
     toggleRate,
     hasChineseVoice,
-    chineseVoiceName
+    chineseVoiceName,
+    availableVoices,
+    selectedVoiceURI,
+    selectVoice
   } = useAudio();
 
   const handleSelectSection = (sectionId: string) => {
@@ -72,6 +75,9 @@ export default function App() {
         onSelectMainMode={(mode) => setMainMode(mode)}
         hasChineseVoice={hasChineseVoice}
         chineseVoiceName={chineseVoiceName}
+        availableVoices={availableVoices}
+        selectedVoiceURI={selectedVoiceURI}
+        onSelectVoice={selectVoice}
         rate={rate}
         onToggleRate={toggleRate}
         onTestSpeaker={testSpeaker}
