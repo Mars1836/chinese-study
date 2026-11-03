@@ -106,20 +106,23 @@ export function generateQuiz(bucketWords: BucketWord[], config: QuizConfig): Qui
       }
 
       case 'fill_blank': {
-        // Construct cloze sentence
+        // Construct cloze sentence and cloze pinyin
         let cloze = '';
+        let clozePinyin = '';
         let meaning = word.exampleMeaning || word.meaning;
 
         if (word.exampleHanzi && word.exampleHanzi.includes(word.hanzi)) {
           cloze = word.exampleHanzi.replace(word.hanzi, ' [ _____ ] ');
+          clozePinyin = word.examplePinyin ? word.examplePinyin.replace(word.pinyin, ' [ _____ ] ') : '';
         } else {
           // Fallback meaningful template
           cloze = `我想学 [ _____ ] 。`;
+          clozePinyin = `Wǒ xiǎng xué [ _____ ] .`;
           meaning = `Tôi muốn học ${word.meaning}.`;
         }
 
-        const distractors = getDistractors(allWordsPool, word, w => w.hanzi, 3);
-        const correct = word.hanzi;
+        const distractors = getDistractors(allWordsPool, word, w => `${w.hanzi} (${w.pinyin})`, 3);
+        const correct = `${word.hanzi} (${word.pinyin})`;
         const options = shuffleArray([correct, ...distractors]);
 
         questions.push({
@@ -128,6 +131,7 @@ export function generateQuiz(bucketWords: BucketWord[], config: QuizConfig): Qui
           word,
           prompt: 'Điền từ vựng thích hợp vào chỗ trống trong câu:',
           clozeSentence: cloze,
+          clozePinyin,
           clozeMeaning: meaning,
           options,
           correctAnswer: correct,
@@ -182,8 +186,8 @@ export function generateQuiz(bucketWords: BucketWord[], config: QuizConfig): Qui
       }
 
       case 'listening_choice': {
-        const distractors = getDistractors(allWordsPool, word, w => w.hanzi, 3);
-        const correct = word.hanzi;
+        const distractors = getDistractors(allWordsPool, word, w => `${w.hanzi} (${w.pinyin})`, 3);
+        const correct = `${word.hanzi} (${word.pinyin})`;
         const options = shuffleArray([correct, ...distractors]);
 
         questions.push({

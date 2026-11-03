@@ -60,6 +60,21 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState<boolean>(false);
   const [isCurrentCorrect, setIsCurrentCorrect] = useState<boolean>(false);
   const [showSentencePinyinHint, setShowSentencePinyinHint] = useState<boolean>(false);
+  const [showQuizPinyin, setShowQuizPinyin] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('chinese_quiz_show_pinyin') !== 'false';
+    } catch {
+      return true;
+    }
+  });
+
+  const toggleQuizPinyin = (val: boolean) => {
+    setShowQuizPinyin(val);
+    try {
+      localStorage.setItem('chinese_quiz_show_pinyin', String(val));
+    } catch {}
+  };
+
   const [results, setResults] = useState<QuizResultItem[]>([]);
 
   // Filtered bucket words for searching
@@ -109,6 +124,27 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
     if (generated[0]?.type === 'listening_choice') {
       setTimeout(() => onSpeak(generated[0].word.hanzi), 350);
     }
+  };
+
+  // Dynamic label renderer: cleanly hide or show Pinyin based on showQuizPinyin toggle
+  const renderOptionLabel = (opt: string) => {
+    const match = opt.match(/^([^\(]+)\s*\((.+)\)$/);
+    if (!match) {
+      return <span className="leading-relaxed">{opt}</span>;
+    }
+    const hanzi = match[1].trim();
+    const pinyin = match[2].trim();
+
+    if (!showQuizPinyin) {
+      return <span className="hanzi-font text-xl sm:text-2xl font-black leading-none">{hanzi}</span>;
+    }
+
+    return (
+      <span className="flex items-center gap-2 flex-wrap">
+        <span className="hanzi-font text-lg sm:text-xl font-black leading-none">{hanzi}</span>
+        <span className="text-xs sm:text-sm font-bold text-indigo-600">({pinyin})</span>
+      </span>
+    );
   };
 
   // Submit Answer
@@ -686,10 +722,42 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
         <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 shadow-md space-y-6 max-w-3xl mx-auto">
           {/* Quiz Header & Progress */}
           <div className="space-y-3 border-b border-stone-100 pb-4">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-500">
-              <span className="flex items-center gap-1.5 text-indigo-700 font-extrabold bg-indigo-50 px-3 py-1 rounded-xl">
-                Câu {currentIndex + 1} / {quizQuestions.length}
-              </span>
+            <div className="flex items-center justify-between text-xs font-bold text-slate-500 flex-wrap gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="flex items-center gap-1.5 text-indigo-700 font-extrabold bg-indigo-50 px-3 py-1.5 rounded-xl border border-indigo-100 shrink-0">
+                  Câu {currentIndex + 1} / {quizQuestions.length}
+                </span>
+
+                {/* Persistent Pinyin On/Off Toggle for Questions & Answers */}
+                <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-2xl border border-stone-200 shrink-0">
+                  <span className="text-[11px] font-bold text-slate-500 pl-2">Pinyin:</span>
+                  <button
+                    onClick={() => toggleQuizPinyin(false)}
+                    className={`flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs font-bold transition active:scale-95 ${
+                      !showQuizPinyin
+                        ? 'bg-rose-500 text-white shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                    title="Ẩn toàn bộ Pinyin ở cả câu hỏi và các đáp án lựa chọn"
+                  >
+                    <EyeOff size={12} />
+                    <span>Tắt</span>
+                  </button>
+                  <button
+                    onClick={() => toggleQuizPinyin(true)}
+                    className={`flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs font-bold transition active:scale-95 ${
+                      showQuizPinyin
+                        ? 'bg-indigo-600 text-white shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                    title="Hiện Pinyin trợ giúp ở câu hỏi và đáp án"
+                  >
+                    <Eye size={12} />
+                    <span>Bật</span>
+                  </button>
+                </div>
+              </div>
+
               <span className="flex items-center gap-2">
                 <span>Đúng: <strong className="text-emerald-600">{correctCount}</strong></span>
                 <span>Sai: <strong className="text-rose-600">{results.length - correctCount}</strong></span>
@@ -722,9 +790,9 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
               </h3>
 
               {currentQ.subPrompt && currentQ.type !== 'sentence_typing' && (
-                <div className="text-base sm:text-2xl font-black text-indigo-900 py-1 flex items-center gap-2">
+                <div className="text-base sm:text-2xl font-black text-indigo-900 py-1 flex items-center gap-2 flex-wrap">
                   <span className="hanzi-font">{currentQ.subPrompt}</span>
-                  {currentQ.type === 'zh_to_vn' && (
+                  {currentQ.type === 'zh_to_vn' && showQuizPinyin && (
                     <span className="text-sm font-bold text-slate-500">
                       ({currentQ.word.pinyin})
                     </span>
@@ -741,12 +809,19 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                 </div>
               )}
 
+              {/* Hanzi Typing Pinyin Hint (governed by showQuizPinyin) */}
+              {currentQ.type === 'hanzi_typing' && showQuizPinyin && (
+                <div className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-xl border border-indigo-100 inline-block mt-1">
+                  🔤 Gợi ý Pinyin: {currentQ.word.pinyin}
+                </div>
+              )}
+
               {/* Context Box for sentence_typing */}
               {currentQ.type === 'sentence_typing' && (
                 <div className="p-4 sm:p-5 rounded-2xl bg-indigo-50/70 border border-indigo-200/80 space-y-3">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <span className="px-2.5 py-1 rounded-xl bg-indigo-100 text-indigo-900 text-xs font-black">
-                      Từ trọng tâm: <strong className="hanzi-font text-sm">{currentQ.word.hanzi}</strong> ({currentQ.word.pinyin} — {currentQ.word.meaning})
+                      Từ trọng tâm: <strong className="hanzi-font text-sm">{currentQ.word.hanzi}</strong> {showQuizPinyin && `(${currentQ.word.pinyin})`} — {currentQ.word.meaning}
                     </span>
 
                     <button
@@ -768,31 +843,28 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                     </div>
                   </div>
 
-                  {/* Optional Pinyin Hint Toggle */}
-                  <div className="pt-2 border-t border-indigo-100/80 flex items-center justify-between flex-wrap gap-2">
-                    <button
-                      onClick={() => setShowSentencePinyinHint(!showSentencePinyinHint)}
-                      className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 transition"
-                    >
-                      {showSentencePinyinHint ? <EyeOff size={13} /> : <Eye size={13} />}
-                      <span>{showSentencePinyinHint ? 'Ẩn gợi ý Pinyin' : 'Xem gợi ý Pinyin câu này'}</span>
-                    </button>
-
-                    {showSentencePinyinHint && currentQ.clozePinyin && (
+                  {/* Pinyin Hint for sentence_typing governed by showQuizPinyin */}
+                  {showQuizPinyin && currentQ.clozePinyin && (
+                    <div className="pt-2 border-t border-indigo-100/80 flex items-center justify-between flex-wrap gap-2">
                       <span className="text-xs font-bold text-indigo-800 bg-white px-2.5 py-1 rounded-lg border border-indigo-200 shadow-2xs">
-                        🔤 {currentQ.clozePinyin}
+                        🔤 Pinyin câu mẫu: {currentQ.clozePinyin}
                       </span>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               )}
 
               {/* Cloze Sentence Display for fill_blank */}
               {currentQ.clozeSentence && currentQ.type === 'fill_blank' && (
-                <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-1">
+                <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-1.5">
                   <div className="hanzi-font text-lg sm:text-2xl font-black text-slate-900">
                     {currentQ.clozeSentence}
                   </div>
+                  {showQuizPinyin && currentQ.clozePinyin && (
+                    <div className="text-xs text-indigo-700 font-bold">
+                      🔤 Pinyin câu: {currentQ.clozePinyin}
+                    </div>
+                  )}
                   <div className="text-xs text-amber-900 font-semibold">
                     👉 Dịch nghĩa: {currentQ.clozeMeaning}
                   </div>
@@ -825,7 +897,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                       onClick={() => handleSelectOption(opt)}
                       className={`p-4 rounded-2xl border-2 text-left font-bold text-sm sm:text-base transition active:scale-95 flex items-center justify-between ${btnStyle}`}
                     >
-                      <span className="hanzi-font leading-relaxed">{opt}</span>
+                      {renderOptionLabel(opt)}
                       {isAnswerSubmitted && isCorrectAnswer && <CheckCircle2 size={18} />}
                       {isAnswerSubmitted && isChosen && !isCorrectAnswer && <XCircle size={18} />}
                     </button>
