@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Volume2, Search, Sparkles, PenTool } from 'lucide-react';
+import { Volume2, Search, Sparkles, PenTool, Bookmark } from 'lucide-react';
 import { VocabItem } from '../types/lesson';
 import { WriteModal } from './WriteModal';
+import { BucketButton } from './bucket/BucketButton';
+import { useBucket } from '../hooks/useBucket';
 
 interface Props {
   vocab: VocabItem[];
@@ -11,6 +13,7 @@ interface Props {
 export const VocabSection: React.FC<Props> = ({ vocab, onSpeak }) => {
   const [search, setSearch] = useState<string>('');
   const [activeWritingVocab, setActiveWritingVocab] = useState<VocabItem | null>(null);
+  const { addBulkToBucket } = useBucket();
 
   const filtered = vocab.filter(v =>
     v.hanzi.includes(search) ||
@@ -34,15 +37,40 @@ export const VocabSection: React.FC<Props> = ({ vocab, onSpeak }) => {
             <p className="text-xs sm:text-sm text-slate-500 mt-1">Bấm nút "Luyện viết" ở bất kỳ từ nào để mở bảng vẽ 米字格 tập viết từng nét chữ.</p>
           </div>
 
-          <div className="relative">
-            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Tìm chữ Hán, Pinyin, nghĩa..."
-              className="pl-9 pr-4 py-2 rounded-xl bg-stone-100 border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-cinnabar-500 focus:bg-white w-64"
-            />
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={() => {
+                const toAdd = vocab.map(v => ({
+                  id: `lesson_vocab_${v.id}`,
+                  hanzi: v.hanzi,
+                  pinyin: v.pinyin,
+                  meaning: v.meaning,
+                  hanViet: v.hanViet,
+                  type: v.type,
+                  source: `Từ mới Bài học`,
+                  exampleHanzi: v.exampleHanzi,
+                  examplePinyin: v.examplePinyin,
+                  exampleMeaning: v.exampleMeaning
+                }));
+                addBulkToBucket(toAdd);
+              }}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold transition active:scale-95 shadow-2xs"
+              title="Thêm tất cả các từ trong bài học này vào giỏ ôn tập"
+            >
+              <Bookmark size={14} className="text-amber-600" />
+              <span>+ Thêm cả {vocab.length} từ vào giỏ</span>
+            </button>
+
+            <div className="relative">
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Tìm chữ Hán, Pinyin, nghĩa..."
+                className="pl-9 pr-4 py-2 rounded-xl bg-stone-100 border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-cinnabar-500 focus:bg-white w-56 sm:w-64"
+              />
+            </div>
           </div>
         </div>
 
@@ -116,8 +144,20 @@ export const VocabSection: React.FC<Props> = ({ vocab, onSpeak }) => {
                   </div>
                 </div>
 
-                {/* Actions: Luyện viết + Phát âm */}
-                <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
+                {/* Actions: Thêm vào giỏ + Luyện viết + Phát âm */}
+                <div className="flex items-center gap-1.5 self-end sm:self-center shrink-0 flex-wrap">
+                  <BucketButton
+                    hanzi={v.hanzi}
+                    pinyin={v.pinyin}
+                    meaning={v.meaning}
+                    hanViet={v.hanViet}
+                    type={v.type}
+                    source={`Bài học: Từ #${v.id}`}
+                    exampleHanzi={v.exampleHanzi}
+                    examplePinyin={v.examplePinyin}
+                    exampleMeaning={v.exampleMeaning}
+                  />
+
                   <button
                     onClick={() => setActiveWritingVocab(v)}
                     className="px-3 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold flex items-center gap-1.5 shadow-sm active:scale-95 transition"

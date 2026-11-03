@@ -1,7 +1,9 @@
 import React from 'react';
-import { BookOpen, Volume2 } from 'lucide-react';
+import { BookOpen, Volume2, Bookmark } from 'lucide-react';
 import { ThematicWord } from '../../types/thematic';
 import { AudioButton } from '../common/AudioButton';
+import { BucketButton } from '../bucket/BucketButton';
+import { useBucket } from '../../hooks/useBucket';
 
 interface ThematicVocabListProps {
   words: ThematicWord[];
@@ -16,14 +18,43 @@ export const ThematicVocabList: React.FC<ThematicVocabListProps> = ({
   onSpeak,
   onOpenWriteModal
 }) => {
+  const { addBulkToBucket } = useBucket();
+
+  const handleAddAllToBucket = () => {
+    const toAdd = words.map(w => ({
+      id: `thematic_${w.id}`,
+      hanzi: w.hanzi,
+      pinyin: w.pinyin,
+      meaning: w.meaning,
+      hanViet: w.hanViet,
+      type: w.type,
+      source: topicTitle,
+      exampleHanzi: w.exampleSentence,
+      examplePinyin: w.examplePinyin,
+      exampleMeaning: w.exampleVn
+    }));
+    addBulkToBucket(toAdd);
+  };
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
-          <BookOpen size={18} className="text-indigo-600" />
-          <span>{words.length} Từ Vựng Chủ Đề: {topicTitle}</span>
-        </h3>
-        <span className="text-xs text-slate-500">Bấm ô chữ Hán hoặc nút "Tập viết" để mở bảng vẽ 米字格</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-3xl border border-stone-200">
+        <div>
+          <h3 className="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
+            <BookOpen size={18} className="text-indigo-600" />
+            <span>{words.length} Từ Vựng Chủ Đề: {topicTitle}</span>
+          </h3>
+          <span className="text-xs text-slate-500">Bấm ô chữ Hán hoặc nút "Tập viết" để mở bảng vẽ 米字格</span>
+        </div>
+
+        <button
+          onClick={handleAddAllToBucket}
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold transition active:scale-95 shadow-2xs shrink-0"
+          title="Thêm toàn bộ từ vựng chuyên đề này vào giỏ ôn tập"
+        >
+          <Bookmark size={14} className="text-amber-700" />
+          <span>+ Thêm cả {words.length} từ vào giỏ</span>
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -60,12 +91,26 @@ export const ThematicVocabList: React.FC<ThematicVocabListProps> = ({
                   </div>
                 </div>
 
-                <AudioButton
-                  text={w.hanzi}
-                  onSpeak={onSpeak}
-                  title="Phát âm từ này"
-                  size="md"
-                />
+                <div className="flex items-center gap-1.5 shrink-0 flex-wrap">
+                  <BucketButton
+                    hanzi={w.hanzi}
+                    pinyin={w.pinyin}
+                    meaning={w.meaning}
+                    hanViet={w.hanViet}
+                    type={w.type}
+                    source={`Chuyên đề: ${topicTitle}`}
+                    exampleHanzi={w.exampleSentence}
+                    examplePinyin={w.examplePinyin}
+                    exampleMeaning={w.exampleVn}
+                  />
+
+                  <AudioButton
+                    text={w.hanzi}
+                    onSpeak={onSpeak}
+                    title="Phát âm từ này"
+                    size="md"
+                  />
+                </div>
               </div>
 
               {/* Writing Guide / Memory hint */}

@@ -16,17 +16,21 @@ import { HanziSection } from './components/HanziSection';
 import { VocabSection } from './components/VocabSection';
 import { DialogueQuizSection } from './components/DialogueQuizSection';
 import { ThematicSection } from './components/ThematicSection';
+import { BucketStudio } from './components/bucket/BucketStudio';
+import { WriteModal } from './components/WriteModal';
 import { lessonsList, allLessonsData } from './data/lessons';
 import { playlistSections } from './data/thematicTopics';
 import { useAudio } from './hooks/useAudio';
+import { VocabItem } from './types/lesson';
 
 type TabKey = 'pinyin' | 'tones' | 'hanzi' | 'vocab' | 'dialogue';
 
 export default function App() {
-  const [mainMode, setMainMode] = useState<'lessons' | 'thematic'>('lessons');
+  const [mainMode, setMainMode] = useState<'lessons' | 'thematic' | 'bucket'>('lessons');
   const [currentSectionId, setCurrentSectionId] = useState<string>('section-1');
   const [currentLessonId, setCurrentLessonId] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<TabKey>('pinyin');
+  const [activeWritingVocab, setActiveWritingVocab] = useState<VocabItem | null>(null);
 
   const {
     speak,
@@ -91,7 +95,30 @@ export default function App() {
           <ThematicSection onSpeak={speak} />
         )}
 
-        {/* MODE 2: PLAYLIST / LESSONS CURRICULUM */}
+        {/* MODE 2: CUSTOM STUDY BUCKET & INTELLIGENT QUIZ GENERATOR */}
+        {mainMode === 'bucket' && (
+          <BucketStudio
+            onSpeak={speak}
+            onOpenWriteModal={(w) => {
+              const vocabItem: VocabItem = {
+                id: Date.now(),
+                hanzi: w.hanzi,
+                pinyin: w.pinyin,
+                hanViet: w.hanViet || '',
+                type: w.type || 'Từ vựng',
+                meaning: w.meaning,
+                radicals: [{ char: w.hanzi[0], name: 'Chữ Hán', desc: 'Luyện viết' }],
+                mnemonic: w.source || '',
+                exampleHanzi: w.exampleHanzi || '',
+                examplePinyin: w.examplePinyin || '',
+                exampleMeaning: w.exampleMeaning || ''
+              };
+              setActiveWritingVocab(vocabItem);
+            }}
+          />
+        )}
+
+        {/* MODE 3: PLAYLIST / LESSONS CURRICULUM */}
         {mainMode === 'lessons' && (
           <>
             {/* Banner with YouTube Link & Highlight */}
@@ -254,6 +281,16 @@ export default function App() {
           </>
         )}
       </main>
+
+      {/* Write Modal for writing practice */}
+      {activeWritingVocab && (
+        <WriteModal
+          isOpen={true}
+          vocab={activeWritingVocab}
+          onClose={() => setActiveWritingVocab(null)}
+          onSpeak={speak}
+        />
+      )}
 
       {/* Footer */}
       <footer className="border-t border-stone-200 bg-white py-6 text-center text-xs text-slate-500">

@@ -1,9 +1,10 @@
 import React from 'react';
-import { BookOpen, Keyboard } from 'lucide-react';
+import { BookOpen, Keyboard, Bookmark } from 'lucide-react';
 import { LessonSummary } from '../../data/lessons';
 import { playlistSections } from '../../data/thematic';
 import { CurriculumDropdown } from './CurriculumDropdown';
 import { AudioControls } from './AudioControls';
+import { useBucket } from '../../hooks/useBucket';
 
 interface Props {
   lessons: LessonSummary[];
@@ -11,8 +12,8 @@ interface Props {
   onSelectLesson: (id: number) => void;
   currentSectionId: string;
   onSelectSection: (sectionId: string) => void;
-  mainMode: 'lessons' | 'thematic';
-  onSelectMainMode: (mode: 'lessons' | 'thematic') => void;
+  mainMode: 'lessons' | 'thematic' | 'bucket';
+  onSelectMainMode: (mode: 'lessons' | 'thematic' | 'bucket') => void;
   hasChineseVoice: boolean;
   chineseVoiceName: string;
   availableVoices: SpeechSynthesisVoice[];
@@ -43,6 +44,7 @@ export const Navbar: React.FC<Props> = ({
   onSpeak
 }) => {
   const currentSection = playlistSections.find(s => s.id === currentSectionId) || playlistSections[0];
+  const { bucketCount } = useBucket();
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm">
@@ -97,6 +99,24 @@ export const Navbar: React.FC<Props> = ({
                 <span>Từ Vựng & Luyện Gõ</span>
                 <span className="px-1.5 py-0.2 rounded-md bg-amber-400 text-slate-950 text-[10px] font-black uppercase">
                   Mới
+                </span>
+              </button>
+
+              <button
+                onClick={() => onSelectMainMode('bucket')}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition active:scale-95 ${
+                  mainMode === 'bucket'
+                    ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black shadow-xs ring-1 ring-amber-300'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+                title="Hộp từ vựng ôn tập cá nhân & tạo bài kiểm tra"
+              >
+                <Bookmark size={14} className={mainMode === 'bucket' ? 'text-slate-950' : 'text-amber-600'} />
+                <span>Giỏ Ôn Tập</span>
+                <span className={`px-1.5 py-0.2 rounded-md text-[10px] font-black ${
+                  mainMode === 'bucket' ? 'bg-black/20 text-slate-950' : 'bg-amber-100 text-amber-800'
+                }`}>
+                  {bucketCount}
                 </span>
               </button>
             </div>
