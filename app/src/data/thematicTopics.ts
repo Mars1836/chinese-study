@@ -476,6 +476,190 @@ export const thematicTopics: ThematicTopic[] = [
       { id: 809, hanzi: '热烈欢迎你来到美丽的越南河内！', pinyin: 'Rèliè huānyíng nǐ lái dào měilì de Yuènán Hénèi!', meaning: 'Nhiệt liệt chào mừng bạn đến với thủ đô Hà Nội của đất nước Việt Nam tươi đẹp!', difficulty: 'Nâng cao', tip: '热烈欢迎 (nhiệt liệt chào mừng).' },
       { id: 810, hanzi: '我们明天早上在学校的大门口见面吧。', pinyin: 'Wǒmen míngtiān zǎoshang zài xuéxiào de dàménkǒu jiànmiàn ba.', meaning: 'Sáng mai chúng ta gặp nhau ở cổng lớn của trường học nhé.', difficulty: 'Trung cấp', tip: '在...见面 (gặp nhau ở đâu).' }
     ]
+  },
+  // ==========================================
+  // 9. 50+ ĐỘNG TỪ CỐT LÕI THÔNG DỤNG NHẤT
+  // ==========================================
+  {
+    id: 'verbs',
+    title: '50+ Động Từ Cốt Lõi Thông Dụng Nhất',
+    chineseTitle: '常用动词大全',
+    pinyinTitle: 'Chángyòng dòngcí dàquán',
+    iconName: 'Zap',
+    badge: 'Chủ đề 9 • Linh hồn câu',
+    color: 'from-teal-500 to-emerald-600',
+    desc: 'Làm chủ các động từ quan trọng nhất trong tiếng Trung: hành động sinh hoạt (ăn, uống, ngủ), giác quan (nhìn, nghe, nói, viết), di chuyển (đi, đến, về, vào, ra), nhận thức (biết, hiểu, quen) và các trợ từ động thái.',
+    grammarPoints: [
+      {
+        id: 1,
+        title: 'Trợ từ động thái 了 (le): Biểu thị hành động đã hoàn thành',
+        formula: 'Chủ ngữ + Động từ + 了 + (Tân ngữ) | Phủ định: 没 (有) + Động từ (BỎ 了)',
+        explanation: 'Trợ từ 了 đặt ngay sau động từ để biểu thị hành động đã xảy ra hoặc đã hoàn thành. Khi phủ định, bắt buộc dùng 没 hoặc 没有 trước động từ và tuyệt đối KHÔNG dùng 了 ở cuối.',
+        usageNotes: [
+          'Tôi đã ăn cơm rồi: 我吃了饭 (Wǒ chī le fàn).',
+          'Tôi chưa ăn cơm: 我没吃饭 (Wǒ méi chī fàn) — KHÔNG nói 我没吃了饭.',
+          'Anh ấy đã mua hai quyển sách: 他买了两本书 (Tā mǎi le liǎng běn shū).'
+        ],
+        examples: [
+          { hanzi: '我喝了一杯咖啡。', pinyin: 'Wǒ hē le yì bēi kāfēi.', meaning: 'Tôi đã uống một ly cà phê.' },
+          { hanzi: '他还没来呢。', pinyin: 'Tā hái méi lái ne.', meaning: 'Anh ấy vẫn chưa đến đâu.' }
+        ]
+      },
+      {
+        id: 2,
+        title: 'Phân biệt phó từ phủ định 不 (bù) vs 没 (méi)',
+        formula: '不 (bù) + Động từ (thói quen, ý muốn, hiện tại & tương lai) | 没 (méi) + Động từ (quá khứ, sự việc chưa xảy ra)',
+        explanation: '不 thể hiện ý chí chủ quan "không muốn làm" hoặc quy luật thói quen. 没 thể hiện sự thật khách quan "chưa làm / không có làm". Riêng động từ 是 (là) và 知道 (biết) luôn luôn dùng 不 (不是, 不知道).',
+        usageNotes: [
+          'Tôi không ăn thịt bò (thói quen/ăn chay): 我不吃牛肉 (Wǒ bù chī niúròu).',
+          'Hôm nay tôi chưa ăn cơm: 今天我没吃饭 (Jīntiān wǒ méi chī fàn).',
+          'Tôi không biết: 我不知道 (Wǒ bù zhīdào).'
+        ],
+        examples: [
+          { hanzi: '明天我不去学校。', pinyin: 'Míngtiān wǒ bú qù xuéxiào.', meaning: 'Ngày mai tôi không đi học (chủ ý tương lai).' }
+        ]
+      },
+      {
+        id: 3,
+        title: 'Động từ lặp lại (AA / ABAB): Thử làm một việc gì đó',
+        formula: 'Động từ đơn âm tiết: AA (看看, 听听, 问问) | Song âm tiết: ABAB (学习学习, 休息休息)',
+        explanation: 'Lặp lại động từ thể hiện hành động diễn ra trong thời gian ngắn, nhẹ nhàng, lịch sự hoặc mang ý nghĩa "thử làm xem sao".',
+        usageNotes: [
+          'Bạn xem thử cuốn sách này xem: 你看看这本书 (Nǐ kànkan zhè běn shū).',
+          'Nghe thử bài hát này: 听听这首歌 (Tīngting zhè shǒu gē).'
+        ],
+        examples: [
+          { hanzi: '我想听听你的想法。', pinyin: 'Wǒ xiǎng tīngting nǐ de xiǎngfǎ.', meaning: 'Tôi muốn nghe thử suy nghĩ của bạn.' }
+        ]
+      }
+    ],
+    words: [
+      { id: 9001, hanzi: '看', pinyin: 'kàn', hanViet: 'Khán', meaning: 'Nhìn, xem, ngắm, đọc sách, khám bệnh', type: 'Động từ', writingGuide: 'Thủ 手 (bàn tay) che trên Mục 目 (con mắt)', exampleSentence: '我喜欢在家里看书。', examplePinyin: 'Wǒ xǐhuan zài jiā lǐ kànshū.', exampleVn: 'Tôi thích đọc sách ở nhà.' },
+      { id: 9002, hanzi: '听', pinyin: 'tīng', hanViet: 'Thính', meaning: 'Nghe, lắng nghe', type: 'Động từ', writingGuide: 'Khẩu 口 + Cân 斤', exampleSentence: '请大家认真听。', examplePinyin: 'Qǐng dàjiā rènzhēn tīng.', exampleVn: 'Xin mọi người hãy chăm chú lắng nghe.' },
+      { id: 9003, hanzi: '说', pinyin: 'shuō', hanViet: 'Thuyết', meaning: 'Nói, bảo', type: 'Động từ', writingGuide: 'Ngôn 讠+ Đoái 兑', exampleSentence: '你会说汉语吗？', examplePinyin: 'Nǐ huì shuō Hànyǔ ma?', exampleVn: 'Bạn biết nói tiếng Hán không?' },
+      { id: 9004, hanzi: '读', pinyin: 'dú', hanViet: 'Độc', meaning: 'Đọc to, học tập', type: 'Động từ', writingGuide: 'Ngôn 讠+ Mãi 卖', exampleSentence: '请跟我读这个生词。', examplePinyin: 'Qǐng gēn wǒ dú zhè gè shēngcí.', exampleVn: 'Xin hãy đọc từ mới này theo tôi.' },
+      { id: 9005, hanzi: '写', pinyin: 'xiě', hanViet: 'Tả', meaning: 'Viết, sáng tác', type: 'Động từ', writingGuide: 'Mịch 冖 ở trên + Dữ 与 ở dưới', exampleSentence: '他写汉字写得很漂亮。', examplePinyin: 'Tā xiě Hànzì xiě de hěn piàoliang.', exampleVn: 'Anh ấy viết chữ Hán rất đẹp.' },
+      { id: 9006, hanzi: '吃', pinyin: 'chī', hanViet: 'Cật', meaning: 'Ăn', type: 'Động từ', writingGuide: 'Khẩu 口 + Khất 乞', exampleSentence: '你想吃什么中国菜？', examplePinyin: 'Nǐ xiǎng chī shénme Zhōngguó cài?', exampleVn: 'Bạn muốn ăn món Trung Quốc nào?' },
+      { id: 9007, hanzi: '喝', pinyin: 'hē', hanViet: 'Hát', meaning: 'Uống', type: 'Động từ', writingGuide: 'Khẩu 口 + Hạt 曷', exampleSentence: '每天要多喝白开水。', examplePinyin: 'Měitiān yào duō hē báikāishuǐ.', exampleVn: 'Mỗi ngày cần uống nhiều nước sôi để nguội.' },
+      { id: 9008, hanzi: '去', pinyin: 'qù', hanViet: 'Khứ', meaning: 'Đi (rời xa vị trí người nói)', type: 'Động từ', writingGuide: 'Thổ 土 ở trên + Khư 厶 ở dưới', exampleSentence: '明天我们去北京旅游。', examplePinyin: 'Míngtiān wǒmen qù Běijīng lǚyóu.', exampleVn: 'Ngày mai chúng tôi đi Bắc Kinh du lịch.' },
+      { id: 9009, hanzi: '来', pinyin: 'lái', hanViet: 'Lai', meaning: 'Đến, lại (về phía người nói)', type: 'Động từ', writingGuide: 'Ngang 一 + Mễ 米 có phẩy mác', exampleSentence: '欢迎你来我家做客。', examplePinyin: 'Huānyíng nǐ lái wǒ jiā zuòkè.', exampleVn: 'Hoan nghênh bạn đến nhà tôi làm khách.' },
+      { id: 9010, hanzi: '回', pinyin: 'huí', hanViet: 'Hồi', meaning: 'Về, trở về', type: 'Động từ', writingGuide: 'Khẩu 口 lớn bao bọc Khẩu 口 nhỏ bên trong', exampleSentence: '下课后他马上回家。', examplePinyin: 'Xiàkè hòu tā mǎshàng huí jiā.', exampleVn: 'Sau khi tan học anh ấy lập tức về nhà.' },
+      { id: 9011, hanzi: '买', pinyin: 'mǎi', hanViet: 'Mãi', meaning: 'Mua', type: 'Động từ', writingGuide: 'Đầu móc trên + Đầu nét dưới', exampleSentence: '我想买两本中文书。', examplePinyin: 'Wǒ xiǎng mǎi liǎng běn Zhōngwén shū.', exampleVn: 'Tôi muốn mua hai cuốn sách tiếng Trung.' },
+      { id: 9012, hanzi: '卖', pinyin: 'mài', hanViet: 'Mại', meaning: 'Bán (có chữ Thập 十 trên đầu)', type: 'Động từ', writingGuide: 'Thập 十 ở trên + Mãi 买 ở dưới', exampleSentence: '这家超市卖很多新鲜水果。', examplePinyin: 'Zhè jiā chāoshì mài hěn duō xīnxiān shuǐguǒ.', exampleVn: 'Siêu thị này bán rất nhiều hoa quả tươi.' },
+      { id: 9013, hanzi: '学', pinyin: 'xué', hanViet: 'Học', meaning: 'Học tập, bắt chước', type: 'Động từ', writingGuide: '3 chấm phẩy trên + Mịch 冖 + Tử 子', exampleSentence: '我们要努力学好汉语。', examplePinyin: 'Wǒmen yào nǔlì xué hǎo Hànyǔ.', exampleVn: 'Chúng ta phải nỗ lực học giỏi tiếng Hán.' },
+      { id: 9014, hanzi: '做', pinyin: 'zuò', hanViet: 'Tác', meaning: 'Làm, chế tạo, nấu ăn', type: 'Động từ', writingGuide: 'Nhân đứng 亻+ Cổ 古 + Phộc 攵', exampleSentence: '你今天晚上做什么？', examplePinyin: 'Nǐ jīntiān wǎnshang zuò shénme?', exampleVn: 'Tối nay bạn làm cái gì?' },
+      { id: 9015, hanzi: '喜欢', pinyin: 'xǐhuan', hanViet: 'Hỷ hoan', meaning: 'Thích, yêu thích', type: 'Động từ', writingGuide: 'Hỷ 喜 + Hoan 欢', exampleSentence: '我很喜欢学中国书法。', examplePinyin: 'Wǒ hěn xǐhuan xué Zhōngguó shūfǎ.', exampleVn: 'Tôi rất thích học thư pháp Trung Hoa.' },
+      { id: 9016, hanzi: '想', pinyin: 'xiǎng', hanViet: 'Tưởng', meaning: 'Muốn, nhớ, suy nghĩ', type: 'Động từ', writingGuide: 'Tương 相 (mộc + mục) + Tâm 心 ở dưới', exampleSentence: '我很想我的爸爸妈妈。', examplePinyin: 'Wǒ hěn xiǎng wǒ de bàba māmā.', exampleVn: 'Tôi rất nhớ bố mẹ của tôi.' },
+      { id: 9017, hanzi: '要', pinyin: 'yào', hanViet: 'Yếu', meaning: 'Muốn, cần, phải, sắp', type: 'Động từ', writingGuide: 'Tây 西 ở trên + Nữ 女 ở dưới', exampleSentence: '我要一杯冰绿茶，谢谢。', examplePinyin: 'Wǒ yào yì bēi bīng lǜchá, xièxie.', exampleVn: 'Tôi muốn một ly trà xanh đá, cảm ơn.' },
+      { id: 9018, hanzi: '认识', pinyin: 'rènshi', hanViet: 'Nhận thức', meaning: 'Quen biết, nhận biết', type: 'Động từ', writingGuide: 'Nhận 认 (ngôn 讠+ nhân 人) + Thức 识', exampleSentence: '认识你，我很高兴。', examplePinyin: 'Rènshi nǐ, wǒ hěn gāoxìng.', exampleVn: 'Rất vui được quen biết bạn.' },
+      { id: 9019, hanzi: '知道', pinyin: 'zhīdào', hanViet: 'Tri đạo', meaning: 'Biết, nắm rõ thông tin', type: 'Động từ', writingGuide: 'Tri 知 (thỉ 矢 + khẩu 口) + Đạo 道', exampleSentence: '你知道去天安门怎么走吗？', examplePinyin: "Nǐ zhīdào qù Tiān'ānmén zěnme zǒu ma?", exampleVn: 'Bạn có biết đi Thiên An Môn đi như thế nào không?' },
+      { id: 9020, hanzi: '找', pinyin: 'zhǎo', hanViet: 'Trảo', meaning: 'Tìm kiếm, thối tiền thừa', type: 'Động từ', writingGuide: 'Thủ 扌(tay) + Qua 戈 (cây giáo)', exampleSentence: '你找谁？我找王经理。', examplePinyin: 'Nǐ zhǎo shéi? Wǒ zhǎo Wáng jīnglǐ.', exampleVn: 'Bạn tìm ai? Tôi tìm giám đốc Vương.' },
+      { id: 9021, hanzi: '等', pinyin: 'děng', hanViet: 'Đẳng', meaning: 'Chờ, đợi', type: 'Động từ', writingGuide: 'Trúc ⺮ ở trên + Tự 寺 (chùa) ở dưới', exampleSentence: '请大家稍等一下。', examplePinyin: 'Qǐng dàjiā shāoděng yíxià.', exampleVn: 'Xin mọi người chờ một lát.' },
+      { id: 9022, hanzi: '帮', pinyin: 'bāng', hanViet: 'Bang', meaning: 'Giúp, hỗ trợ', type: 'Động từ', writingGuide: 'Bang 邦 ở trên + Cân 巾 ở dưới', exampleSentence: '你能帮我一个忙吗？', examplePinyin: 'Nǐ néng bāng wǒ yí gè máng ma?', exampleVn: 'Bạn có thể giúp tôi một tay được không?' }
+    ],
+    sampleSentences: [
+      { id: 901, hanzi: '我每天早上喝一杯水，然后去学校。', pinyin: 'Wǒ měitiān zǎoshang hē yì bēi shuǐ, ránhòu qù xuéxiào.', meaning: 'Mỗi sáng tôi uống một ly nước, sau đó đi đến trường.', difficulty: 'Cơ bản', tip: 'Cặp liên từ: 然后 (ránhòu - sau đó).' },
+      { id: 902, hanzi: '你听，老师正在给我们讲课呢。', pinyin: 'Nǐ tīng, lǎoshī zhèngzài gěi wǒmen jiǎngkè ne.', meaning: 'Bạn nghe kìa, thầy giáo đang giảng bài cho chúng ta đấy.', difficulty: 'Trung cấp', tip: '正在...呢 biểu thị hành động đang diễn ra.' },
+      { id: 903, hanzi: '他想买一部新手机，但是没有钱。', pinyin: 'Tā xiǎng mǎi yí bù xīn shǒujī, dànshì méiyǒu qián.', meaning: 'Anh ấy muốn mua một chiếc điện thoại mới, nhưng không có tiền.', difficulty: 'Cơ bản', tip: 'Lượng từ cho điện thoại: 一部 (yí bù).' },
+      { id: 904, hanzi: '我喜欢在家里看书和听音乐。', pinyin: 'Wǒ xǐhuan zài jiā lǐ kànshū hé tīng yīnyuè.', meaning: 'Tôi thích đọc sách và nghe nhạc ở nhà.', difficulty: 'Cơ bản', tip: 'Sở thích thường dùng: 喜欢 + Động từ.' },
+      { id: 905, hanzi: '请问，你认识前面那位中文老师吗？', pinyin: 'Qǐngwèn, nǐ rènshi qiánmiàn nà wèi Zhōngwén lǎoshī ma?', meaning: 'Xin hỏi, bạn có quen biết vị giáo viên tiếng Trung phía trước không?', difficulty: 'Trung cấp', tip: '认识 (rènshi - quen biết người nào đó).' },
+      { id: 906, hanzi: '你在找什么？我在找我的钥匙。', pinyin: 'Nǐ zài zhǎo shénme? Wǒ zài zhǎo wǒ de yàoshi.', meaning: 'Bạn đang tìm cái gì vậy? Tôi đang tìm chìa khóa của mình.', difficulty: 'Cơ bản', tip: '找 (zhǎo - tìm kiếm).' },
+      { id: 907, hanzi: '请等我五分钟，我马上就来。', pinyin: 'Qǐng děng wǒ wǔ fēnzhōng, wǒ mǎshàng jiù lái.', meaning: 'Xin đợi tôi 5 phút, tôi tới ngay đây.', difficulty: 'Cơ bản', tip: '马上就 (mǎshàng jiù - lập tức, ngay).' },
+      { id: 908, hanzi: '他昨天写了一封长信给他的妈妈。', pinyin: 'Tā zuótiān xiě le yì fēng cháng xìn gěi tā de māmā.', meaning: 'Hôm qua anh ấy đã viết một bức thư dài gửi cho mẹ.', difficulty: 'Trung cấp', tip: 'Lượng từ cho thư: 封 (fēng).' },
+      { id: 909, hanzi: '你会说汉语吗？我会说一点儿。', pinyin: 'Nǐ huì shuō Hànyǔ ma? Wǒ huì shuō yìdiǎnr.', meaning: 'Bạn biết nói tiếng Hán không? Tôi biết nói một chút.', difficulty: 'Cơ bản', tip: '会 + Động từ: biết làm gì qua học tập.' },
+      { id: 910, hanzi: '他帮我借了两本很有意思的中文书。', pinyin: 'Tā bāng wǒ jiè le liǎng běn hěn yǒu yìsi de Zhōngwén shū.', meaning: 'Anh ấy đã giúp tôi mượn hai cuốn sách tiếng Trung rất hay.', difficulty: 'Trung cấp', tip: 'A 帮 B + Động từ: A giúp B làm việc gì.' }
+    ]
+  },
+
+  // ==========================================
+  // 10. 50+ TÍNH TỪ MIÊU TẢ CẢM XÚC, TRẠNG THÁI & TÍNH CHẤT
+  // ==========================================
+  {
+    id: 'adjectives',
+    title: '50+ Tính Từ Miêu Tả Cảm Xúc, Trạng Thái & Tính Chất',
+    chineseTitle: '常用形容词大全',
+    pinyinTitle: 'Chángyòng xíngróngcí dàquán',
+    iconName: 'Smile',
+    badge: 'Chủ đề 10 • Biểu cảm sinh động',
+    color: 'from-amber-500 to-rose-600',
+    desc: 'Bộ sưu tập đầy đủ các cặp tính từ trái nghĩa thông dụng nhất: to/nhỏ, nhiều/ít, tốt/xấu, nhanh/chậm, nóng/lạnh, đói/khát, mệt/vui, khó/dễ, đắt/rẻ cùng cấu trúc so sánh hơn 比 (bǐ).',
+    grammarPoints: [
+      {
+        id: 1,
+        title: 'Cấu trúc câu vị ngữ tính từ chuẩn: Tuyệt đối KHÔNG dùng 是',
+        formula: 'Chủ ngữ + 很 / 非常 / 太 + Tính từ',
+        explanation: 'Trong tiếng Trung, câu miêu tả tính chất không có động từ to-be 是. Chữ 很 trong câu vị ngữ tính từ khẳng định thường đóng vai trò cân bằng ngữ âm (không nhất thiết phải dịch là "rất"). Nếu dùng 是, câu sẽ sai ngữ pháp nghiêm trọng.',
+        usageNotes: [
+          'Anh ấy rất tốt: 他很好 (Tā hěn hǎo) — KHÔNG nói 他是好.',
+          'Hôm nay trời rất nóng: 今天天气很热 (Jīntiān tiānqì hěn rè).'
+        ],
+        examples: [
+          { hanzi: '汉字很有意思。', pinyin: 'Hànzì hěn yǒu yìsi.', meaning: 'Chữ Hán rất thú vị.' }
+        ]
+      },
+      {
+        id: 2,
+        title: 'Cấu trúc so sánh hơn với chữ 比 (bǐ)',
+        formula: 'A + 比 (bǐ) + B + Tính từ (+ 得多 / 多了 / 一点儿)',
+        explanation: 'Dùng chữ 比 để so sánh mức độ giữa 2 sự vật hoặc 2 người. Muốn nhấn mạnh hơn nhiều dùng 得多 hoặc 多了 ở cuối câu; hơn một ít dùng 一点儿.',
+        usageNotes: [
+          'Anh ấy cao hơn tôi: 他比我高 (Tā bǐ wǒ gāo).',
+          'Tàu điện ngầm nhanh hơn xe buýt nhiều: 地铁比公交车快得多 (Dìtiě bǐ gōngjiāochē kuài de duō).'
+        ],
+        examples: [
+          { hanzi: '今天比昨天冷一点儿。', pinyin: 'Jīntiān bǐ zuótiān lěng yìdiǎnr.', meaning: 'Hôm nay lạnh hơn hôm qua một chút.' }
+        ]
+      },
+      {
+        id: 3,
+        title: 'Cấu trúc cảm thán: 太 + Tính từ + 了 (Tài... le)',
+        formula: '太 + Tính từ + 了 (Quá... rồi / ...lắm)',
+        explanation: 'Cấu trúc này dùng để bộc lộ cảm xúc khen ngợi hoặc phàn nàn về một mức độ vượt quá bình thường.',
+        usageNotes: [
+          'Quá tốt rồi: 太好了！ (Tài hǎo le!)',
+          'Đắt quá rồi: 太贵了！ (Tài guì le!)'
+        ],
+        examples: [
+          { hanzi: '这个西瓜太甜了！', pinyin: 'Zhè gè xīguā tài tián le!', meaning: 'Quả dưa hấu này ngọt quá đi thôi!' }
+        ]
+      }
+    ],
+    words: [
+      { id: 9501, hanzi: '好', pinyin: 'hǎo', hanViet: 'Hảo', meaning: 'Tốt, đẹp, hay, khỏe', type: 'Tính từ', writingGuide: 'Nữ 女 bên trái + Tử 子 bên phải', exampleSentence: '他是一个好老师。', examplePinyin: 'Tā shì yí gè hǎo lǎoshī.', exampleVn: 'Thầy ấy là một giáo viên tốt.' },
+      { id: 9502, hanzi: '坏', pinyin: 'huài', hanViet: 'Hoại', meaning: 'Xấu, tồi, hỏng hóc', type: 'Tính từ', writingGuide: 'Thổ 土 + Bất 不', exampleSentence: '这台电脑坏了。', examplePinyin: 'Zhè tái diànnǎo huài le.', exampleVn: 'Chiếc máy tính này bị hỏng rồi.' },
+      { id: 9503, hanzi: '大', pinyin: 'dà', hanViet: 'Đại', meaning: 'To, lớn', type: 'Tính từ', writingGuide: 'Nhất 一 + Nhân 人 (người dang rộng 2 tay)', exampleSentence: '这个苹果很大很红。', examplePinyin: 'Zhè gè píngguǒ hěn dà hěn hóng.', exampleVn: 'Quả táo này rất to và đỏ.' },
+      { id: 9504, hanzi: '小', pinyin: 'xiǎo', hanViet: 'Tiểu', meaning: 'Nhỏ, bé', type: 'Tính từ', writingGuide: 'Sổ móc giữa + 2 chấm hai bên', exampleSentence: '我家有一只小猫。', examplePinyin: 'Wǒ jiā yǒu yì zhī xiǎomāo.', exampleVn: 'Nhà tôi có một con mèo nhỏ.' },
+      { id: 9505, hanzi: '多', pinyin: 'duō', hanViet: 'Đa', meaning: 'Nhiều', type: 'Tính từ', writingGuide: 'Hai chữ Tịch 夕 chồng lên nhau', exampleSentence: '超市里有很多新鲜蔬菜。', examplePinyin: 'Chāoshì lǐ yǒu hěn duō xīnxiān shūcài.', exampleVn: 'Trong siêu thị có rất nhiều rau tươi.' },
+      { id: 9506, hanzi: '少', pinyin: 'shǎo', hanViet: 'Thiểu', meaning: 'Ít', type: 'Tính từ', writingGuide: 'Tiểu 小 + Nét phẩy xéo dưới', exampleSentence: '今天来开会的人很少。', examplePinyin: 'Jīntiān lái kāihuì de rén hěn shǎo.', exampleVn: 'Hôm nay người đến họp rất ít.' },
+      { id: 9507, hanzi: '高', pinyin: 'gāo', hanViet: 'Cao', meaning: 'Cao (chiều cao, tòa nhà)', type: 'Tính từ', writingGuide: 'Chữ tượng hình cổng tháp cao', exampleSentence: '姚明的个子非常高。', examplePinyin: 'Yáo Míng de gèzi fēicháng gāo.', exampleVn: 'Vóc dáng Dao Minh rất cao.' },
+      { id: 9508, hanzi: '矮', pinyin: 'ǎi', hanViet: 'Ải', meaning: 'Thấp, lùn', type: 'Tính từ', writingGuide: 'Thỉ 矢 (mũi tên ngắn) + Ủy 委', exampleSentence: '这棵树比那棵树矮。', examplePinyin: 'Zhè kē shù bǐ nà kē shù ǎi.', exampleVn: 'Cây này thấp hơn cây kia.' },
+      { id: 9509, hanzi: '胖', pinyin: 'pàng', hanViet: 'Bàn', meaning: 'Mập, béo', type: 'Tính từ', writingGuide: 'Nguyệt 月 (thịt) + Bán 半 (nửa)', exampleSentence: '小猫长得胖乎乎的。', examplePinyin: 'Xiǎomāo zhǎng de pànghūhū de.', exampleVn: 'Mèo con lớn lên béo tròn béo trục.' },
+      { id: 9510, hanzi: '瘦', pinyin: 'shòu', hanViet: 'Sấu', meaning: 'Gầy, ốm', type: 'Tính từ', writingGuide: 'Bệnh 疒+ Tẩu 叟', exampleSentence: '他最近工作太忙，瘦了。', examplePinyin: 'Tā zuìjìn gōngzuò tài máng, shòu le.', exampleVn: 'Dạo này anh ấy làm việc bận quá nên bị gầy đi.' },
+      { id: 9511, hanzi: '快', pinyin: 'kuài', hanViet: 'Khoái', meaning: 'Nhanh, mau lẹ, vui sướng', type: 'Tính từ', writingGuide: 'Tâm đứng 忄+ Quyết 夬', exampleSentence: '中国高铁跑得非常快。', examplePinyin: 'Zhōngguó gāotiě pǎo de fēicháng kuài.', exampleVn: 'Tàu cao tốc Trung Quốc chạy cực kỳ nhanh.' },
+      { id: 9512, hanzi: '慢', pinyin: 'màn', hanViet: 'Mạn', meaning: 'Chậm, từ từ', type: 'Tính từ', writingGuide: 'Tâm đứng 忄+ Mạn 曼', exampleSentence: '请您说慢一点儿。', examplePinyin: 'Qǐng nín shuō màn yìdiǎnr.', exampleVn: 'Xin ngài hãy nói chậm một chút.' },
+      { id: 9513, hanzi: '热', pinyin: 'rè', hanViet: 'Nhiệt', meaning: 'Nóng (nhiệt độ, thời tiết)', type: 'Tính từ', writingGuide: 'Chấp 执 ở trên + Bốn chấm hỏa 灬 ở dưới', exampleSentence: '夏天天气非常热。', examplePinyin: 'Xiàtiān tiānqì fēicháng rè.', exampleVn: 'Mùa hè thời tiết rất nóng.' },
+      { id: 9514, hanzi: '冷', pinyin: 'lěng', hanViet: 'Lãnh', meaning: 'Lạnh (nhiệt độ, thời tiết)', type: 'Tính từ', writingGuide: 'Băng 冫(hai chấm băng) + Lệnh 令', exampleSentence: '冬天北方很冷。', examplePinyin: 'Dōngtiān běifāng hěn lěng.', exampleVn: 'Mùa đông miền Bắc rất lạnh.' },
+      { id: 9515, hanzi: '累', pinyin: 'lèi', hanViet: 'Luy', meaning: 'Mệt mỏi', type: 'Tính từ', writingGuide: 'Điền 田 (ruộng) ở trên + Mịch 糸 (dây tơ) ở dưới', exampleSentence: '今天走了一万步，好累啊。', examplePinyin: 'Jīntiān zǒu le yíwàn bù, hǎo lèi a.', exampleVn: 'Hôm nay đi bộ một vạn bước, mệt quá đi.' },
+      { id: 9516, hanzi: '饿', pinyin: 'è', hanViet: 'Ngạ', meaning: 'Đói bụng', type: 'Tính từ', writingGuide: 'Thực 饣(thức ăn) + Ngã 我', exampleSentence: '肚子饿了，我们去吃饭吧。', examplePinyin: 'Dùzi è le, wǒmen qù chīfàn ba.', exampleVn: 'Bụng đói rồi, chúng ta đi ăn cơm thôi.' },
+      { id: 9517, hanzi: '渴', pinyin: 'kě', hanViet: 'Khát', meaning: 'Khát nước', type: 'Tính từ', writingGuide: 'Thủy 氵(ba chấm nước) + Hạt 曷', exampleSentence: '我很渴，想喝冰水。', examplePinyin: 'Wǒ hěn kě, xiǎng hē bīng shuǐ.', exampleVn: 'Tôi rất khát, muốn uống nước đá.' },
+      { id: 9518, hanzi: '忙', pinyin: 'máng', hanViet: 'Mang', meaning: 'Bận rộn', type: 'Tính từ', writingGuide: 'Tâm đứng 忄+ Vong 亡 (chết/mất)', exampleSentence: '你今天工作忙不忙？', examplePinyin: 'Nǐ jīntiān gōngzuò máng bù máng?', exampleVn: 'Hôm nay công việc của bạn có bận không?' },
+      { id: 9519, hanzi: '高兴', pinyin: 'gāoxìng', hanViet: 'Cao hứng', meaning: 'Vui vẻ, hân hoan', type: 'Tính từ', writingGuide: 'Cao 高 + Hứng 兴', exampleSentence: '今天全家人都非常高兴。', examplePinyin: 'Jīntiān quán jiā rén dōu fēicháng gāoxìng.', exampleVn: 'Hôm nay cả nhà đều vô cùng vui vẻ.' },
+      { id: 9520, hanzi: '难', pinyin: 'nán', hanViet: 'Nan', meaning: 'Khó khăn', type: 'Tính từ', writingGuide: 'Hữu 又 + Chuy 隹', exampleSentence: '发音不太难，汉字比较难。', examplePinyin: 'Fāyīn bú tài nán, Hànzì bǐjiào nán.', exampleVn: 'Phát âm không khó lắm, chữ Hán tương đối khó.' },
+      { id: 9521, hanzi: '容易', pinyin: 'róngyì', hanViet: 'Dung dị', meaning: 'Dễ dàng', type: 'Tính từ', writingGuide: 'Dung 容 + Dịch 易', exampleSentence: '这道题非常容易。', examplePinyin: 'Zhè dào tí fēicháng róngyì.', exampleVn: 'Câu hỏi này rất dễ dàng.' },
+      { id: 9522, hanzi: '舒服', pinyin: 'shūfu', hanViet: 'Thư phục', meaning: 'Thoải mái, dễ chịu, khỏe khoắn', type: 'Tính từ', writingGuide: 'Thư 舒 + Phục 服', exampleSentence: '坐在沙发上真舒服。', examplePinyin: 'Zuò zài shāfā shang zhēn shūfu.', exampleVn: 'Ngồi trên ghế sofa thật là thoải mái.' }
+    ],
+    sampleSentences: [
+      { id: 1001, hanzi: '今天的天气非常冷，你要多穿衣服。', pinyin: 'Jīntiān de tiānqì fēicháng lěng, nǐ yào duō chuān yīfu.', meaning: 'Thời tiết hôm nay rất lạnh, bạn phải mặc nhiều quần áo vào.', difficulty: 'Cơ bản', tip: 'Cấu trúc lời khuyên: 多 + Động từ (làm việc gì nhiều hơn).' },
+      { id: 1002, hanzi: '工作了一整天，我感觉特别累。', pinyin: 'Gōngzuò le yì zhěng tiān, wǒ gǎnjué tèbié lèi.', meaning: 'Làm việc suốt cả một ngày, tôi cảm thấy đặc biệt mệt mỏi.', difficulty: 'Trung cấp', tip: '特别 (tèbié - đặc biệt).' },
+      { id: 1003, hanzi: '学中文不难，汉字非常有趣。', pinyin: 'Xué Zhōngwén bù nán, Hànzì fēicháng yǒuqù.', meaning: 'Học tiếng Trung không khó, chữ Hán vô cùng thú vị.', difficulty: 'Cơ bản', tip: '有趣 (yǒuqù - thú vị, có ý vị).' },
+      { id: 1004, hanzi: '听到这个好消息，大家都很高兴。', pinyin: 'Tīngdào zhè gè hǎo xiāoxi, dàjiā dōu hěn gāoxìng.', meaning: 'Nghe được tin tốt lành này, mọi người đều rất vui mừng.', difficulty: 'Trung cấp', tip: '消息 (xiāoxi - tin tức).' },
+      { id: 1005, hanzi: '这件衣服太贵了，有没有便宜一点儿的？', pinyin: 'Zhè jiàn yīfu tài guì le, yǒu méiyǒu piányi yìdiǎnr de?', meaning: 'Chiếc áo này đắt quá rồi, có chiếc nào rẻ hơn một chút không?', difficulty: 'Trung cấp', tip: 'Câu hỏi thăm dò giá cả rất tự nhiên.' },
+      { id: 1006, hanzi: '他比我高五厘米，长得很帅。', pinyin: 'Tā bǐ wǒ gāo wǔ límǐ, zhǎng de hěn shuài.', meaning: 'Anh ấy cao hơn tôi 5 cm, nhìn rất đẹp trai.', difficulty: 'Trung cấp', tip: 'Cấu trúc câu chữ 比 (so sánh hơn).' },
+      { id: 1007, hanzi: '我现在肚子很饿，想吃一碗热面条。', pinyin: 'Wǒ xiànzài dùzi hěn è, xiǎng chī yì wǎn rè miàntiáo.', meaning: 'Bây giờ bụng tôi rất đói, muốn ăn một bát mì nóng.', difficulty: 'Cơ bản', tip: '肚子饿 (dùzi è - đói bụng).' },
+      { id: 1008, hanzi: '这里的环境很安静，住着非常舒服。', pinyin: 'Zhèlǐ de huánjìng hěn ānjìng, zhù zhe fēicháng shūfu.', meaning: 'Môi trường ở đây rất yên tĩnh, sống vô cùng thoải mái dễ chịu.', difficulty: 'Trung cấp', tip: '安静 (yên tĩnh), 舒服 (thoải mái).' },
+      { id: 1009, hanzi: '跑步比散步快得多，能锻炼身体。', pinyin: 'Pǎobù bǐ sànbù kuài de duō, néng duànliàn shēntǐ.', meaning: 'Chạy bộ nhanh hơn đi dạo nhiều, có thể rèn luyện sức khỏe.', difficulty: 'Trung cấp', tip: '快得多 (nhanh hơn nhiều).' },
+      { id: 1010, hanzi: '最近你工作忙不忙？我一点儿都不忙。', pinyin: 'Zuìjìn nǐ gōngzuò máng bù máng? Wǒ yìdiǎnr dōu bù máng.', meaning: 'Dạo gần đây công việc của bạn có bận không? Tôi chẳng bận chút nào.', difficulty: 'Trung cấp', tip: '一点儿都不 (yìdiǎnr dōu bù - một chút cũng không).' }
+    ]
   }
 ];
 

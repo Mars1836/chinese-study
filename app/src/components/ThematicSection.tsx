@@ -23,7 +23,9 @@ import {
   Navigation,
   Lightbulb,
   HelpCircle,
-  Layers
+  Layers,
+  Zap,
+  Smile
 } from 'lucide-react';
 import { ThematicTopic, ThematicSentence, ThematicWord } from '../types/thematic';
 import { thematicTopics, allTypingSentences, generateRandomSentence } from '../data/thematicTopics';
@@ -162,6 +164,8 @@ export const ThematicSection: React.FC<Props> = ({ onSpeak }) => {
       case 'colors_adj': return <Palette size={16} className="text-pink-500" />;
       case 'food_fruits': return <UtensilsCrossed size={16} className="text-orange-500" />;
       case 'places_travel': return <Navigation size={16} className="text-cyan-500" />;
+      case 'verbs': return <Zap size={16} className="text-teal-500" />;
+      case 'adjectives': return <Smile size={16} className="text-amber-500" />;
       default: return <BookOpen size={16} />;
     }
   };
