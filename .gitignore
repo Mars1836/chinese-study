@@ -7,6 +7,10 @@ node_modules/
 dist/
 build/
 
+# Heavy documents (exceeds GitHub 100MB limit)
+documents/
+*.pdf
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
