@@ -1,0 +1,416 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  RotateCcw,
+  ArrowRight,
+  Eye,
+  EyeOff,
+  Trophy,
+  Copy,
+  Check,
+  Dices,
+  Sparkles,
+  Volume2,
+  Lightbulb,
+  HelpCircle,
+  Shuffle
+} from 'lucide-react';
+import { ThematicSentence } from '../../types/thematic';
+
+interface TypingStudioProps {
+  currentSentence: ThematicSentence;
+  sentencePool: ThematicSentence[];
+  selectedSentenceIndex: number;
+  isDynamic: boolean;
+  onNextSentence: () => void;
+  onRandomSentence: () => void;
+  onGenerateDynamic: () => void;
+  onSelectSentenceIndex: (index: number) => void;
+  onSpeak: (text: string, tone?: number) => void;
+  onCompleted: () => void;
+}
+
+export const TypingStudio: React.FC<TypingStudioProps> = ({
+  currentSentence,
+  sentencePool,
+  selectedSentenceIndex,
+  isDynamic,
+  onNextSentence,
+  onRandomSentence,
+  onGenerateDynamic,
+  onSelectSentenceIndex,
+  onSpeak,
+  onCompleted
+}) => {
+  const [userInput, setUserInput] = useState<string>('');
+  const [isBlindMode, setIsBlindMode] = useState<boolean>(true);
+  const [isPeek, setIsPeek] = useState<boolean>(false);
+  const [showPinyinHint, setShowPinyinHint] = useState<boolean>(false);
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // Reset input and peek on target sentence change
+  useEffect(() => {
+    setUserInput('');
+    setIsPeek(false);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [currentSentence]);
+
+  // Target and user characters comparison
+  const targetChars = Array.from(currentSentence.hanzi);
+  const inputChars = Array.from(userInput);
+
+  let correctCount = 0;
+  targetChars.forEach((targetC, idx) => {
+    if (inputChars[idx] && inputChars[idx] === targetC) {
+      correctCount++;
+    }
+  });
+
+  const isCompleted = userInput.trim() === currentSentence.hanzi.trim();
+  const accuracy = inputChars.length > 0
+    ? Math.min(100, Math.round((correctCount / Math.max(inputChars.length, targetChars.length)) * 100))
+    : 0;
+
+  // Auto-trigger completion handler
+  useEffect(() => {
+    if (isCompleted && userInput.length > 0) {
+      onCompleted();
+    }
+  }, [isCompleted]);
+
+  const handleCopySentence = () => {
+    navigator.clipboard.writeText(currentSentence.hanzi);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
+
+  return (
+    <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 shadow-md space-y-6">
+      {/* 1. Action Controls Bar */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-stone-100 pb-4">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-800 font-extrabold text-xs">
+            {isDynamic ? '✨ Câu Tạo Ngẫu Nhiên' : `Câu #${selectedSentenceIndex + 1} / ${sentencePool.length}`}
+          </span>
+
+          <span className="px-2.5 py-1.5 rounded-xl bg-amber-50 text-amber-800 font-bold text-xs">
+            Độ khó: {currentSentence.difficulty || 'Cơ bản'}
+          </span>
+
+          <span className="px-2.5 py-1.5 rounded-xl bg-stone-100 text-slate-600 font-bold text-xs">
+            {targetChars.length} ký tự
+          </span>
+        </div>
+
+        {/* Mode Toggles and Action Buttons */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Blind Mode Toggle */}
+          <button
+            onClick={() => setIsBlindMode(!isBlindMode)}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-black transition shadow-xs active:scale-95 ${
+              isBlindMode
+                ? 'bg-rose-50 text-rose-700 border-2 border-rose-300 hover:bg-rose-100'
+                : 'bg-emerald-50 text-emerald-700 border-2 border-emerald-300 hover:bg-emerald-100'
+            }`}
+            title="Tắt/Bật đáp án chữ Hán: Khi Tắt, bạn sẽ không thấy chữ Hán mẫu mà chỉ thấy nghĩa tiếng Việt để thử thách trí nhớ!"
+          >
+            {isBlindMode ? <EyeOff size={14} className="text-rose-600" /> : <Eye size={14} className="text-emerald-600" />}
+            <span>{isBlindMode ? 'Đáp án: ĐANG TẮT (Ẩn chữ Hán)' : 'Đáp án: ĐANG BẬT (Hiện chữ Hán)'}</span>
+          </button>
+
+          {/* Peek Button (When Blind Mode is active) */}
+          {isBlindMode && (
+            <button
+              onClick={() => setIsPeek(!isPeek)}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold transition active:scale-95"
+              title="Bấm để xem nhanh đáp án nếu bạn quên chữ"
+            >
+              <HelpCircle size={14} className="text-amber-600" />
+              <span>{isPeek ? 'Ẩn lại đáp án' : 'Xem đáp án'}</span>
+            </button>
+          )}
+
+          {/* Pinyin Hint Toggle */}
+          <button
+            onClick={() => setShowPinyinHint(!showPinyinHint)}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition ${
+              showPinyinHint
+                ? 'bg-indigo-100 text-indigo-800 border border-indigo-300'
+                : 'bg-stone-100 hover:bg-stone-200 text-slate-700'
+            }`}
+            title="Hiện/Ẩn phiên âm Pinyin"
+          >
+            <span>{showPinyinHint ? 'Ẩn Pinyin' : 'Hiện Pinyin'}</span>
+          </button>
+
+          {/* Random Sentence Button */}
+          <button
+            onClick={onRandomSentence}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-800 text-xs font-bold transition active:scale-95 shadow-xs"
+            title="Chọn một câu ngẫu nhiên trong danh sách"
+          >
+            <Dices size={15} className="text-indigo-600" />
+            <span>🎲 Đổi câu ngẫu nhiên</span>
+          </button>
+
+          {/* Dynamic Sentence Generator Button */}
+          <button
+            onClick={onGenerateDynamic}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white text-xs font-bold transition active:scale-95 shadow-xs"
+            title="Tạo một câu kết hợp ngữ pháp mới ngẫu nhiên"
+          >
+            <Sparkles size={14} className="text-amber-300" />
+            <span>✨ Tạo câu mới</span>
+          </button>
+
+          {/* Pronounce Button */}
+          <button
+            onClick={() => onSpeak(currentSentence.hanzi)}
+            className="p-2 rounded-xl bg-cinnabar-600 hover:bg-cinnabar-700 text-white text-xs font-bold transition active:scale-95 shadow-xs"
+            title="Nghe phát âm chuẩn cả câu"
+          >
+            <Volume2 size={16} />
+          </button>
+
+          {/* Copy Button */}
+          <button
+            onClick={handleCopySentence}
+            className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-600 text-xs transition"
+            title="Sao chép chữ Hán câu này"
+          >
+            {isCopied ? <Check size={16} className="text-emerald-600" /> : <Copy size={16} />}
+          </button>
+        </div>
+      </div>
+
+      {/* 2. Target Display Box with Real-Time Blind/Challenge Mode */}
+      <div className={`p-6 rounded-3xl transition-all space-y-4 border ${
+        isBlindMode && !isPeek
+          ? 'bg-slate-900 text-white border-slate-800 shadow-inner'
+          : 'bg-stone-50 border-stone-200/80'
+      }`}>
+        {/* Vietnamese Prompt */}
+        <div className="space-y-1">
+          <div className={`text-xs font-black uppercase tracking-wider flex items-center gap-1.5 ${
+            isBlindMode && !isPeek ? 'text-amber-400' : 'text-slate-500'
+          }`}>
+            <Lightbulb size={14} />
+            <span>{isBlindMode && !isPeek ? 'Thử thách: Nhớ chữ Hán dựa theo nghĩa tiếng Việt:' : 'Dịch nghĩa tiếng Việt:'}</span>
+          </div>
+          <div className={`text-base sm:text-xl font-black ${
+            isBlindMode && !isPeek ? 'text-white' : 'text-slate-900'
+          }`}>
+            👉 {currentSentence.meaning}
+          </div>
+        </div>
+
+        {/* Character-by-Character Tiles */}
+        <div className="space-y-2 pt-1">
+          <div className="flex items-center justify-between text-xs font-bold text-slate-400">
+            <span>{isBlindMode && !isPeek ? 'Các ô chữ Hán cần gõ (Sẽ tự động mở khi bạn gõ đúng):' : 'Câu chữ Hán mục tiêu:'}</span>
+            {isBlindMode && !isPeek && (
+              <span className="text-amber-300 font-semibold">
+                (Đang ở chế độ Thử Thách Ẩn Đáp Án 🛡️)
+              </span>
+            )}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-1.5 py-1">
+            {targetChars.map((char, idx) => {
+              const typedChar = inputChars[idx];
+              const hasTyped = typedChar !== undefined;
+              const isMatch = hasTyped && typedChar === char;
+              const isWrong = hasTyped && typedChar !== char;
+
+              if (isBlindMode && !isPeek) {
+                return (
+                  <div
+                    key={idx}
+                    className={`min-w-[44px] h-14 sm:min-w-[50px] sm:h-16 px-2 rounded-2xl flex flex-col items-center justify-center font-black transition-all ${
+                      isMatch
+                        ? 'bg-emerald-500 text-white shadow-md scale-105 ring-2 ring-emerald-300'
+                        : isWrong
+                        ? 'bg-rose-500 text-white shadow-md ring-2 ring-rose-300'
+                        : 'bg-slate-800/80 border border-slate-700 text-slate-500'
+                    }`}
+                  >
+                    <span className="hanzi-font text-2xl sm:text-3xl leading-none">
+                      {isMatch ? char : isWrong ? typedChar : '?'}
+                    </span>
+                    <span className="text-[9px] opacity-50 mt-1 font-sans">#{idx + 1}</span>
+                  </div>
+                );
+              }
+
+              return (
+                <div
+                  key={idx}
+                  className={`min-w-[44px] h-14 sm:min-w-[50px] sm:h-16 px-2 rounded-2xl flex flex-col items-center justify-center font-black transition-all ${
+                    isMatch
+                      ? 'bg-emerald-500 text-white shadow-md scale-105'
+                      : isWrong
+                      ? 'bg-rose-500 text-white shadow-md ring-2 ring-rose-300'
+                      : hasTyped
+                      ? 'bg-amber-100 text-slate-900'
+                      : 'bg-white text-slate-800 border-2 border-stone-200 shadow-2xs'
+                  }`}
+                >
+                  <span className="hanzi-font text-2xl sm:text-3xl leading-none">{char}</span>
+                  <span className="text-[9px] opacity-50 mt-1 font-sans">#{idx + 1}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Pinyin display */}
+        {(showPinyinHint || isPeek || !isBlindMode) && (
+          <div className={`text-sm sm:text-base font-bold pt-1 ${
+            isBlindMode && !isPeek ? 'text-indigo-300' : 'text-indigo-700'
+          }`}>
+            🔤 Pinyin: {currentSentence.pinyin}
+          </div>
+        )}
+
+        {/* Grammar Tip */}
+        {currentSentence.tip && (
+          <div className={`text-xs p-3 rounded-2xl border ${
+            isBlindMode && !isPeek
+              ? 'bg-slate-800/60 border-slate-700 text-amber-200'
+              : 'bg-amber-50/80 border-amber-200/60 text-amber-900'
+          }`}>
+            💡 <strong>Gợi ý ngữ cảnh:</strong> {currentSentence.tip}
+          </div>
+        )}
+      </div>
+
+      {/* 3. Input Field with Instant Accuracy Feedback */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between text-xs font-bold text-slate-600 flex-wrap gap-2">
+          <span>Nhập câu bằng bộ gõ tiếng Trung (Pinyin / IME keyboard):</span>
+          <span>
+            Độ chính xác: <strong className={accuracy === 100 ? 'text-emerald-600 font-black text-sm' : 'text-slate-800'}>{accuracy}%</strong> ({correctCount}/{targetChars.length} chữ)
+          </span>
+        </div>
+
+        <div className="relative">
+          <input
+            ref={inputRef}
+            type="text"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            placeholder="Gõ chữ Hán vào đây (VD: dùng IME gõ 'nihao' -> chọn 你好)..."
+            className={`w-full py-4 px-5 rounded-2xl bg-white border-2 text-lg sm:text-xl font-bold font-sans focus:outline-none transition shadow-inner ${
+              isCompleted
+                ? 'border-emerald-500 ring-4 ring-emerald-100 text-emerald-900'
+                : inputChars.length > 0 && accuracy < 60
+                ? 'border-rose-400 ring-2 ring-rose-100'
+                : 'border-indigo-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 text-slate-900'
+            }`}
+          />
+
+          {userInput.length > 0 && (
+            <button
+              onClick={() => setUserInput('')}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-500 text-xs font-bold transition"
+              title="Xóa ô gõ để gõ lại từ đầu"
+            >
+              <RotateCcw size={15} />
+            </button>
+          )}
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full bg-stone-200 h-2.5 rounded-full overflow-hidden">
+          <div
+            className={`h-full transition-all duration-300 ${
+              isCompleted ? 'bg-emerald-500' : 'bg-gradient-to-r from-indigo-500 to-indigo-600'
+            }`}
+            style={{ width: `${Math.min(100, (correctCount / targetChars.length) * 100)}%` }}
+          />
+        </div>
+      </div>
+
+      {/* 4. Victory Banner */}
+      {isCompleted && (
+        <div className="p-6 rounded-3xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border-2 border-emerald-400 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fadeIn shadow-md">
+          <div className="flex items-center gap-3">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-emerald-600/30">
+              <Trophy size={28} />
+            </div>
+            <div>
+              <h4 className="text-base sm:text-lg font-black text-emerald-950 flex items-center gap-2">
+                <span>Xuất sắc! Gõ chính xác 100% 🎉</span>
+              </h4>
+              <p className="text-xs sm:text-sm text-emerald-800 mt-0.5">
+                Bạn đã hoàn thành câu này với độ chuẩn xác tuyệt đối! Hãy chuyển sang câu tiếp theo hoặc đổi câu ngẫu nhiên để duy trì chuỗi luyện tập.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={onRandomSentence}
+              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs sm:text-sm font-extrabold flex items-center gap-1.5 shadow-xs transition active:scale-95"
+            >
+              <Dices size={16} />
+              <span>🎲 Câu ngẫu nhiên</span>
+            </button>
+
+            <button
+              onClick={onNextSentence}
+              className="px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-extrabold flex items-center gap-2 shadow-md transition active:scale-95"
+            >
+              <span>Câu kế tiếp</span>
+              <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 5. Fast Quick-Jump Carousel */}
+      <div className="pt-2">
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-xs font-bold uppercase tracking-wider text-slate-500">
+            Danh sách câu trong danh mục hiện tại ({sentencePool.length} câu):
+          </div>
+          <button
+            onClick={onRandomSentence}
+            className="text-xs text-indigo-600 hover:text-indigo-800 font-extrabold flex items-center gap-1"
+          >
+            <Shuffle size={12} />
+            <span>Trộn ngẫu nhiên</span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 max-h-[300px] overflow-y-auto pr-1">
+          {sentencePool.map((sent, idx) => {
+            const isCurrent = !isDynamic && idx === selectedSentenceIndex;
+            return (
+              <button
+                key={sent.id}
+                onClick={() => onSelectSentenceIndex(idx)}
+                className={`p-3 rounded-2xl border text-left transition flex items-center justify-between gap-2 ${
+                  isCurrent
+                    ? 'border-indigo-500 bg-indigo-50/90 shadow-xs ring-2 ring-indigo-400'
+                    : 'border-stone-200 bg-white hover:bg-stone-50'
+                }`}
+              >
+                <div className="min-w-0">
+                  <div className="hanzi-font text-sm font-bold text-slate-900 truncate">{sent.hanzi}</div>
+                  <div className="text-[11px] text-slate-500 truncate">{sent.meaning}</div>
+                </div>
+                <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md bg-stone-100 text-slate-600 shrink-0">
+                  #{idx + 1}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
