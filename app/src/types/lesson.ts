@@ -107,6 +107,7 @@ export interface VocabItem {
   examplePinyin: string;
   exampleMeaning: string;
   singleChar?: string;
+  timestamp?: string;
 }
 
 export interface DialogueLine {
