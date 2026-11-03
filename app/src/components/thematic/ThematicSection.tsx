@@ -60,6 +60,12 @@ export const ThematicSection: React.FC<Props> = ({ onSpeak }) => {
     setSelectedSentenceIndex(nextIdx);
   };
 
+  const handlePrevSentence = () => {
+    setDynamicSentence(null);
+    const prevIdx = (selectedSentenceIndex - 1 + sentencePool.length) % sentencePool.length;
+    setSelectedSentenceIndex(prevIdx);
+  };
+
   const handleRandomSentence = () => {
     setDynamicSentence(null);
     let randomIdx = Math.floor(Math.random() * sentencePool.length);
@@ -204,6 +210,7 @@ export const ThematicSection: React.FC<Props> = ({ onSpeak }) => {
               sentencePool={sentencePool}
               selectedSentenceIndex={selectedSentenceIndex}
               isDynamic={!!dynamicSentence}
+              onPrevSentence={handlePrevSentence}
               onNextSentence={handleNextSentence}
               onRandomSentence={handleRandomSentence}
               onGenerateDynamic={handleGenerateDynamic}

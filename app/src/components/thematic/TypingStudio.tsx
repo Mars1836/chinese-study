@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   RotateCcw,
   ArrowRight,
+  ArrowLeft,
   Eye,
   EyeOff,
   Trophy,
@@ -21,6 +22,7 @@ interface TypingStudioProps {
   sentencePool: ThematicSentence[];
   selectedSentenceIndex: number;
   isDynamic: boolean;
+  onPrevSentence: () => void;
   onNextSentence: () => void;
   onRandomSentence: () => void;
   onGenerateDynamic: () => void;
@@ -36,6 +38,7 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
   sentencePool,
   selectedSentenceIndex,
   isDynamic,
+  onPrevSentence,
   onNextSentence,
   onRandomSentence,
   onGenerateDynamic,
@@ -60,6 +63,34 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
       inputRef.current.focus();
     }
   }, [currentSentence]);
+
+  // Global keyboard shortcuts for sentence navigation:
+  // - Alt + ArrowLeft: Previous sentence (works universally, even while focusing text input)
+  // - Alt + ArrowRight: Next sentence (works universally, even while focusing text input)
+  // - Bare ArrowLeft / ArrowRight: When input text box is not focused
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeTag = document.activeElement?.tagName?.toLowerCase();
+      const isInputFocused = activeTag === 'input' || activeTag === 'textarea';
+
+      // Alt + ArrowLeft or (ArrowLeft when not focused in input)
+      if ((e.altKey && e.key === 'ArrowLeft') || (!isInputFocused && e.key === 'ArrowLeft')) {
+        e.preventDefault();
+        onPrevSentence();
+        return;
+      }
+
+      // Alt + ArrowRight or (ArrowRight when not focused in input)
+      if ((e.altKey && e.key === 'ArrowRight') || (!isInputFocused && e.key === 'ArrowRight')) {
+        e.preventDefault();
+        onNextSentence();
+        return;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onPrevSentence, onNextSentence]);
 
   // Target and user characters comparison
   const targetChars = Array.from(currentSentence.hanzi);
@@ -106,6 +137,28 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
           <span className="px-2.5 py-1.5 rounded-xl bg-stone-100 text-slate-600 font-bold text-xs">
             {targetChars.length} ký tự
           </span>
+
+          {/* Quick Prev / Next Buttons in Header with Shortcut Badges */}
+          <div className="inline-flex items-center gap-1 bg-stone-100 p-1 rounded-2xl border border-stone-200">
+            <button
+              onClick={onPrevSentence}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-xl hover:bg-white text-slate-700 text-xs font-bold transition active:scale-95 shadow-2xs"
+              title="Câu trước (Phím tắt: Alt + ←)"
+            >
+              <ArrowLeft size={13} />
+              <span className="hidden sm:inline">Câu trước</span>
+              <kbd className="text-[10px] font-mono bg-stone-200/90 px-1 py-0.2 rounded text-slate-500">Alt+←</kbd>
+            </button>
+            <button
+              onClick={onNextSentence}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-xl hover:bg-white text-slate-700 text-xs font-bold transition active:scale-95 shadow-2xs"
+              title="Câu sau (Phím tắt: Alt + →)"
+            >
+              <span className="hidden sm:inline">Câu sau</span>
+              <kbd className="text-[10px] font-mono bg-stone-200/90 px-1 py-0.2 rounded text-slate-500">Alt+→</kbd>
+              <ArrowRight size={13} />
+            </button>
+          </div>
         </div>
 
         {/* Clean, Independent Mode Toggles & Action Buttons */}
@@ -438,10 +491,22 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
             </button>
 
             <button
+              onClick={onPrevSentence}
+              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-emerald-100 text-emerald-950 border border-emerald-300 text-xs sm:text-sm font-extrabold flex items-center gap-1.5 shadow-xs transition active:scale-95"
+              title="Quay lại câu trước (Phím tắt: Alt + ←)"
+            >
+              <ArrowLeft size={16} />
+              <span>Câu trước</span>
+              <kbd className="hidden sm:inline-block text-[10px] font-mono bg-emerald-100 px-1 py-0.5 rounded text-emerald-800">Alt+←</kbd>
+            </button>
+
+            <button
               onClick={onNextSentence}
               className="px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-extrabold flex items-center gap-2 shadow-md transition active:scale-95"
+              title="Chuyển sang câu sau (Phím tắt: Alt + →)"
             >
               <span>Câu kế tiếp</span>
+              <kbd className="hidden sm:inline-block text-[10px] font-mono bg-emerald-700 px-1.5 py-0.5 rounded text-white/90">Alt+→</kbd>
               <ArrowRight size={16} />
             </button>
           </div>

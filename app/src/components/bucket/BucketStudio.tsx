@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Bookmark,
   Sparkles,
@@ -15,6 +15,7 @@ import {
   Check,
   Trophy,
   ArrowRight,
+  ArrowLeft,
   Plus,
   HelpCircle,
   Settings2,
@@ -161,14 +162,15 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
       onSpeak(currentQ.word.hanzi);
     }
 
-    setResults(prev => [
-      ...prev,
-      {
+    setResults(prev => {
+      const updated = [...prev];
+      updated[currentIndex] = {
         question: currentQ,
         userAnswer: opt,
         isCorrect: correct
-      }
-    ]);
+      };
+      return updated;
+    });
   };
 
   // Submit Typing Answer (Supports single hanzi typing & full sentence typing)
@@ -189,14 +191,36 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
       onSpeak(currentQ.type === 'sentence_typing' ? currentQ.correctAnswer : currentQ.word.hanzi);
     }
 
-    setResults(prev => [
-      ...prev,
-      {
+    setResults(prev => {
+      const updated = [...prev];
+      updated[currentIndex] = {
         question: currentQ,
         userAnswer: typedAnswer.trim(),
         isCorrect: correct
+      };
+      return updated;
+    });
+  };
+
+  // Previous Question (Review previously answered questions)
+  const handlePrevQuestion = () => {
+    if (currentIndex > 0) {
+      const prevIdx = currentIndex - 1;
+      setCurrentIndex(prevIdx);
+      const prevResult = results[prevIdx];
+      if (prevResult) {
+        setSelectedOption(prevResult.userAnswer);
+        setTypedAnswer(prevResult.userAnswer);
+        setIsAnswerSubmitted(true);
+        setIsCurrentCorrect(prevResult.isCorrect);
+      } else {
+        setSelectedOption(null);
+        setTypedAnswer('');
+        setIsAnswerSubmitted(false);
+        setIsCurrentCorrect(false);
       }
-    ]);
+      setShowSentencePinyinHint(false);
+    }
   };
 
   // Next Question or Finish
@@ -204,19 +228,67 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
     if (currentIndex + 1 < quizQuestions.length) {
       const nextIdx = currentIndex + 1;
       setCurrentIndex(nextIdx);
-      setSelectedOption(null);
-      setTypedAnswer('');
-      setIsAnswerSubmitted(false);
-      setIsCurrentCorrect(false);
+      const nextResult = results[nextIdx];
+      if (nextResult) {
+        setSelectedOption(nextResult.userAnswer);
+        setTypedAnswer(nextResult.userAnswer);
+        setIsAnswerSubmitted(true);
+        setIsCurrentCorrect(nextResult.isCorrect);
+      } else {
+        setSelectedOption(null);
+        setTypedAnswer('');
+        setIsAnswerSubmitted(false);
+        setIsCurrentCorrect(false);
+      }
       setShowSentencePinyinHint(false);
 
-      if (quizQuestions[nextIdx]?.type === 'listening_choice') {
+      if (!nextResult && quizQuestions[nextIdx]?.type === 'listening_choice') {
         setTimeout(() => onSpeak(quizQuestions[nextIdx].word.hanzi), 350);
       }
     } else {
       setActiveStep('results');
     }
   };
+
+  // Global Keyboard Shortcuts for Quiz Navigation & Pinyin Toggle:
+  // - Alt + ArrowLeft: Previous question (always works, even in text input)
+  // - Alt + ArrowRight: Next question (always works, even in text input)
+  // - ArrowLeft: Previous question (when not typing in text input)
+  // - ArrowRight: Next question (when not typing in text input and answered)
+  // - 'P' key: Toggle Pinyin on/off (when not typing in text input)
+  useEffect(() => {
+    if (activeStep !== 'quiz') return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeTag = document.activeElement?.tagName?.toLowerCase();
+      const isInputFocused = activeTag === 'input' || activeTag === 'textarea';
+
+      // Alt + ArrowLeft or (ArrowLeft when not typing)
+      if ((e.altKey && e.key === 'ArrowLeft') || (!isInputFocused && e.key === 'ArrowLeft')) {
+        e.preventDefault();
+        handlePrevQuestion();
+        return;
+      }
+
+      // Alt + ArrowRight or (ArrowRight when not typing and answered)
+      if ((e.altKey && e.key === 'ArrowRight') || (!isInputFocused && e.key === 'ArrowRight')) {
+        if (isAnswerSubmitted || e.altKey || !!results[currentIndex]) {
+          e.preventDefault();
+          handleNextQuestion();
+          return;
+        }
+      }
+
+      // Hotkey 'P' to toggle Pinyin
+      if (!isInputFocused && (e.key === 'p' || e.key === 'P')) {
+        e.preventDefault();
+        toggleQuizPinyin(!showQuizPinyin);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeStep, currentIndex, isAnswerSubmitted, quizQuestions, results, showQuizPinyin]);
 
   // Quick Add Sample Words
   const handleAddSampleWords = () => {
@@ -724,13 +796,38 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
           <div className="space-y-3 border-b border-stone-100 pb-4">
             <div className="flex items-center justify-between text-xs font-bold text-slate-500 flex-wrap gap-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="flex items-center gap-1.5 text-indigo-700 font-extrabold bg-indigo-50 px-3 py-1.5 rounded-xl border border-indigo-100 shrink-0">
-                  Câu {currentIndex + 1} / {quizQuestions.length}
-                </span>
+                <div className="inline-flex items-center gap-1">
+                  <span className="flex items-center gap-1.5 text-indigo-700 font-extrabold bg-indigo-50 px-3 py-1.5 rounded-xl border border-indigo-100 shrink-0">
+                    Câu {currentIndex + 1} / {quizQuestions.length}
+                  </span>
+
+                  {/* Header Prev / Next Navigation Buttons */}
+                  <div className="inline-flex items-center gap-0.5 bg-stone-100 p-0.5 rounded-xl border border-stone-200">
+                    <button
+                      onClick={handlePrevQuestion}
+                      disabled={currentIndex === 0}
+                      className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white disabled:opacity-30 disabled:pointer-events-none transition active:scale-95"
+                      title="Câu trước (Alt + ←)"
+                    >
+                      <ArrowLeft size={14} />
+                    </button>
+                    <button
+                      onClick={handleNextQuestion}
+                      disabled={!isAnswerSubmitted && !results[currentIndex]}
+                      className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white disabled:opacity-30 disabled:pointer-events-none transition active:scale-95"
+                      title="Câu tiếp theo (Alt + →)"
+                    >
+                      <ArrowRight size={14} />
+                    </button>
+                  </div>
+                </div>
 
                 {/* Persistent Pinyin On/Off Toggle for Questions & Answers */}
-                <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-2xl border border-stone-200 shrink-0">
-                  <span className="text-[11px] font-bold text-slate-500 pl-2">Pinyin:</span>
+                <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-2xl border border-stone-200 shrink-0 shadow-2xs">
+                  <span className="text-[11px] font-bold text-slate-600 pl-2 flex items-center gap-1">
+                    <span>Pinyin</span>
+                    <kbd className="hidden sm:inline-block text-[9px] font-mono bg-white px-1 py-0.2 rounded border border-stone-200 text-slate-400">P</kbd>:
+                  </span>
                   <button
                     onClick={() => toggleQuizPinyin(false)}
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs font-bold transition active:scale-95 ${
@@ -738,7 +835,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                         ? 'bg-rose-500 text-white shadow-xs'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
-                    title="Ẩn toàn bộ Pinyin ở cả câu hỏi và các đáp án lựa chọn"
+                    title="Ẩn toàn bộ Pinyin ở cả câu hỏi và các đáp án lựa chọn (Phím tắt: P)"
                   >
                     <EyeOff size={12} />
                     <span>Tắt</span>
@@ -750,7 +847,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                         ? 'bg-indigo-600 text-white shadow-xs'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
-                    title="Hiện Pinyin trợ giúp ở câu hỏi và đáp án"
+                    title="Hiện Pinyin trợ giúp ở câu hỏi và đáp án (Phím tắt: P)"
                   >
                     <Eye size={12} />
                     <span>Bật</span>
@@ -969,23 +1066,45 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
           </div>
 
           {/* Action Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-stone-100">
-            <button
-              onClick={() => setActiveStep('setup')}
-              className="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-600 text-xs font-bold transition"
-            >
-              Hủy bài tập
-            </button>
-
-            {isAnswerSubmitted && (
+          <div className="flex items-center justify-between pt-4 border-t border-stone-100 flex-wrap gap-2">
+            <div className="flex items-center gap-2">
               <button
-                onClick={handleNextQuestion}
-                className="flex items-center gap-1.5 px-6 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-sm shadow-md transition active:scale-95"
+                onClick={() => setActiveStep('setup')}
+                className="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-600 text-xs font-bold transition active:scale-95"
               >
-                <span>{currentIndex + 1 < quizQuestions.length ? 'Câu tiếp theo' : 'Xem Kết Quả'}</span>
-                <ArrowRight size={15} />
+                Hủy bài tập
               </button>
-            )}
+
+              {currentIndex > 0 && (
+                <button
+                  onClick={handlePrevQuestion}
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-700 text-xs font-extrabold transition active:scale-95 border border-stone-200 shadow-2xs"
+                  title="Xem lại câu trước (Phím tắt: Alt + ←)"
+                >
+                  <ArrowLeft size={14} />
+                  <span>Câu trước</span>
+                  <kbd className="hidden sm:inline-block text-[10px] font-mono bg-stone-200 px-1 py-0.5 rounded text-slate-500">
+                    Alt+←
+                  </kbd>
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              {(isAnswerSubmitted || !!results[currentIndex]) && (
+                <button
+                  onClick={handleNextQuestion}
+                  className="flex items-center gap-1.5 px-6 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm shadow-md transition active:scale-95"
+                  title="Chuyển sang câu tiếp theo (Phím tắt: Alt + →)"
+                >
+                  <span>{currentIndex + 1 < quizQuestions.length ? 'Câu tiếp theo' : 'Xem Kết Quả'}</span>
+                  <kbd className="hidden sm:inline-block text-[10px] font-mono bg-indigo-500 px-1.5 py-0.5 rounded text-white/90">
+                    Alt+→
+                  </kbd>
+                  <ArrowRight size={15} />
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
