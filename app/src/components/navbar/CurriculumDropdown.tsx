@@ -43,19 +43,19 @@ export const CurriculumDropdown: React.FC<CurriculumDropdownProps> = ({
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white shadow-sm border border-slate-700/60 transition group active:scale-95 text-left"
+        className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white shadow-sm border border-slate-700/60 transition group active:scale-95 text-left shrink-0"
         title="Bấm để chọn giáo trình và danh sách bài học"
       >
         <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
-        <div className="flex flex-col">
-          <div className="text-[10px] text-amber-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span>{currentSection.title}</span>
-            <span className="text-slate-400">•</span>
-            <span className="text-slate-300">{currentSection.badge}</span>
+        <div className="flex flex-col min-w-0">
+          <div className="text-[10px] uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap overflow-hidden">
+            <span className="text-amber-300 font-extrabold truncate max-w-[120px] sm:max-w-[160px]">{currentSection.title}</span>
+            <span className="text-slate-500 shrink-0">•</span>
+            <span className="text-slate-300 font-semibold truncate max-w-[120px] sm:max-w-[160px]">{currentSection.badge}</span>
           </div>
-          <div className="text-xs sm:text-sm font-black flex items-center gap-1.5">
-            <span className="hanzi-font text-amber-400 text-base">{currentLesson.hanzi}</span>
-            <span className="truncate max-w-[140px] sm:max-w-[200px] text-white">
+          <div className="text-xs sm:text-sm font-black flex items-center gap-1.5 whitespace-nowrap overflow-hidden">
+            <span className="hanzi-font text-amber-400 text-base shrink-0">{currentLesson.hanzi}</span>
+            <span className="truncate max-w-[150px] sm:max-w-[220px] text-white">
               {currentLesson.title}
             </span>
           </div>

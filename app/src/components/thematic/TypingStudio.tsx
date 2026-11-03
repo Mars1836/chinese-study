@@ -11,7 +11,6 @@ import {
   Sparkles,
   Volume2,
   Lightbulb,
-  HelpCircle,
   Shuffle
 } from 'lucide-react';
 import { ThematicSentence } from '../../types/thematic';
@@ -42,17 +41,16 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
   onCompleted
 }) => {
   const [userInput, setUserInput] = useState<string>('');
-  const [isBlindMode, setIsBlindMode] = useState<boolean>(true);
-  const [isPeek, setIsPeek] = useState<boolean>(false);
-  const [showPinyinHint, setShowPinyinHint] = useState<boolean>(false);
+  // 2 independent clean switches as requested
+  const [showTargetHanzi, setShowTargetHanzi] = useState<boolean>(false);
+  const [showPinyin, setShowPinyin] = useState<boolean>(true);
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // Reset input and peek on target sentence change
+  // Reset input on target sentence change
   useEffect(() => {
     setUserInput('');
-    setIsPeek(false);
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -105,71 +103,89 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
           </span>
         </div>
 
-        {/* Mode Toggles and Action Buttons */}
+        {/* Clean, Independent Mode Toggles & Action Buttons */}
         <div className="flex items-center gap-2 flex-wrap">
-          {/* Blind Mode Toggle */}
-          <button
-            onClick={() => setIsBlindMode(!isBlindMode)}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-black transition shadow-xs active:scale-95 ${
-              isBlindMode
-                ? 'bg-rose-50 text-rose-700 border-2 border-rose-300 hover:bg-rose-100'
-                : 'bg-emerald-50 text-emerald-700 border-2 border-emerald-300 hover:bg-emerald-100'
-            }`}
-            title="Tắt/Bật đáp án chữ Hán: Khi Tắt, bạn sẽ không thấy chữ Hán mẫu mà chỉ thấy nghĩa tiếng Việt để thử thách trí nhớ!"
-          >
-            {isBlindMode ? <EyeOff size={14} className="text-rose-600" /> : <Eye size={14} className="text-emerald-600" />}
-            <span>{isBlindMode ? 'Đáp án: ĐANG TẮT (Ẩn chữ Hán)' : 'Đáp án: ĐANG BẬT (Hiện chữ Hán)'}</span>
-          </button>
-
-          {/* Peek Button (When Blind Mode is active) */}
-          {isBlindMode && (
+          {/* 1. Toggle Chữ Hán mẫu (Bật / Tắt) */}
+          <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-2xl border border-stone-200">
+            <span className="text-[11px] font-bold text-slate-500 pl-2">Chữ Hán:</span>
             <button
-              onClick={() => setIsPeek(!isPeek)}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold transition active:scale-95"
-              title="Bấm để xem nhanh đáp án nếu bạn quên chữ"
+              onClick={() => setShowTargetHanzi(false)}
+              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold transition ${
+                !showTargetHanzi
+                  ? 'bg-rose-500 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+              title="Ẩn chữ Hán mẫu (Chế độ thử thách tự nhớ chữ để gõ)"
             >
-              <HelpCircle size={14} className="text-amber-600" />
-              <span>{isPeek ? 'Ẩn lại đáp án' : 'Xem đáp án'}</span>
+              <EyeOff size={13} />
+              <span>Ẩn</span>
             </button>
-          )}
+            <button
+              onClick={() => setShowTargetHanzi(true)}
+              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold transition ${
+                showTargetHanzi
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+              title="Hiện chữ Hán mẫu để nhìn theo gõ"
+            >
+              <Eye size={13} />
+              <span>Hiện</span>
+            </button>
+          </div>
 
-          {/* Pinyin Hint Toggle */}
-          <button
-            onClick={() => setShowPinyinHint(!showPinyinHint)}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition ${
-              showPinyinHint
-                ? 'bg-indigo-100 text-indigo-800 border border-indigo-300'
-                : 'bg-stone-100 hover:bg-stone-200 text-slate-700'
-            }`}
-            title="Hiện/Ẩn phiên âm Pinyin"
-          >
-            <span>{showPinyinHint ? 'Ẩn Pinyin' : 'Hiện Pinyin'}</span>
-          </button>
+          {/* 2. Toggle Phiên âm Pinyin (Bật / Tắt) */}
+          <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-2xl border border-stone-200">
+            <span className="text-[11px] font-bold text-slate-500 pl-2">Pinyin:</span>
+            <button
+              onClick={() => setShowPinyin(false)}
+              className={`px-2.5 py-1.5 rounded-xl text-xs font-bold transition ${
+                !showPinyin
+                  ? 'bg-rose-500 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+              title="Tắt hiển thị Pinyin"
+            >
+              Tắt
+            </button>
+            <button
+              onClick={() => setShowPinyin(true)}
+              className={`px-2.5 py-1.5 rounded-xl text-xs font-bold transition ${
+                showPinyin
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+              title="Bật hiển thị Pinyin"
+            >
+              Bật
+            </button>
+          </div>
 
           {/* Random Sentence Button */}
           <button
             onClick={onRandomSentence}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-800 text-xs font-bold transition active:scale-95 shadow-xs"
-            title="Chọn một câu ngẫu nhiên trong danh sách"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-stone-100 hover:bg-stone-200 text-slate-800 text-xs font-bold transition active:scale-95 border border-stone-200"
+            title="Đổi một câu ngẫu nhiên trong danh sách"
           >
             <Dices size={15} className="text-indigo-600" />
-            <span>🎲 Đổi câu ngẫu nhiên</span>
+            <span className="hidden sm:inline">Đổi câu ngẫu nhiên</span>
+            <span className="sm:hidden">Đổi câu</span>
           </button>
 
           {/* Dynamic Sentence Generator Button */}
           <button
             onClick={onGenerateDynamic}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white text-xs font-bold transition active:scale-95 shadow-xs"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white text-xs font-bold transition active:scale-95 shadow-xs"
             title="Tạo một câu kết hợp ngữ pháp mới ngẫu nhiên"
           >
             <Sparkles size={14} className="text-amber-300" />
-            <span>✨ Tạo câu mới</span>
+            <span>Tạo câu mới</span>
           </button>
 
           {/* Pronounce Button */}
           <button
             onClick={() => onSpeak(currentSentence.hanzi)}
-            className="p-2 rounded-xl bg-cinnabar-600 hover:bg-cinnabar-700 text-white text-xs font-bold transition active:scale-95 shadow-xs"
+            className="p-2 rounded-2xl bg-cinnabar-600 hover:bg-cinnabar-700 text-white text-xs font-bold transition active:scale-95 shadow-xs"
             title="Nghe phát âm chuẩn cả câu"
           >
             <Volume2 size={16} />
@@ -178,7 +194,7 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
           {/* Copy Button */}
           <button
             onClick={handleCopySentence}
-            className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-600 text-xs transition"
+            className="p-2 rounded-2xl bg-stone-100 hover:bg-stone-200 text-slate-600 text-xs transition border border-stone-200"
             title="Sao chép chữ Hán câu này"
           >
             {isCopied ? <Check size={16} className="text-emerald-600" /> : <Copy size={16} />}
@@ -186,22 +202,22 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
         </div>
       </div>
 
-      {/* 2. Target Display Box with Real-Time Blind/Challenge Mode */}
+      {/* 2. Target Display Box with Clean Real-Time Toggle */}
       <div className={`p-6 rounded-3xl transition-all space-y-4 border ${
-        isBlindMode && !isPeek
+        !showTargetHanzi
           ? 'bg-slate-900 text-white border-slate-800 shadow-inner'
           : 'bg-stone-50 border-stone-200/80'
       }`}>
         {/* Vietnamese Prompt */}
         <div className="space-y-1">
           <div className={`text-xs font-black uppercase tracking-wider flex items-center gap-1.5 ${
-            isBlindMode && !isPeek ? 'text-amber-400' : 'text-slate-500'
+            !showTargetHanzi ? 'text-amber-400' : 'text-slate-500'
           }`}>
             <Lightbulb size={14} />
-            <span>{isBlindMode && !isPeek ? 'Thử thách: Nhớ chữ Hán dựa theo nghĩa tiếng Việt:' : 'Dịch nghĩa tiếng Việt:'}</span>
+            <span>{!showTargetHanzi ? 'Thử thách: Nhớ chữ Hán dựa theo nghĩa tiếng Việt:' : 'Dịch nghĩa tiếng Việt:'}</span>
           </div>
           <div className={`text-base sm:text-xl font-black ${
-            isBlindMode && !isPeek ? 'text-white' : 'text-slate-900'
+            !showTargetHanzi ? 'text-white' : 'text-slate-900'
           }`}>
             👉 {currentSentence.meaning}
           </div>
@@ -210,10 +226,10 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
         {/* Character-by-Character Tiles */}
         <div className="space-y-2 pt-1">
           <div className="flex items-center justify-between text-xs font-bold text-slate-400">
-            <span>{isBlindMode && !isPeek ? 'Các ô chữ Hán cần gõ (Sẽ tự động mở khi bạn gõ đúng):' : 'Câu chữ Hán mục tiêu:'}</span>
-            {isBlindMode && !isPeek && (
+            <span>{!showTargetHanzi ? 'Các ô chữ Hán cần gõ (Sẽ tự động mở chữ khi bạn gõ đúng):' : 'Câu chữ Hán mẫu:'}</span>
+            {!showTargetHanzi && (
               <span className="text-amber-300 font-semibold">
-                (Đang ở chế độ Thử Thách Ẩn Đáp Án 🛡️)
+                (Đang ở chế độ Thử Thách Ẩn Chữ Hán 🛡️)
               </span>
             )}
           </div>
@@ -225,7 +241,7 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
               const isMatch = hasTyped && typedChar === char;
               const isWrong = hasTyped && typedChar !== char;
 
-              if (isBlindMode && !isPeek) {
+              if (!showTargetHanzi) {
                 return (
                   <div
                     key={idx}
@@ -266,10 +282,10 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
           </div>
         </div>
 
-        {/* Pinyin display */}
-        {(showPinyinHint || isPeek || !isBlindMode) && (
+        {/* Pinyin display: purely governed by showPinyin toggle */}
+        {showPinyin && (
           <div className={`text-sm sm:text-base font-bold pt-1 ${
-            isBlindMode && !isPeek ? 'text-indigo-300' : 'text-indigo-700'
+            !showTargetHanzi ? 'text-indigo-300' : 'text-indigo-700'
           }`}>
             🔤 Pinyin: {currentSentence.pinyin}
           </div>
@@ -278,7 +294,7 @@ export const TypingStudio: React.FC<TypingStudioProps> = ({
         {/* Grammar Tip */}
         {currentSentence.tip && (
           <div className={`text-xs p-3 rounded-2xl border ${
-            isBlindMode && !isPeek
+            !showTargetHanzi
               ? 'bg-slate-800/60 border-slate-700 text-amber-200'
               : 'bg-amber-50/80 border-amber-200/60 text-amber-900'
           }`}>

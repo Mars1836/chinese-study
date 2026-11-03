@@ -54,20 +54,23 @@ export const TopicSelector: React.FC<TopicSelectorProps> = ({
         <span>Tổng {allSentencesCount}+ câu mẫu</span>
       </div>
 
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" aria-label="Topic list">
-        {/* Shuffle All Topics Pill */}
+      {/* Responsive Grid for All Topics - No more horizontal scrolling */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5">
+        {/* Shuffle All Topics Button - Spans 2 cols */}
         <button
           onClick={() => onSelectTopic('all')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition active:scale-95 shadow-xs ${
+          className={`col-span-2 flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all active:scale-95 shadow-xs ${
             isAllTopics
               ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black shadow-amber-500/30 ring-2 ring-amber-300'
               : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200'
           }`}
         >
-          <span>{getTopicIcon('all')}</span>
-          <span>🎲 Toàn Bộ Chủ Đề (Trộn ngẫu nhiên)</span>
-          <span className={`text-[10px] px-1.5 py-0.5 rounded-md ${
-            isAllTopics ? 'bg-black/20 text-slate-950 font-black' : 'bg-stone-100 text-slate-500'
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="shrink-0">{getTopicIcon('all')}</span>
+            <span className="truncate">🎲 Trộn ngẫu nhiên tất cả</span>
+          </div>
+          <span className={`text-[10px] px-2 py-0.5 rounded-md font-black shrink-0 ${
+            isAllTopics ? 'bg-black/20 text-slate-950' : 'bg-stone-100 text-slate-500'
           }`}>
             {allSentencesCount} câu
           </span>
@@ -80,18 +83,20 @@ export const TopicSelector: React.FC<TopicSelectorProps> = ({
             <button
               key={topic.id}
               onClick={() => onSelectTopic(topic.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition active:scale-95 shadow-xs ${
+              className={`flex items-center justify-between px-3 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all active:scale-95 shadow-xs ${
                 isSelected
                   ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-indigo-600/30 ring-2 ring-indigo-400'
                   : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200'
               }`}
             >
-              <span>{getTopicIcon(topic.id)}</span>
-              <span>{topic.title}</span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-md ${
-                isSelected ? 'bg-white/20 text-white' : 'bg-stone-100 text-slate-500'
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="shrink-0">{getTopicIcon(topic.id)}</span>
+                <span className="truncate">{topic.title}</span>
+              </div>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-md shrink-0 ${
+                isSelected ? 'bg-white/20 text-white font-bold' : 'bg-stone-100 text-slate-500'
               }`}>
-                {topic.sampleSentences.length} câu
+                {topic.sampleSentences.length}
               </span>
             </button>
           );

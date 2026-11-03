@@ -130,13 +130,13 @@ export default function App() {
             </div>
 
             {/* Navigation Tabs (5 Modules) */}
-            <nav className="flex items-center gap-2 overflow-x-auto pb-1" aria-label="Tabs">
+            <nav className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" aria-label="Tabs">
               <button
                 onClick={() => setActiveTab('pinyin')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
                   activeTab === 'pinyin'
-                    ? 'bg-cinnabar-600 text-white shadow-sm'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200'
+                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
+                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
                 }`}
               >
                 <Mic size={15} />
@@ -145,25 +145,29 @@ export default function App() {
 
               <button
                 onClick={() => setActiveTab('tones')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
                   activeTab === 'tones'
-                    ? 'bg-cinnabar-600 text-white shadow-sm'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200'
+                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
+                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
                 }`}
               >
                 <AudioWaveform size={15} />
                 <span>2. Thanh Điệu & Biến Điệu</span>
-                <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-1.5 py-0.5 rounded ml-0.5">
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ml-0.5 transition ${
+                  activeTab === 'tones'
+                    ? 'bg-black/25 text-amber-200 border border-amber-300/40'
+                    : 'bg-amber-100 text-amber-800'
+                }`}>
                   01:00:38
                 </span>
               </button>
 
               <button
                 onClick={() => setActiveTab('hanzi')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
                   activeTab === 'hanzi'
-                    ? 'bg-cinnabar-600 text-white shadow-sm'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200'
+                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
+                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
                 }`}
               >
                 <PenTool size={15} />
@@ -172,22 +176,27 @@ export default function App() {
 
               <button
                 onClick={() => setActiveTab('vocab')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
                   activeTab === 'vocab'
-                    ? 'bg-cinnabar-600 text-white shadow-sm'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200'
+                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
+                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
                 }`}
               >
                 <BookOpen size={15} />
-                <span>4. Từ Mới & Bộ Thủ ({lessonData.vocab.length} từ)</span>
+                <span>4. Từ Mới & Bộ Thủ</span>
+                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
+                  activeTab === 'vocab' ? 'bg-white/20 text-white' : 'bg-stone-100 text-slate-500'
+                }`}>
+                  {lessonData.vocab.length}
+                </span>
               </button>
 
               <button
                 onClick={() => setActiveTab('dialogue')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all active:scale-95 ${
                   activeTab === 'dialogue'
-                    ? 'bg-cinnabar-600 text-white shadow-sm'
-                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200'
+                    ? 'bg-gradient-to-r from-cinnabar-600 to-rose-600 text-white shadow-md shadow-cinnabar-600/25 ring-2 ring-cinnabar-300/60 font-black'
+                    : 'bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 shadow-2xs'
                 }`}
               >
                 <MessageSquare size={15} />
