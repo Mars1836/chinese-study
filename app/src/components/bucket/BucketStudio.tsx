@@ -18,7 +18,10 @@ import {
   Plus,
   HelpCircle,
   Settings2,
-  Layers
+  Layers,
+  PenTool,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { BucketWord, QuestionType, QuizConfig, QuizQuestion, QuizResultItem } from '../../types/bucket';
 import { useBucket } from '../../hooks/useBucket';
@@ -43,6 +46,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
     'zh_to_vn',
     'fill_blank',
     'hanzi_typing',
+    'sentence_typing',
     'listening_choice'
   ]);
   const [questionCount, setQuestionCount] = useState<number>(10);
@@ -55,6 +59,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
   const [typedAnswer, setTypedAnswer] = useState<string>('');
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState<boolean>(false);
   const [isCurrentCorrect, setIsCurrentCorrect] = useState<boolean>(false);
+  const [showSentencePinyinHint, setShowSentencePinyinHint] = useState<boolean>(false);
   const [results, setResults] = useState<QuizResultItem[]>([]);
 
   // Filtered bucket words for searching
@@ -130,17 +135,22 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
     ]);
   };
 
-  // Submit Typing Answer
+  // Submit Typing Answer (Supports single hanzi typing & full sentence typing)
   const handleCheckTyping = () => {
     if (isAnswerSubmitted || !typedAnswer.trim()) return;
     const currentQ = quizQuestions[currentIndex];
-    const correct = typedAnswer.trim() === currentQ.correctAnswer.trim();
+
+    // Normalize helper: strip punctuation & whitespace for fair comparison
+    const normalize = (text: string) => text.trim().replace(/[\s\.\,\!\?\。\，\！\？\、]/g, '');
+    const correct = currentQ.type === 'sentence_typing'
+      ? normalize(typedAnswer) === normalize(currentQ.correctAnswer)
+      : typedAnswer.trim() === currentQ.correctAnswer.trim();
 
     setIsAnswerSubmitted(true);
     setIsCurrentCorrect(correct);
 
     if (correct) {
-      onSpeak(currentQ.word.hanzi);
+      onSpeak(currentQ.type === 'sentence_typing' ? currentQ.correctAnswer : currentQ.word.hanzi);
     }
 
     setResults(prev => [
@@ -162,6 +172,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
       setTypedAnswer('');
       setIsAnswerSubmitted(false);
       setIsCurrentCorrect(false);
+      setShowSentencePinyinHint(false);
 
       if (quizQuestions[nextIdx]?.type === 'listening_choice') {
         setTimeout(() => onSpeak(quizQuestions[nextIdx].word.hanzi), 350);
@@ -557,12 +568,37 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                     <span>Luyện gõ chữ Hán (IME)</span>
                   </div>
                   <p className="text-[11px] text-slate-500 mt-1">
-                    Tự tay gõ chữ Hán vào ô theo nghĩa và gợi ý Pinyin để rèn phản xạ.
+                    Tự tay gõ từ vựng chữ Hán vào ô theo nghĩa và gợi ý Pinyin để rèn phản xạ.
                   </p>
                 </div>
               </div>
 
-              {/* Type 5: Listening */}
+              {/* Type 5: Sentence Typing (Writing full sentence based on word's contextual example) */}
+              <div
+                onClick={() => toggleType('sentence_typing')}
+                className={`p-4 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                  enabledTypes.includes('sentence_typing')
+                    ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-60'
+                }`}
+              >
+                <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
+                  enabledTypes.includes('sentence_typing') ? 'bg-indigo-600 text-white' : 'border border-stone-300 bg-white'
+                }`}>
+                  {enabledTypes.includes('sentence_typing') && <Check size={13} />}
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
+                    <PenTool size={15} className="text-blue-600" />
+                    <span>Viết câu tiếng Trung (Theo ngữ cảnh)</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    Dựa vào nghĩa câu ví dụ của từ, tự gõ lại toàn bộ câu tiếng Trung hoàn chỉnh.
+                  </p>
+                </div>
+              </div>
+
+              {/* Type 6: Listening */}
               <div
                 onClick={() => toggleType('listening_choice')}
                 className={`p-4 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 sm:col-span-2 ${
@@ -677,6 +713,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                 {currentQ.type === 'zh_to_vn' && '🇨🇳 Dịch sang tiếng Việt'}
                 {currentQ.type === 'fill_blank' && '✍️ Điền từ vào chỗ trống'}
                 {currentQ.type === 'hanzi_typing' && '⌨️ Luyện gõ chữ Hán'}
+                {currentQ.type === 'sentence_typing' && '✍️ Viết câu tiếng Trung (Ngữ cảnh câu mẫu)'}
                 {currentQ.type === 'listening_choice' && '🔊 Luyện nghe phát âm'}
               </span>
 
@@ -684,7 +721,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                 {currentQ.prompt}
               </h3>
 
-              {currentQ.subPrompt && (
+              {currentQ.subPrompt && currentQ.type !== 'sentence_typing' && (
                 <div className="text-base sm:text-2xl font-black text-indigo-900 py-1 flex items-center gap-2">
                   <span className="hanzi-font">{currentQ.subPrompt}</span>
                   {currentQ.type === 'zh_to_vn' && (
@@ -704,8 +741,54 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                 </div>
               )}
 
+              {/* Context Box for sentence_typing */}
+              {currentQ.type === 'sentence_typing' && (
+                <div className="p-4 sm:p-5 rounded-2xl bg-indigo-50/70 border border-indigo-200/80 space-y-3">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <span className="px-2.5 py-1 rounded-xl bg-indigo-100 text-indigo-900 text-xs font-black">
+                      Từ trọng tâm: <strong className="hanzi-font text-sm">{currentQ.word.hanzi}</strong> ({currentQ.word.pinyin} — {currentQ.word.meaning})
+                    </span>
+
+                    <button
+                      onClick={() => onSpeak(currentQ.correctAnswer)}
+                      className="px-3 py-1.5 rounded-xl bg-white hover:bg-stone-100 text-slate-700 border border-stone-200 text-xs font-bold flex items-center gap-1.5 shadow-2xs transition active:scale-95"
+                      title="Bấm để nghe phát âm câu mẫu"
+                    >
+                      <Volume2 size={14} className="text-amber-500" />
+                      <span>Nghe câu mẫu</span>
+                    </button>
+                  </div>
+
+                  <div className="space-y-1">
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                      Dịch nghĩa câu cần viết:
+                    </div>
+                    <div className="text-base sm:text-xl font-black text-slate-900">
+                      👉 {currentQ.clozeMeaning}
+                    </div>
+                  </div>
+
+                  {/* Optional Pinyin Hint Toggle */}
+                  <div className="pt-2 border-t border-indigo-100/80 flex items-center justify-between flex-wrap gap-2">
+                    <button
+                      onClick={() => setShowSentencePinyinHint(!showSentencePinyinHint)}
+                      className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 transition"
+                    >
+                      {showSentencePinyinHint ? <EyeOff size={13} /> : <Eye size={13} />}
+                      <span>{showSentencePinyinHint ? 'Ẩn gợi ý Pinyin' : 'Xem gợi ý Pinyin câu này'}</span>
+                    </button>
+
+                    {showSentencePinyinHint && currentQ.clozePinyin && (
+                      <span className="text-xs font-bold text-indigo-800 bg-white px-2.5 py-1 rounded-lg border border-indigo-200 shadow-2xs">
+                        🔤 {currentQ.clozePinyin}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Cloze Sentence Display for fill_blank */}
-              {currentQ.clozeSentence && (
+              {currentQ.clozeSentence && currentQ.type === 'fill_blank' && (
                 <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-1">
                   <div className="hanzi-font text-lg sm:text-2xl font-black text-slate-900">
                     {currentQ.clozeSentence}
@@ -751,18 +834,22 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
               </div>
             )}
 
-            {/* Answer Mode 2: Typing Input */}
-            {currentQ.type === 'hanzi_typing' && (
+            {/* Answer Mode 2: Typing Input (for single hanzi or full sentence) */}
+            {(currentQ.type === 'hanzi_typing' || currentQ.type === 'sentence_typing') && (
               <div className="space-y-3 pt-2">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <input
                     type="text"
                     disabled={isAnswerSubmitted}
                     value={typedAnswer}
                     onChange={(e) => setTypedAnswer(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleCheckTyping()}
-                    placeholder="Gõ chữ Hán vào đây (VD: gõ pinyin -> chọn chữ)..."
-                    className={`flex-1 p-3.5 rounded-2xl border-2 text-lg font-bold font-sans focus:outline-none transition ${
+                    placeholder={
+                      currentQ.type === 'sentence_typing'
+                        ? 'Gõ cả câu tiếng Trung vào đây (bằng bộ gõ IME)...'
+                        : 'Gõ chữ Hán vào đây (VD: gõ pinyin -> chọn chữ)...'
+                    }
+                    className={`flex-1 p-3.5 rounded-2xl border-2 text-base sm:text-lg font-bold font-sans focus:outline-none transition ${
                       isAnswerSubmitted
                         ? isCurrentCorrect
                           ? 'border-emerald-500 bg-emerald-50 text-emerald-900'
@@ -773,7 +860,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                   {!isAnswerSubmitted && (
                     <button
                       onClick={handleCheckTyping}
-                      className="px-5 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm transition active:scale-95 shrink-0"
+                      className="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm transition active:scale-95 shrink-0 shadow-xs"
                     >
                       Kiểm Tra
                     </button>
@@ -795,9 +882,9 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                     {isCurrentCorrect ? 'Chính xác! Làm rất tốt! 🎉' : 'Chưa đúng rồi!'}
                   </span>
                   <button
-                    onClick={() => onSpeak(currentQ.word.hanzi)}
+                    onClick={() => onSpeak(currentQ.type === 'sentence_typing' ? currentQ.correctAnswer : currentQ.word.hanzi)}
                     className="p-1.5 rounded-lg bg-white/80 hover:bg-white text-slate-700 shadow-2xs transition"
-                    title="Nghe phát âm từ này"
+                    title="Nghe phát âm"
                   >
                     <Volume2 size={15} />
                   </button>
@@ -874,8 +961,9 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                     </span>
                   )}
                   <button
-                    onClick={() => onSpeak(r.question.word.hanzi)}
+                    onClick={() => onSpeak(r.question.type === 'sentence_typing' ? r.question.correctAnswer : r.question.word.hanzi)}
                     className="p-1 rounded-md bg-white hover:bg-stone-100 text-slate-600"
+                    title="Nghe phát âm"
                   >
                     <Volume2 size={13} />
                   </button>

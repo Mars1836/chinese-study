@@ -13,11 +13,12 @@ export interface BucketWord {
 }
 
 export type QuestionType =
-  | 'vn_to_zh'       // Tiếng Việt -> Tiếng Trung (Chọn chữ Hán)
-  | 'zh_to_vn'       // Tiếng Trung -> Tiếng Việt (Chọn nghĩa)
-  | 'fill_blank'     // Điền từ còn thiếu vào câu
-  | 'hanzi_typing'   // Luyện gõ chữ Hán theo nghĩa tiếng Việt
-  | 'listening_choice'; // Nghe phát âm -> Chọn chữ Hán
+  | 'vn_to_zh'           // Tiếng Việt -> Tiếng Trung (Chọn chữ Hán)
+  | 'zh_to_vn'           // Tiếng Trung -> Tiếng Việt (Chọn nghĩa)
+  | 'fill_blank'         // Điền từ còn thiếu vào câu
+  | 'hanzi_typing'       // Luyện gõ từ vựng chữ Hán theo nghĩa
+  | 'sentence_typing'    // Viết / Luyện gõ cả câu tiếng Trung chứa từ vựng
+  | 'listening_choice';  // Nghe phát âm -> Chọn chữ Hán
 
 export interface QuestionTypeOption {
   type: QuestionType;

@@ -149,6 +149,38 @@ export function generateQuiz(bucketWords: BucketWord[], config: QuizConfig): Qui
         break;
       }
 
+      case 'sentence_typing': {
+        // Target sentence from word's existing example sentence or contextual template
+        let sentenceHanzi = '';
+        let sentencePinyin = '';
+        let sentenceMeaning = '';
+
+        if (word.exampleHanzi && word.exampleHanzi.trim()) {
+          sentenceHanzi = word.exampleHanzi.trim();
+          sentencePinyin = word.examplePinyin ? word.examplePinyin.trim() : '';
+          sentenceMeaning = word.exampleMeaning ? word.exampleMeaning.trim() : word.meaning;
+        } else {
+          // Meaningful contextual fallback sentence with this vocabulary
+          sentenceHanzi = `我想学${word.hanzi}。`;
+          sentencePinyin = `Wǒ xiǎng xué ${word.pinyin}.`;
+          sentenceMeaning = `Tôi muốn học ${word.meaning}.`;
+        }
+
+        questions.push({
+          id: `q_${index}_sentence_typing`,
+          type: 'sentence_typing',
+          word,
+          prompt: `Dịch và viết câu tiếng Trung chứa từ "${word.hanzi}" (${word.meaning}):`,
+          subPrompt: `Dịch nghĩa câu: "${sentenceMeaning}"`,
+          clozeSentence: sentenceHanzi,
+          clozePinyin: sentencePinyin,
+          clozeMeaning: sentenceMeaning,
+          correctAnswer: sentenceHanzi,
+          explanation: `Câu tiếng Trung chính xác: "${sentenceHanzi}" (${sentencePinyin}) — Dịch nghĩa: "${sentenceMeaning}"`
+        });
+        break;
+      }
+
       case 'listening_choice': {
         const distractors = getDistractors(allWordsPool, word, w => w.hanzi, 3);
         const correct = word.hanzi;
