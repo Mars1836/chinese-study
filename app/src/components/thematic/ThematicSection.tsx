@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Keyboard, BookOpen, Sparkles } from 'lucide-react';
+import { Keyboard, BookOpen, Sparkles, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { ThematicTopic, ThematicSentence, ThematicWord } from '../../types/thematic';
 import { thematicTopics, allTypingSentences, generateRandomSentence } from '../../data/thematic';
 import { VocabItem } from '../../types/lesson';
@@ -18,6 +18,7 @@ export const ThematicSection: React.FC<Props> = ({ onSpeak }) => {
   // 'all' represents shuffle mode across all topics
   const [selectedTopicId, setSelectedTopicId] = useState<string>('all');
   const [activeTab, setActiveTab] = useState<'typing' | 'vocab' | 'grammar'>('typing');
+  const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
   const isAllTopics = selectedTopicId === 'all';
   const currentTopic = thematicTopics.find(t => t.id === selectedTopicId) || thematicTopics[0];
@@ -97,24 +98,41 @@ export const ThematicSection: React.FC<Props> = ({ onSpeak }) => {
       {/* 2. Main Two-Column Layout: Topic Sidebar + Main Practice Studio */}
       <div className="flex flex-col lg:flex-row gap-6 items-start">
         {/* Left Sidebar: Topics list with real-time search & full titles */}
-        <aside className="w-full lg:w-80 shrink-0 lg:sticky lg:top-20">
-          <TopicSidebar
-            topics={thematicTopics}
-            selectedTopicId={selectedTopicId}
-            onSelectTopic={(topicId) => {
-              setSelectedTopicId(topicId);
-              setSelectedSentenceIndex(0);
-              setDynamicSentence(null);
-            }}
-            allSentencesCount={allTypingSentences.length}
-          />
-        </aside>
+        {showSidebar && (
+          <aside className="w-full lg:w-80 shrink-0 lg:sticky lg:top-20 animate-fadeIn">
+            <TopicSidebar
+              topics={thematicTopics}
+              selectedTopicId={selectedTopicId}
+              onSelectTopic={(topicId) => {
+                setSelectedTopicId(topicId);
+                setSelectedSentenceIndex(0);
+                setDynamicSentence(null);
+              }}
+              allSentencesCount={allTypingSentences.length}
+              onClose={() => setShowSidebar(false)}
+            />
+          </aside>
+        )}
 
         {/* Right Main Column: Navigation Tabs & Tab Content */}
         <div className="flex-1 min-w-0 w-full space-y-5">
-          {/* Navigation Tabs */}
+          {/* Navigation Tabs with Sidebar Toggle */}
           <div className="flex items-center justify-between border-b border-stone-200 pb-3 flex-wrap gap-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              {/* Sidebar Visibility Toggle Button */}
+              <button
+                onClick={() => setShowSidebar(!showSidebar)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs font-bold transition-all active:scale-95 shadow-xs border ${
+                  showSidebar
+                    ? 'bg-stone-100 hover:bg-stone-200 text-slate-700 border-stone-200'
+                    : 'bg-indigo-600 hover:bg-indigo-700 text-white border-indigo-600 ring-2 ring-indigo-300'
+                }`}
+                title={showSidebar ? 'Bấm để ẩn sidebar danh sách chủ đề' : 'Bấm để mở sidebar danh sách chủ đề'}
+              >
+                {showSidebar ? <PanelLeftClose size={15} /> : <PanelLeftOpen size={15} />}
+                <span>{showSidebar ? 'Ẩn chuyên đề' : 'Hiện chuyên đề'}</span>
+              </button>
+
               <button
                 onClick={() => setActiveTab('typing')}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold transition-all active:scale-95 ${

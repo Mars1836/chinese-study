@@ -66,6 +66,12 @@ export const calendarTopic: ThematicTopic = {
       { id: 207, hanzi: '星期五晚上你忙不忙？', pinyin: 'Xīngqīwǔ wǎnshang nǐ máng bù máng?', meaning: 'Tối thứ Sáu bạn có bận không?', difficulty: 'Trung cấp', tip: 'Câu hỏi chính phản: 忙不忙 (bận hay không bận).' },
       { id: 208, hanzi: '明年三月我打算去中国旅游。', pinyin: 'Míngnián sān yuè wǒ dǎsuan qù Zhōngguó lǚyóu.', meaning: 'Tháng 3 năm sau tôi dự định đi Trung Quốc du lịch.', difficulty: 'Nâng cao', tip: '打算 (dǎsuan - dự định).' },
       { id: 209, hanzi: '每天早上七点他都去跑步。', pinyin: 'Měitiān zǎoshang qī diǎn tā dōu qù pǎobù.', meaning: '7 giờ mỗi sáng anh ấy đều đi chạy bộ.', difficulty: 'Trung cấp', tip: 'Đều làm gì: 都 (dōu).' },
-      { id: 210, hanzi: '今天星期几？今天星期五。', pinyin: 'Jīntiān xīngqī jǐ? Jīntiān xīngqīwǔ.', meaning: 'Hôm nay là thứ mấy? Hôm nay là thứ Sáu.', difficulty: 'Cơ bản', tip: 'Hỏi thứ dùng 星期几 (xīngqī jǐ).' }
+      { id: 210, hanzi: '今天星期几？今天星期五。', pinyin: 'Jīntiān xīngqī jǐ? Jīntiān xīngqīwǔ.', meaning: 'Hôm nay là thứ mấy? Hôm nay là thứ Sáu.', difficulty: 'Cơ bản', tip: 'Hỏi thứ dùng 星期几 (xīngqī jǐ).' },
+      { id: 211, hanzi: '明天见！', pinyin: 'Míngtiān jiàn!', meaning: 'Ngày mai gặp lại!', difficulty: 'Cơ bản', tip: 'Câu chào hẹn gặp: Ngày mai gặp.' },
+      { id: 212, hanzi: '现在十点整。', pinyin: 'Xiànzài shí diǎn zhěng.', meaning: 'Bây giờ đúng mười giờ.', difficulty: 'Cơ bản', tip: 'Đúng ... giờ: 点整 (diǎn zhěng).' },
+      { id: 213, hanzi: '今天不是星期一。', pinyin: 'Jīntiān bú shì xīngqīyī.', meaning: 'Hôm nay không phải là thứ Hai.', difficulty: 'Cơ bản', tip: 'Không phải là: 不是 (bú shì).' },
+      { id: 214, hanzi: '明天是我的生日。', pinyin: 'Míngtiān shì wǒ de shēngrì.', meaning: 'Ngày mai là sinh nhật của tôi.', difficulty: 'Cơ bản', tip: 'Sinh nhật: 生日 (shēngrì).' },
+      { id: 215, hanzi: '晚上你想去哪儿？', pinyin: 'Wǎnshang nǐ xiǎng qù nǎr?', meaning: 'Buổi tối bạn muốn đi đâu?', difficulty: 'Cơ bản', tip: 'Hỏi nơi chốn: 哪儿 (nǎr).' },
+      { id: 216, hanzi: '昨天我很忙。', pinyin: 'Zuótiān wǒ hěn máng.', meaning: 'Hôm qua tôi rất bận.', difficulty: 'Cơ bản', tip: 'Rất bận: 很忙 (hěn máng).' }
     ]
   };

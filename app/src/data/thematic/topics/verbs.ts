@@ -87,6 +87,12 @@ export const verbsTopic: ThematicTopic = {
       { id: 907, hanzi: '请等我五分钟，我马上就来。', pinyin: 'Qǐng děng wǒ wǔ fēnzhōng, wǒ mǎshàng jiù lái.', meaning: 'Xin đợi tôi 5 phút, tôi tới ngay đây.', difficulty: 'Cơ bản', tip: '马上就 (mǎshàng jiù - lập tức, ngay).' },
       { id: 908, hanzi: '他昨天写了一封长信给他的妈妈。', pinyin: 'Tā zuótiān xiě le yì fēng cháng xìn gěi tā de māmā.', meaning: 'Hôm qua anh ấy đã viết một bức thư dài gửi cho mẹ.', difficulty: 'Trung cấp', tip: 'Lượng từ cho thư: 封 (fēng).' },
       { id: 909, hanzi: '你会说汉语吗？我会说一点儿。', pinyin: 'Nǐ huì shuō Hànyǔ ma? Wǒ huì shuō yìdiǎnr.', meaning: 'Bạn biết nói tiếng Hán không? Tôi biết nói một chút.', difficulty: 'Cơ bản', tip: '会 + Động từ: biết làm gì qua học tập.' },
-      { id: 910, hanzi: '他帮我借了两本很有意思的中文书。', pinyin: 'Tā bāng wǒ jiè le liǎng běn hěn yǒu yìsi de Zhōngwén shū.', meaning: 'Anh ấy đã giúp tôi mượn hai cuốn sách tiếng Trung rất hay.', difficulty: 'Trung cấp', tip: 'A 帮 B + Động từ: A giúp B làm việc gì.' }
+      { id: 910, hanzi: '他帮我借了两本很有意思的中文书。', pinyin: 'Tā bāng wǒ jiè le liǎng běn hěn yǒu yìsi de Zhōngwén shū.', meaning: 'Anh ấy đã giúp tôi mượn hai cuốn sách tiếng Trung rất hay.', difficulty: 'Trung cấp', tip: 'A 帮 B + Động từ: A giúp B làm việc gì.' },
+      { id: 911, hanzi: '你看懂了吗？', pinyin: 'Nǐ kàndǒng le ma?', meaning: 'Bạn xem có hiểu không?', difficulty: 'Cơ bản', tip: 'Bổ ngữ kết quả: 看懂 (xem hiểu).' },
+      { id: 912, hanzi: '我们一起走吧。', pinyin: 'Wǒmen yìqǐ zǒu ba.', meaning: 'Chúng mình cùng đi thôi.', difficulty: 'Cơ bản', tip: 'Chúng ta cùng đi: 一起走.' },
+      { id: 913, hanzi: '请坐，请喝水。', pinyin: 'Qǐng zuò, qǐng hē shuǐ.', meaning: 'Xin mời ngồi, xin mời uống nước.', difficulty: 'Cơ bản', tip: 'Lời mời lịch sự: 请坐, 请喝.' },
+      { id: 914, hanzi: '他在听音乐。', pinyin: 'Tā zài tīng yīnyuè.', meaning: 'Anh ấy đang nghe nhạc.', difficulty: 'Cơ bản', tip: 'Đang làm gì: 在 + Động từ.' },
+      { id: 915, hanzi: '你会写这个汉字吗？', pinyin: 'Nǐ huì xiě zhè ge hànzì ma?', meaning: 'Bạn biết viết chữ Hán này không?', difficulty: 'Cơ bản', tip: 'Biết viết: 会写 (huì xiě).' },
+      { id: 916, hanzi: '我不想去，我想在家看书。', pinyin: 'Wǒ bù xiǎng qù, wǒ xiǎng zài jiā kànshū.', meaning: 'Tôi không muốn đi, tôi muốn ở nhà đọc sách.', difficulty: 'Cơ bản', tip: 'Ở nhà đọc sách: 在家看书.' }
     ]
   };

@@ -76,6 +76,12 @@ export const numbersTopic: ThematicTopic = {
       { id: 107, hanzi: '我们家一共有四口人。', pinyin: 'Wǒmen jiā yígòng yǒu sì kǒu rén.', meaning: 'Nhà chúng tôi tổng cộng có bốn người.', difficulty: 'Cơ bản', tip: 'Lượng từ cho nhân khẩu gia đình dùng 口 (kǒu).' },
       { id: 108, hanzi: '我想买两件好看的衣服。', pinyin: 'Wǒ xiǎng mǎi liǎng jiàn hǎokàn de yīfu.', meaning: 'Tôi muốn mua hai bộ quần áo đẹp.', difficulty: 'Trung cấp', tip: 'Lượng từ cho quần áo là 件 (jiàn).' },
       { id: 109, hanzi: '桌子上有五张白纸和三支笔。', pinyin: 'Zhuōzi shang yǒu wǔ zhāng bái zhǐ hé sān zhī bǐ.', meaning: 'Trên bàn có năm tờ giấy trắng và ba cây bút.', difficulty: 'Nâng cao', tip: '张 (zhāng) cho giấy, 支 (zhī) cho bút.' },
-      { id: 110, hanzi: '他买了两瓶水和三碗热面条。', pinyin: 'Tā mǎi le liǎng píng shuǐ hé sān wǎn rè miàntiáo.', meaning: 'Anh ấy đã mua hai chai nước và ba bát mì sợi nóng.', difficulty: 'Nâng cao', tip: '瓶 (píng - chai), 碗 (wǎn - bát).' }
+      { id: 110, hanzi: '他买了两瓶水和三碗热面条。', pinyin: 'Tā mǎi le liǎng píng shuǐ hé sān wǎn rè miàntiáo.', meaning: 'Anh ấy đã mua hai chai nước và ba bát mì sợi nóng.', difficulty: 'Nâng cao', tip: '瓶 (píng - chai), 碗 (wǎn - bát).' },
+      { id: 111, hanzi: '你要几个？', pinyin: 'Nǐ yào jǐ gè?', meaning: 'Bạn muốn mấy cái?', difficulty: 'Cơ bản', tip: '几 (jǐ) dùng hỏi số lượng ít dưới 10.' },
+      { id: 112, hanzi: '我有两块钱。', pinyin: 'Wǒ yǒu liǎng kuài qián.', meaning: 'Tôi có hai tệ.', difficulty: 'Cơ bản', tip: 'Tiền tệ: 两块钱.' },
+      { id: 113, hanzi: '请给我一张纸。', pinyin: 'Qǐng gěi wǒ yì zhāng zhǐ.', meaning: 'Xin cho tôi một tờ giấy.', difficulty: 'Cơ bản', tip: 'Lượng từ tờ giấy: 一张纸.' },
+      { id: 114, hanzi: '这里有五个人。', pinyin: 'Zhèlǐ yǒu wǔ gè rén.', meaning: 'Ở đây có năm người.', difficulty: 'Cơ bản', tip: '五个人: 5 người.' },
+      { id: 115, hanzi: '我想喝一杯水。', pinyin: 'Wǒ xiǎng hē yì bēi shuǐ.', meaning: 'Tôi muốn uống một cốc nước.', difficulty: 'Cơ bản', tip: '一杯水: 1 cốc nước.' },
+      { id: 116, hanzi: '他买了三本书。', pinyin: 'Tā mǎi le sān běn shū.', meaning: 'Anh ấy đã mua ba cuốn sách.', difficulty: 'Cơ bản', tip: '三本书: 3 cuốn sách.' }
     ]
   };

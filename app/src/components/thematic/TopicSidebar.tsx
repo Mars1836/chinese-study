@@ -14,7 +14,8 @@ import {
   BookOpen,
   Search,
   X,
-  Layers
+  Layers,
+  PanelLeftClose
 } from 'lucide-react';
 import { ThematicTopic } from '../../types/thematic';
 
@@ -23,13 +24,15 @@ interface TopicSidebarProps {
   selectedTopicId: string;
   onSelectTopic: (topicId: string) => void;
   allSentencesCount: number;
+  onClose?: () => void;
 }
 
 export const TopicSidebar: React.FC<TopicSidebarProps> = ({
   topics,
   selectedTopicId,
   onSelectTopic,
-  allSentencesCount
+  allSentencesCount,
+  onClose
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const isAllTopics = selectedTopicId === 'all';
@@ -103,9 +106,20 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
             10 chuyên đề thực tế + Kho luyện gõ
           </p>
         </div>
-        <span className="text-[11px] font-extrabold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-xl border border-indigo-100 shrink-0">
-          {filteredTopics.length} / {topics.length}
-        </span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[11px] font-extrabold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-xl border border-indigo-100 shrink-0">
+            {filteredTopics.length} / {topics.length}
+          </span>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-500 hover:text-slate-800 transition"
+              title="Ẩn sidebar này"
+            >
+              <PanelLeftClose size={15} />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Search Input Box */}

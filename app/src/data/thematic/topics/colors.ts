@@ -46,6 +46,12 @@ export const colorsTopic: ThematicTopic = {
       { id: 607, hanzi: '骑自行车比走路快得多。', pinyin: 'Qí zìxíngchē bǐ zǒulù kuài de duō.', meaning: 'Đi xe đạp nhanh hơn đi bộ rất nhiều.', difficulty: 'Trung cấp', tip: '比...快得多 (nhanh hơn nhiều).' },
       { id: 608, hanzi: '我爸爸买了一辆黑色的新车。', pinyin: 'Wǒ bàba mǎi le yí liàng hēisè de xīn chē.', meaning: 'Bố tôi đã mua một chiếc xe ô tô mới màu đen.', difficulty: 'Trung cấp', tip: 'Lượng từ cho xe cộ: 辆 (liàng).' },
       { id: 609, hanzi: '这间房子的窗户很大，采光很好。', pinyin: 'Zhè jiān fángzi de chuānghu hěn dà, cǎiguāng hěn hǎo.', meaning: 'Cửa sổ căn phòng này rất lớn, đón ánh sáng rất tốt.', difficulty: 'Nâng cao', tip: 'Lượng từ phòng: 间 (jiān).' },
-      { id: 610, hanzi: '这里的衣服既便宜又好看，质量很棒。', pinyin: 'Zhèlǐ de yīfu jì piányi yòu hǎokàn, zhìliàng hěn bàng.', meaning: 'Quần áo ở đây vừa rẻ lại vừa đẹp, chất lượng rất đỉnh.', difficulty: 'Nâng cao', tip: '既...又...: Vừa... vừa...' }
+      { id: 610, hanzi: '这里的衣服既便宜又好看，质量很棒。', pinyin: 'Zhèlǐ de yīfu jì piányi yòu hǎokàn, zhìliàng hěn bàng.', meaning: 'Quần áo ở đây vừa rẻ lại vừa đẹp, chất lượng rất đỉnh.', difficulty: 'Nâng cao', tip: '既...又...: Vừa... vừa...' },
+      { id: 611, hanzi: '你喜欢什么颜色？', pinyin: 'Nǐ xǐhuan shénme yánsè?', meaning: 'Bạn thích màu gì?', difficulty: 'Cơ bản', tip: 'Màu gì: 什么颜色 (shénme yánsè).' },
+      { id: 612, hanzi: '我喜欢白色。', pinyin: 'Wǒ xǐhuan báisè.', meaning: 'Tôi thích màu trắng.', difficulty: 'Cơ bản', tip: 'Màu trắng: 白色 (báisè).' },
+      { id: 613, hanzi: '你看那朵红花。', pinyin: 'Nǐ kàn nà duǒ hóng huā.', meaning: 'Bạn nhìn bông hoa đỏ kìa.', difficulty: 'Cơ bản', tip: 'Bông hoa đỏ: 红花 (hóng huā).' },
+      { id: 614, hanzi: '他穿黑色的衣服。', pinyin: 'Tā chuān hēisè de yīfu.', meaning: 'Anh ấy mặc quần áo màu đen.', difficulty: 'Cơ bản', tip: 'Mặc áo màu đen: 穿黑色的衣服.' },
+      { id: 615, hanzi: '这支笔是蓝色的。', pinyin: 'Zhè zhī bǐ shì lánsè de.', meaning: 'Cây bút này có màu xanh lam.', difficulty: 'Cơ bản', tip: 'Màu xanh lam: 蓝色 (lánsè).' },
+      { id: 616, hanzi: '这件衣服太贵了。', pinyin: 'Zhè jiàn yīfu tài guì le.', meaning: 'Bộ quần áo này đắt quá rồi.', difficulty: 'Cơ bản', tip: 'Đắt quá: 太贵了 (tài guì le).' }
     ]
   };

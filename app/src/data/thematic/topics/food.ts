@@ -46,6 +46,12 @@ export const foodTopic: ThematicTopic = {
       { id: 707, hanzi: '服务员，买单！一共多少钱？', pinyin: 'Fúwùyuán, mǎidān! Yígòng duōshao qián?', meaning: 'Phục vụ, tính tiền! Tổng cộng bao nhiêu tiền?', difficulty: 'Cơ bản', tip: 'Câu hỏi tính tiền chuẩn: 一共多少钱？' },
       { id: 708, hanzi: '这个苹果很甜，一斤五块钱。', pinyin: 'Zhè gè píngguǒ hěn tián, yì jīn wǔ kuài qián.', meaning: 'Quả táo này rất ngọt, năm tệ một cân (500g).', difficulty: 'Cơ bản', tip: '1 斤 (jīn) ở TQ = 500 gram.' },
       { id: 709, hanzi: '我肚子很饿，我们去饭馆吃饭吧。', pinyin: 'Wǒ dùzi hěn è, wǒmen qù fànguǎn chīfàn ba.', meaning: 'Bụng tôi đói quá rồi, chúng ta đến quán ăn cơm đi.', difficulty: 'Cơ bản', tip: '饿 (è - đói bụng), 吧 (ba - nhé/đi).' },
-      { id: 710, hanzi: '晚上少喝一点儿咖啡，喝温水对身体好。', pinyin: 'Wǎnshang shǎo hē yìdiǎnr kāfēi, hē wēnshuǐ duì shēntǐ hǎo.', meaning: 'Buổi tối bớt uống cà phê đi, uống nước ấm tốt cho sức khỏe.', difficulty: 'Trung cấp', tip: '少 + Động từ: làm việc gì ít đi.' }
+      { id: 710, hanzi: '晚上少喝一点儿咖啡，喝温水对身体好。', pinyin: 'Wǎnshang shǎo hē yìdiǎnr kāfēi, hē wēnshuǐ duì shēntǐ hǎo.', meaning: 'Buổi tối bớt uống cà phê đi, uống nước ấm tốt cho sức khỏe.', difficulty: 'Trung cấp', tip: '少 + Động từ: làm việc gì ít đi.' },
+      { id: 711, hanzi: '你想吃什么？', pinyin: 'Nǐ xiǎng chī shénme?', meaning: 'Bạn muốn ăn gì?', difficulty: 'Cơ bản', tip: 'Câu hỏi ăn uống phổ biến nhất.' },
+      { id: 712, hanzi: '请喝茶。', pinyin: 'Qǐng hē chá.', meaning: 'Xin mời uống trà.', difficulty: 'Cơ bản', tip: 'Mời ai uống gì: 请喝...' },
+      { id: 713, hanzi: '米饭很好吃。', pinyin: 'Mǐfàn hěn hǎochī.', meaning: 'Cơm trắng rất ngon.', difficulty: 'Cơ bản', tip: 'Cơm trắng: 米饭 (mǐfàn).' },
+      { id: 714, hanzi: '我不喜欢吃辣的。', pinyin: 'Wǒ bù xǐhuan chī là de.', meaning: 'Tôi không thích ăn đồ cay.', difficulty: 'Cơ bản', tip: 'Đồ cay: 辣的 (là de).' },
+      { id: 715, hanzi: '来两碗牛肉面。', pinyin: 'Lái liǎng wǎn niúròumiàn.', meaning: 'Cho hai bát mì thịt bò.', difficulty: 'Cơ bản', tip: 'Gọi món dùng 来 (lái - cho/lấy).' },
+      { id: 716, hanzi: '这个西瓜多少钱？', pinyin: 'Zhè ge xīguā duōshao qián?', meaning: 'Quả dưa hấu này bao nhiêu tiền?', difficulty: 'Cơ bản', tip: 'Hỏi giá tiền: 多少钱 (duōshao qián).' }
     ]
   };

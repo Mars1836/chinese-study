@@ -46,6 +46,12 @@ export const placesTopic: ThematicTopic = {
       { id: 807, hanzi: '我打算坐高速铁路去上海旅游。', pinyin: 'Wǒ dǎsuan zuò gāosù tiělù qù Shànghǎi lǚyóu.', meaning: 'Tôi dự định đi tàu cao tốc đến Thượng Hải du lịch.', difficulty: 'Trung cấp', tip: '高速铁路 (Gao thiêt / tàu cao tốc).' },
       { id: 808, hanzi: '离这里最近的地铁站在哪里？', pinyin: 'Lí zhèlǐ zuì jìn de dìtiězhàn zài nǎlǐ?', meaning: 'Ga tàu điện ngầm gần đây nhất nằm ở đâu?', difficulty: 'Trung cấp', tip: '离这里最近 (gần nơi này nhất).' },
       { id: 809, hanzi: '热烈欢迎你来到美丽的越南河内！', pinyin: 'Rèliè huānyíng nǐ lái dào měilì de Yuènán Hénèi!', meaning: 'Nhiệt liệt chào mừng bạn đến với thủ đô Hà Nội của đất nước Việt Nam tươi đẹp!', difficulty: 'Nâng cao', tip: '热烈欢迎 (nhiệt liệt chào mừng).' },
-      { id: 810, hanzi: '我们明天早上在学校的大门口见面吧。', pinyin: 'Wǒmen míngtiān zǎoshang zài xuéxiào de dàménkǒu jiànmiàn ba.', meaning: 'Sáng mai chúng ta gặp nhau ở cổng lớn của trường học nhé.', difficulty: 'Trung cấp', tip: '在...见面 (gặp nhau ở đâu).' }
+      { id: 810, hanzi: '我们明天早上在学校的大门口见面吧。', pinyin: 'Wǒmen míngtiān zǎoshang zài xuéxiào de dàménkǒu jiànmiàn ba.', meaning: 'Sáng mai chúng ta gặp nhau ở cổng lớn của trường học nhé.', difficulty: 'Trung cấp', tip: '在...见面 (gặp nhau ở đâu).' },
+      { id: 811, hanzi: '你去哪儿？', pinyin: 'Nǐ qù nǎr?', meaning: 'Bạn đi đâu đấy?', difficulty: 'Cơ bản', tip: 'Câu hỏi điểm đến kinh điển nhất.' },
+      { id: 812, hanzi: '我去超市买东西。', pinyin: 'Wǒ qù chāoshì mǎi dōngxi.', meaning: 'Tôi đi siêu thị mua đồ.', difficulty: 'Cơ bản', tip: 'Mua đồ: 买东西 (mǎi dōngxi).' },
+      { id: 813, hanzi: '他现在不在家。', pinyin: 'Tā xiànzài bú zài jiā.', meaning: 'Hiện tại anh ấy không ở nhà.', difficulty: 'Cơ bản', tip: 'Không ở nhà: 不在家.' },
+      { id: 814, hanzi: '请问，地铁站在哪儿？', pinyin: 'Qǐngwèn, dìtiězhàn zài nǎr?', meaning: 'Xin hỏi, ga tàu điện ngầm ở đâu?', difficulty: 'Cơ bản', tip: 'Ga tàu điện ngầm: 地铁站.' },
+      { id: 815, hanzi: '我在中国学习汉语。', pinyin: 'Wǒ zài Zhōngguó xuéxí Hànyǔ.', meaning: 'Tôi học tiếng Hán ở Trung Quốc.', difficulty: 'Cơ bản', tip: 'Ở đâu làm gì: 在...学习.' },
+      { id: 816, hanzi: '我们回家吧。', pinyin: 'Wǒmen huí jiā ba.', meaning: 'Chúng mình về nhà thôi.', difficulty: 'Cơ bản', tip: 'Về nhà: 回家 (huí jiā).' }
     ]
   };

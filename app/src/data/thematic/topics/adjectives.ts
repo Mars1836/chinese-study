@@ -84,6 +84,12 @@ export const adjectivesTopic: ThematicTopic = {
       { id: 1007, hanzi: '我现在肚子很饿，想吃一碗热面条。', pinyin: 'Wǒ xiànzài dùzi hěn è, xiǎng chī yì wǎn rè miàntiáo.', meaning: 'Bây giờ bụng tôi rất đói, muốn ăn một bát mì nóng.', difficulty: 'Cơ bản', tip: '肚子饿 (dùzi è - đói bụng).' },
       { id: 1008, hanzi: '这里的环境很安静，住着非常舒服。', pinyin: 'Zhèlǐ de huánjìng hěn ānjìng, zhù zhe fēicháng shūfu.', meaning: 'Môi trường ở đây rất yên tĩnh, sống vô cùng thoải mái dễ chịu.', difficulty: 'Trung cấp', tip: '安静 (yên tĩnh), 舒服 (thoải mái).' },
       { id: 1009, hanzi: '跑步比散步快得多，能锻炼身体。', pinyin: 'Pǎobù bǐ sànbù kuài de duō, néng duànliàn shēntǐ.', meaning: 'Chạy bộ nhanh hơn đi dạo nhiều, có thể rèn luyện sức khỏe.', difficulty: 'Trung cấp', tip: '快得多 (nhanh hơn nhiều).' },
-      { id: 1010, hanzi: '最近你工作忙不忙？我一点儿都不忙。', pinyin: 'Zuìjìn nǐ gōngzuò máng bù máng? Wǒ yìdiǎnr dōu bù máng.', meaning: 'Dạo gần đây công việc của bạn có bận không? Tôi chẳng bận chút nào.', difficulty: 'Trung cấp', tip: '一点儿都不 (yìdiǎnr dōu bù - một chút cũng không).' }
+      { id: 1010, hanzi: '最近你工作忙不忙？我一点儿都不忙。', pinyin: 'Zuìjìn nǐ gōngzuò máng bù máng? Wǒ yìdiǎnr dōu bù máng.', meaning: 'Dạo gần đây công việc của bạn có bận không? Tôi chẳng bận chút nào.', difficulty: 'Trung cấp', tip: '一点儿都不 (yìdiǎnr dōu bù - một chút cũng không).' },
+      { id: 1011, hanzi: '今天天气很好。', pinyin: 'Jīntiān tiānqì hěn hǎo.', meaning: 'Hôm nay thời tiết rất đẹp.', difficulty: 'Cơ bản', tip: 'Thời tiết rất tốt: 天气很好.' },
+      { id: 1012, hanzi: '学汉语不太难。', pinyin: 'Xué Hànyǔ bú tài nán.', meaning: 'Học tiếng Hán không quá khó.', difficulty: 'Cơ bản', tip: 'Không quá: 不太 (bú tài).' },
+      { id: 1013, hanzi: '这个苹果真甜！', pinyin: 'Zhè ge píngguǒ zhēn tián!', meaning: 'Quả táo này ngọt thật đấy!', difficulty: 'Cơ bản', tip: 'Thật là...: 真 + Tính từ.' },
+      { id: 1014, hanzi: '你今天累不累？', pinyin: 'Nǐ jīntiān lèi bu lèi?', meaning: 'Hôm nay bạn có mệt không?', difficulty: 'Cơ bản', tip: 'Câu hỏi chính phản: 累不累.' },
+      { id: 1015, hanzi: '那家饭馆很大。', pinyin: 'Nà jiā fànguǎn hěn dà.', meaning: 'Nhà hàng đó rất to.', difficulty: 'Cơ bản', tip: 'Lượng từ cho nhà hàng: 家 (jiā).' },
+      { id: 1016, hanzi: '我很高兴认识你。', pinyin: 'Wǒ hěn gāoxìng rènshi nǐ.', meaning: 'Tôi rất vui được quen biết bạn.', difficulty: 'Cơ bản', tip: 'Rất vui được quen biết bạn: 很高兴认识你.' }
     ]
   };

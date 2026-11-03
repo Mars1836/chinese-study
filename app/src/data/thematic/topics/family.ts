@@ -47,6 +47,12 @@ export const familyTopic: ThematicTopic = {
       { id: 507, hanzi: '我弟弟比我小三岁，他很调皮。', pinyin: 'Wǒ dìdi bǐ wǒ xiǎo sān suì, tā hěn tiáopí.', meaning: 'Em trai tôi nhỏ hơn tôi ba tuổi, nó rất nghịch ngợm.', difficulty: 'Trung cấp', tip: 'Câu so sánh 比: A 比 B + Tính từ + Số lượng.' },
       { id: 508, hanzi: '这是我女儿小时候的照片，真可爱！', pinyin: 'Zhè shì wǒ nǚ\'ér xiǎoshíhou de zhàopiàn, zhēn kě\'ài!', meaning: 'Đây là ảnh hồi nhỏ của con gái tôi, thật đáng yêu!', difficulty: 'Trung cấp', tip: '小时候 (hồi còn nhỏ).' },
       { id: 509, hanzi: '我的外公外婆现在住在北京。', pinyin: 'Wǒ de wàigōng wàipó xiànzài zhù zài Běijīng.', meaning: 'Ông ngoại bà ngoại tôi hiện tại đang sống ở Bắc Kinh.', difficulty: 'Cơ bản', tip: '外公 (ông ngoại), 外婆 (bà ngoại).' },
-      { id: 510, hanzi: '公司的同事们对我都非常热情友好。', pinyin: 'Gōngsī de tóngshìmen duì wǒ dōu fēicháng rèqíng yǒuhǎo.', meaning: 'Các đồng nghiệp ở công ty đối với tôi đều rất nhiệt tình thân thiện.', difficulty: 'Nâng cao', tip: '对...热情 (đối xử nhiệt tình với ai).' }
+      { id: 510, hanzi: '公司的同事们对我都非常热情友好。', pinyin: 'Gōngsī de tóngshìmen duì wǒ dōu fēicháng rèqíng yǒuhǎo.', meaning: 'Các đồng nghiệp ở công ty đối với tôi đều rất nhiệt tình thân thiện.', difficulty: 'Nâng cao', tip: '对...热情 (đối xử nhiệt tình với ai).' },
+      { id: 511, hanzi: '这是我爸爸妈妈。', pinyin: 'Zhè shì wǒ bàba māma.', meaning: 'Đây là bố mẹ tôi.', difficulty: 'Cơ bản', tip: 'Bố mẹ: 爸爸妈妈.' },
+      { id: 512, hanzi: '你哥哥几岁？', pinyin: 'Nǐ gēge jǐ suì?', meaning: 'Anh trai bạn mấy tuổi?', difficulty: 'Cơ bản', tip: 'Hỏi tuổi: 几岁 (jǐ suì).' },
+      { id: 513, hanzi: '我有两个可爱的妹妹。', pinyin: 'Wǒ yǒu liǎng gè kě\'ài de mèimei.', meaning: 'Tôi có hai người em gái đáng yêu.', difficulty: 'Cơ bản', tip: 'Hai người em gái: 两个妹妹.' },
+      { id: 514, hanzi: '弟弟在房间里写作业。', pinyin: 'Dìdi zài fángjiān lǐ xiě zuòyè.', meaning: 'Em trai đang làm bài tập trong phòng.', difficulty: 'Cơ bản', tip: 'Làm bài tập: 写作业 (xiě zuòyè).' },
+      { id: 515, hanzi: '姐姐喜欢喝奶茶。', pinyin: 'Jiějie xǐhuan hē nǎichá.', meaning: 'Chị gái thích uống trà sữa.', difficulty: 'Cơ bản', tip: 'Trà sữa: 奶茶 (nǎichá).' },
+      { id: 516, hanzi: '他们都是我的家人。', pinyin: 'Tāmen dōu shì wǒ de jiārén.', meaning: 'Họ đều là người nhà của tôi.', difficulty: 'Cơ bản', tip: 'Người nhà: 家人 (jiārén).' }
     ]
   };

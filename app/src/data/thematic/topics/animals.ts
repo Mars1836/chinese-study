@@ -48,6 +48,12 @@ export const animalsTopic: ThematicTopic = {
       { id: 307, hanzi: '这只白色的小兔子跑得真快。', pinyin: 'Zhè zhī báisè de xiǎo tùzi pǎo de zhēn kuài.', meaning: 'Chú thỏ con màu trắng này chạy thật nhanh.', difficulty: 'Trung cấp', tip: 'Bổ ngữ trạng thái: Động từ + 得 + Tính từ.' },
       { id: 308, hanzi: '中国四川有很多野生大熊猫。', pinyin: 'Zhōngguó Sìchuān yǒu hěn duō yěshēng dàxióngmāo.', meaning: 'Tứ Xuyên Trung Quốc có rất nhiều gấu trúc hoang dã.', difficulty: 'Nâng cao', tip: '野生 (yěshēng - hoang dã).' },
       { id: 309, hanzi: '动物园里有狮子、老虎和猴子。', pinyin: 'Dòngwùyuán lǐ yǒu shīzi, lǎohǔ hé hóuzi.', meaning: 'Trong sở thú có sư tử, hổ và khỉ.', difficulty: 'Nâng cao', tip: '动物园 (sở thú).' },
-      { id: 310, hanzi: '我的猫每天都喜欢吃鱼和睡觉。', pinyin: 'Wǒ de māo měitiān dōu xǐhuan chī yú hé shuìjiào.', meaning: 'Mèo của tôi mỗi ngày đều thích ăn cá và đi ngủ.', difficulty: 'Cơ bản', tip: '每天都 (mỗi ngày đều).' }
+      { id: 310, hanzi: '我的猫每天都喜欢吃鱼和睡觉。', pinyin: 'Wǒ de māo měitiān dōu xǐhuan chī yú hé shuìjiào.', meaning: 'Mèo của tôi mỗi ngày đều thích ăn cá và đi ngủ.', difficulty: 'Cơ bản', tip: '每天都 (mỗi ngày đều).' },
+      { id: 311, hanzi: '你喜欢小猫吗？', pinyin: 'Nǐ xǐhuan xiǎomāo ma?', meaning: 'Bạn có thích mèo con không?', difficulty: 'Cơ bản', tip: 'Câu hỏi nghi vấn với 吗.' },
+      { id: 312, hanzi: '那只狗很大。', pinyin: 'Nà zhī gǒu hěn dà.', meaning: 'Con chó đó rất to.', difficulty: 'Cơ bản', tip: 'Lượng từ con vật: 只 (zhī).' },
+      { id: 313, hanzi: '熊猫非常可爱。', pinyin: 'Xióngmāo fēicháng kě\'ài.', meaning: 'Gấu trúc vô cùng đáng yêu.', difficulty: 'Cơ bản', tip: 'Cực kỳ đáng yêu: 非常可爱.' },
+      { id: 314, hanzi: '小鸟在天上飞。', pinyin: 'Xiǎoniǎo zài tiān shang fēi.', meaning: 'Chú chim nhỏ đang bay trên trời.', difficulty: 'Cơ bản', tip: '在 + nơi chốn + động từ.' },
+      { id: 315, hanzi: '我不想养狗。', pinyin: 'Wǒ bù xiǎng yǎng gǒu.', meaning: 'Tôi không muốn nuôi chó.', difficulty: 'Cơ bản', tip: 'Nuôi chó: 养狗 (yǎng gǒu).' },
+      { id: 316, hanzi: '你看，那是一只小兔子。', pinyin: 'Nǐ kàn, nà shì yì zhī xiǎo tùzi.', meaning: 'Bạn xem kìa, đó là một con thỏ nhỏ.', difficulty: 'Cơ bản', tip: 'Thỏ con: 小兔子 (xiǎo tùzi).' }
     ]
   };

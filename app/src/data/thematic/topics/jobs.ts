@@ -46,6 +46,12 @@ export const jobsTopic: ThematicTopic = {
       { id: 407, hanzi: '餐厅的厨师做中国菜做得很好吃。', pinyin: 'Cāntīng de chúshī zuò Zhōngguó cài zuò de hěn hǎochī.', meaning: 'Đầu bếp nhà hàng nấu món Trung rất ngon.', difficulty: 'Nâng cao', tip: 'Bổ ngữ trạng thái: 做得很好吃.' },
       { id: 408, hanzi: '他大学毕业以后当了一名警察。', pinyin: 'Tā dàxué bìyè yǐhòu dāng le yì míng jǐngchá.', meaning: 'Sau khi tốt nghiệp đại học, anh ấy đã làm một cảnh sát.', difficulty: 'Trung cấp', tip: '当 (dāng - làm nghề gì).' },
       { id: 409, hanzi: '很多外国留学生在北京大学学中文。', pinyin: 'Hěn duō wàiguó liúxuéshēng zài Běijīng Dàxué xué Zhōngwén.', meaning: 'Rất nhiều du học sinh nước ngoài học tiếng Trung tại Đại học Bắc Kinh.', difficulty: 'Trung cấp', tip: '留学生 (du học sinh).' },
-      { id: 410, hanzi: '我想在一家大型科技公司当工程师。', pinyin: 'Wǒ xiǎng zài yì jiā dàxíng kējì gōngsī dāng gōngchéngshī.', meaning: 'Tôi muốn làm một kỹ sư trong một công ty công nghệ lớn.', difficulty: 'Nâng cao', tip: '一家公司 (Lượng từ 家 cho công ty/doanh nghiệp).' }
+      { id: 410, hanzi: '我想在一家大型科技公司当工程师。', pinyin: 'Wǒ xiǎng zài yì jiā dàxíng kējì gōngsī dāng gōngchéngshī.', meaning: 'Tôi muốn làm một kỹ sư trong một công ty công nghệ lớn.', difficulty: 'Nâng cao', tip: '一家公司 (Lượng từ 家 cho công ty/doanh nghiệp).' },
+      { id: 411, hanzi: '你做什么工作？', pinyin: 'Nǐ zuò shénme gōngzuò?', meaning: 'Bạn làm nghề gì?', difficulty: 'Cơ bản', tip: 'Câu hỏi nghề nghiệp thông dụng nhất.' },
+      { id: 412, hanzi: '我是一名学生。', pinyin: 'Wǒ shì yì míng xuésheng.', meaning: 'Tôi là một học sinh.', difficulty: 'Cơ bản', tip: 'Lượng từ danh xưng: 一名学生.' },
+      { id: 413, hanzi: '王老师是我的中文老师。', pinyin: 'Wáng lǎoshī shì wǒ de Zhōngwén lǎoshī.', meaning: 'Thầy Vương là giáo viên tiếng Trung của tôi.', difficulty: 'Cơ bản', tip: 'Giáo viên tiếng Trung: 中文老师.' },
+      { id: 414, hanzi: '他爸爸是医生。', pinyin: 'Tā bàba shì yīshēng.', meaning: 'Bố của anh ấy là bác sĩ.', difficulty: 'Cơ bản', tip: 'Bác sĩ: 医生 (yīshēng).' },
+      { id: 415, hanzi: '我妈妈在学校工作。', pinyin: 'Wǒ māma zài xuéxiào gōngzuò.', meaning: 'Mẹ tôi làm việc ở trường học.', difficulty: 'Cơ bản', tip: 'Làm việc ở đâu: 在...工作.' },
+      { id: 416, hanzi: '你哥哥是护士吗？', pinyin: 'Nǐ gēge shì hùshi ma?', meaning: 'Anh trai bạn có phải là y tá không?', difficulty: 'Cơ bản', tip: 'Y tá: 护士 (hùshi).' }
     ]
   };
