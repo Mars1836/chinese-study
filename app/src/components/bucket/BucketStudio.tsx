@@ -17,14 +17,25 @@ import {
   ArrowRight,
   ArrowLeft,
   Plus,
-  HelpCircle,
   Settings2,
   Layers,
   PenTool,
   Eye,
-  EyeOff
+  EyeOff,
+  Repeat,
+  Shuffle,
+  GraduationCap,
+  Flame,
+  ShieldCheck
 } from 'lucide-react';
-import { BucketWord, QuestionType, QuizConfig, QuizQuestion, QuizResultItem } from '../../types/bucket';
+import {
+  BucketWord,
+  QuestionType,
+  QuizConfig,
+  QuizOrderMode,
+  QuizQuestion,
+  QuizResultItem
+} from '../../types/bucket';
 import { useBucket } from '../../hooks/useBucket';
 import { generateQuiz } from '../../utils/quizGenerator';
 import { getAllAvailableWords } from '../../data/allVocabPool';
@@ -41,16 +52,23 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
   const [activeStep, setActiveStep] = useState<'list' | 'setup' | 'quiz' | 'results'>('list');
   const [searchWord, setSearchWord] = useState<string>('');
 
-  // Setup options
+  // Setup options - 9 distinct question types covering every aspect of a Chinese character
   const [enabledTypes, setEnabledTypes] = useState<QuestionType[]>([
-    'vn_to_zh',
     'zh_to_vn',
+    'vn_to_zh',
+    'zh_to_pinyin',
+    'pinyin_to_zh',
+    'zh_to_hanviet',
+    'listening_choice',
     'fill_blank',
     'hanzi_typing',
-    'sentence_typing',
-    'listening_choice'
+    'sentence_typing'
   ]);
-  const [questionCount, setQuestionCount] = useState<number>(10);
+  // repeatsPerWord: -1 means ALL enabled types for each word; 1, 2, 3 means custom count
+  const [repeatsPerWord, setRepeatsPerWord] = useState<number>(-1);
+  const [orderMode, setOrderMode] = useState<QuizOrderMode>('interleaved');
+  const [retryWrongQuestions, setRetryWrongQuestions] = useState<boolean>(true);
+  const [questionCount, setQuestionCount] = useState<number>(-1);
   const [shuffleQuestions, setShuffleQuestions] = useState<boolean>(true);
 
   // Active Quiz State
@@ -60,7 +78,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
   const [typedAnswer, setTypedAnswer] = useState<string>('');
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState<boolean>(false);
   const [isCurrentCorrect, setIsCurrentCorrect] = useState<boolean>(false);
-  const [showSentencePinyinHint, setShowSentencePinyinHint] = useState<boolean>(false);
   const [showQuizPinyin, setShowQuizPinyin] = useState<boolean>(() => {
     try {
       return localStorage.getItem('chinese_quiz_show_pinyin') !== 'false';
@@ -102,12 +119,19 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
     }
   };
 
+  // Estimated questions count calculation
+  const calculatedRepeats = repeatsPerWord === -1 ? enabledTypes.length : Math.min(repeatsPerWord, enabledTypes.length);
+  const maxPossibleQuestions = bucket.length * calculatedRepeats;
+
   // Start Quiz
   const handleStartQuiz = () => {
     const config: QuizConfig = {
       enabledTypes,
+      repeatsPerWord,
       questionCount,
-      shuffle: shuffleQuestions
+      shuffle: shuffleQuestions,
+      orderMode,
+      retryWrongQuestions
     };
     const generated = generateQuiz(bucket, config);
     if (generated.length === 0) return;
@@ -131,10 +155,10 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
   const renderOptionLabel = (opt: string) => {
     const match = opt.match(/^([^\(]+)\s*\((.+)\)$/);
     if (!match) {
-      return <span className="leading-relaxed">{opt}</span>;
+      return <span className="leading-relaxed font-bold">{opt}</span>;
     }
     const hanzi = match[1].trim();
-    const pinyin = match[2].trim();
+    const subText = match[2].trim();
 
     if (!showQuizPinyin) {
       return <span className="hanzi-font text-xl sm:text-2xl font-black leading-none">{hanzi}</span>;
@@ -143,7 +167,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
     return (
       <span className="flex items-center gap-2 flex-wrap">
         <span className="hanzi-font text-lg sm:text-xl font-black leading-none">{hanzi}</span>
-        <span className="text-xs sm:text-sm font-bold text-indigo-600">({pinyin})</span>
+        <span className="text-xs sm:text-sm font-bold text-indigo-600">({subText})</span>
       </span>
     );
   };
@@ -160,6 +184,14 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
 
     if (correct) {
       onSpeak(currentQ.word.hanzi);
+    } else if (retryWrongQuestions && !currentQ.isRetry) {
+      // Append retry question for this word to the end of the quiz
+      const retryQ: QuizQuestion = {
+        ...currentQ,
+        id: `${currentQ.id}_retry_${Date.now()}`,
+        isRetry: true
+      };
+      setQuizQuestions(prev => [...prev, retryQ]);
     }
 
     setResults(prev => {
@@ -189,6 +221,13 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
 
     if (correct) {
       onSpeak(currentQ.type === 'sentence_typing' ? currentQ.correctAnswer : currentQ.word.hanzi);
+    } else if (retryWrongQuestions && !currentQ.isRetry) {
+      const retryQ: QuizQuestion = {
+        ...currentQ,
+        id: `${currentQ.id}_retry_${Date.now()}`,
+        isRetry: true
+      };
+      setQuizQuestions(prev => [...prev, retryQ]);
     }
 
     setResults(prev => {
@@ -202,7 +241,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
     });
   };
 
-  // Previous Question (Review previously answered questions)
+  // Previous Question
   const handlePrevQuestion = () => {
     if (currentIndex > 0) {
       const prevIdx = currentIndex - 1;
@@ -219,7 +258,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
         setIsAnswerSubmitted(false);
         setIsCurrentCorrect(false);
       }
-      setShowSentencePinyinHint(false);
     }
   };
 
@@ -240,7 +278,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
         setIsAnswerSubmitted(false);
         setIsCurrentCorrect(false);
       }
-      setShowSentencePinyinHint(false);
 
       if (!nextResult && quizQuestions[nextIdx]?.type === 'listening_choice') {
         setTimeout(() => onSpeak(quizQuestions[nextIdx].word.hanzi), 350);
@@ -250,12 +287,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
     }
   };
 
-  // Global Keyboard Shortcuts for Quiz Navigation & Pinyin Toggle:
-  // - Alt + ArrowLeft: Previous question (always works, even in text input)
-  // - Alt + ArrowRight: Next question (always works, even in text input)
-  // - ArrowLeft: Previous question (when not typing in text input)
-  // - ArrowRight: Next question (when not typing in text input and answered)
-  // - 'P' key: Toggle Pinyin on/off (when not typing in text input)
+  // Keyboard navigation & hotkeys
   useEffect(() => {
     if (activeStep !== 'quiz') return;
 
@@ -297,15 +329,22 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
     addBulkToBucket(sample);
   };
 
-  // Retake only wrong answers
+  // Retake only wrong words
   const handleRetakeWrongAnswers = () => {
-    const wrongWords = results.filter(r => !r.isCorrect).map(r => r.question.word);
+    const wrongWordsMap = new Map<string, BucketWord>();
+    results.filter(r => !r.isCorrect).forEach(r => {
+      wrongWordsMap.set(r.question.word.hanzi, r.question.word);
+    });
+    const wrongWords = Array.from(wrongWordsMap.values());
     if (wrongWords.length === 0) return;
 
     const config: QuizConfig = {
       enabledTypes,
-      questionCount: wrongWords.length,
-      shuffle: true
+      repeatsPerWord,
+      questionCount: -1,
+      shuffle: true,
+      orderMode,
+      retryWrongQuestions
     };
     const generated = generateQuiz(wrongWords, config);
     setQuizQuestions(generated);
@@ -321,6 +360,38 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
   const currentQ = quizQuestions[currentIndex];
   const correctCount = results.filter(r => r.isCorrect).length;
   const scorePercent = results.length > 0 ? Math.round((correctCount / results.length) * 100) : 0;
+
+  // Word-level mastery breakdown in results step
+  const wordMasteryMap = useMemo(() => {
+    const map = new Map<string, { word: BucketWord; total: number; correct: number; failedTypes: string[] }>();
+    results.forEach(r => {
+      const h = r.question.word.hanzi;
+      if (!map.has(h)) {
+        map.set(h, { word: r.question.word, total: 0, correct: 0, failedTypes: [] });
+      }
+      const entry = map.get(h)!;
+      entry.total += 1;
+      if (r.isCorrect) {
+        entry.correct += 1;
+      } else {
+        const typeLabel =
+          r.question.type === 'zh_to_vn' ? 'Nghĩa tiếng Việt' :
+          r.question.type === 'vn_to_zh' ? 'Chọn chữ Hán' :
+          r.question.type === 'zh_to_pinyin' ? 'Nhớ Pinyin' :
+          r.question.type === 'pinyin_to_zh' ? 'Từ Pinyin chọn chữ' :
+          r.question.type === 'zh_to_hanviet' ? 'Âm Hán Việt' :
+          r.question.type === 'listening_choice' ? 'Luyện nghe' :
+          r.question.type === 'hanzi_typing' ? 'Gõ chữ Hán' :
+          r.question.type === 'sentence_typing' ? 'Viết câu' : 'Điền câu';
+        if (!entry.failedTypes.includes(typeLabel)) {
+          entry.failedTypes.push(typeLabel);
+        }
+      }
+    });
+    return Array.from(map.values());
+  }, [results]);
+
+  const fullyMasteredWords = wordMasteryMap.filter(w => w.correct === w.total && w.total > 0).length;
 
   return (
     <div className="space-y-6 animate-fadeIn pb-16">
@@ -340,7 +411,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
               🧺 Giỏ Từ Vựng & Bộ Đề Luyện Tập Thông Minh
             </h2>
             <p className="text-amber-100 text-xs sm:text-sm leading-relaxed">
-              Gom bất kỳ từ vựng nào bạn muốn từ các bài học và các chuyên đề thực tế vào một giỏ. Sau đó tự cấu hình các dạng bài kiểm tra (Dịch nghĩa, Điền từ, Luyện gõ, Nghe phát âm) để rèn luyện trí nhớ!
+              Mỗi chữ Hán sẽ được thử thách qua <strong>nhiều dạng câu hỏi khác nhau</strong> (Nghĩa, Pinyin, Âm Hán Việt, Nghe phát âm, Điền câu, Tự gõ chữ, Viết câu) và được <strong>trộn ngẫu nhiên giãn cách</strong> để không bao giờ xuất hiện 2 câu của cùng một từ liên tiếp.
             </p>
           </div>
 
@@ -380,7 +451,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
             }`}
           >
             <Settings2 size={16} />
-            <span>2. Cấu Hình Bài Kiểm Tra</span>
+            <span>2. Cấu Hình Ôn Tập Đa Dạng</span>
           </button>
 
           {quizQuestions.length > 0 && (
@@ -426,7 +497,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
       {/* 3. STEP 1: WORDS LIST & BUCKET MANAGEMENT */}
       {activeStep === 'list' && (
         <div className="space-y-4">
-          {/* Action Toolbar */}
           <div className="bg-white rounded-3xl p-4 sm:p-5 border border-stone-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="relative flex-1 max-w-md">
               <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -461,7 +531,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
             </div>
           </div>
 
-          {/* Empty state */}
           {bucket.length === 0 ? (
             <div className="bg-white rounded-3xl p-10 border-2 border-dashed border-stone-200 text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-2xl">
@@ -472,7 +541,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                   Giỏ từ vựng của bạn đang trống!
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
-                  Hãy bấm biểu tượng <strong>+ Giỏ ôn tập</strong> ở bất kỳ thẻ từ vựng nào trong mục <strong>Giáo Trình Theo Bài</strong> hoặc <strong>Kho Chuyên Đề Từ Vựng</strong> để thêm các từ bạn muốn ôn luyện vào đây.
+                  Hãy bấm biểu tượng <strong>+ Giỏ ôn tập</strong> ở bất kỳ từ vựng nào trong bài học để thêm vào giỏ, sau đó vào đây để luyện tập lặp lại đa dạng câu hỏi giúp nhớ sâu mặt chữ.
                 </p>
               </div>
 
@@ -484,7 +553,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
               </button>
             </div>
           ) : (
-            /* Words Grid */
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
               {filteredBucket.map((item) => (
                 <div
@@ -494,7 +562,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                   <div>
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-3">
-                        {/* Hanzi Box */}
                         <div
                           onClick={() => onOpenWriteModal && onOpenWriteModal(item)}
                           className="min-w-[55px] h-14 px-2 rounded-2xl bg-amber-50/80 border border-amber-200 flex items-center justify-center cursor-pointer hover:bg-amber-100 transition shadow-2xs"
@@ -520,7 +587,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                         </div>
                       </div>
 
-                      {/* Remove Button */}
                       <button
                         onClick={() => removeFromBucket(item.hanzi)}
                         className="p-1.5 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
@@ -530,7 +596,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                       </button>
                     </div>
 
-                    {/* Example Sentence if available */}
                     {item.exampleHanzi && (
                       <div className="mt-2.5 text-[11px] bg-stone-50 p-2 rounded-xl text-slate-600 border border-stone-100">
                         <div className="font-bold text-slate-800">{item.exampleHanzi}</div>
@@ -539,7 +604,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                     )}
                   </div>
 
-                  {/* Card Footer: Source & Sound */}
                   <div className="flex items-center justify-between pt-2 border-t border-stone-100 text-[10px] text-slate-400">
                     <span className="truncate max-w-[170px]" title={item.source}>
                       📍 {item.source}
@@ -561,58 +625,49 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
 
       {/* 4. STEP 2: SETUP QUIZ CONFIGURATION */}
       {activeStep === 'setup' && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 shadow-md space-y-6 max-w-3xl mx-auto">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 shadow-md space-y-7 max-w-3xl mx-auto">
           <div>
-            <span className="text-xs font-black uppercase tracking-wider text-indigo-600">
-              Tùy Chọn Cấu Hình Bài Kiểm Tra
-            </span>
-            <h3 className="text-xl font-black text-slate-900 mt-1">
-              Chọn Các Loại Câu Hỏi Bạn Muốn Có Trong Đề Thi
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-black border border-indigo-200">
+              <Repeat size={13} />
+              <span>Cấu Hình Lặp Lại & Đa Dạng Câu Hỏi</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2">
+              Luyện Tập Chuyên Sâu Từng Chữ Hán
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Hệ thống sẽ dựa vào danh sách <strong>{bucket.length} từ vựng</strong> trong giỏ của bạn và tự động sinh ra đề kiểm tra với các dạng câu hỏi được chọn bên dưới:
+              Bạn có <strong>{bucket.length} chữ/từ</strong> trong giỏ. Tùy chỉnh số lần lặp lại và các loại bài tập để khắc sâu trí nhớ từ mọi giác quan.
             </p>
           </div>
 
-          {/* Question Types Checkboxes */}
+          {/* Guarantee banner */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200 flex items-start gap-3">
+            <ShieldCheck size={20} className="text-emerald-600 shrink-0 mt-0.5" />
+            <div className="space-y-0.5 text-xs">
+              <div className="font-black text-emerald-950">
+                Nguyên tắc ôn tập thông minh (Spaced Spaced Repetition):
+              </div>
+              <p className="text-emerald-900 leading-relaxed">
+                Khi lặp lại, <strong>mỗi câu hỏi về cùng một chữ đều là một dạng bài hoàn toàn khác nhau</strong> (nghĩa, pinyin, âm Hán Việt, nghe phát âm, điền câu, gõ chữ). Đề thi được <strong>trộn ngẫu nhiên giãn cách</strong> — <strong>tuyệt đối không có 2 câu của cùng một chữ xuất hiện liên tiếp nhau</strong>!
+              </p>
+            </div>
+          </div>
+
+          {/* Section 1: Question Types Selection */}
           <div className="space-y-3">
-            <div className="text-xs font-bold text-slate-600 uppercase tracking-wider">
-              1. Bật / Tắt các dạng bài tập:
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-black text-slate-700 uppercase tracking-wider">
+                1. Bật / Tắt các dạng bài tập ({enabledTypes.length} dạng đang chọn):
+              </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* Type 1: VN -> ZH */}
-              <div
-                onClick={() => toggleType('vn_to_zh')}
-                className={`p-4 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
-                  enabledTypes.includes('vn_to_zh')
-                    ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
-                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-60'
-                }`}
-              >
-                <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
-                  enabledTypes.includes('vn_to_zh') ? 'bg-indigo-600 text-white' : 'border border-stone-300 bg-white'
-                }`}>
-                  {enabledTypes.includes('vn_to_zh') && <Check size={13} />}
-                </div>
-                <div>
-                  <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
-                    <Languages size={15} className="text-indigo-600" />
-                    <span>Tiếng Việt ➔ Tiếng Trung</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 mt-1">
-                    Hiện nghĩa tiếng Việt, người học chọn chữ Hán và Pinyin đúng.
-                  </p>
-                </div>
-              </div>
-
-              {/* Type 2: ZH -> VN */}
+              {/* Type 1: ZH -> VN */}
               <div
                 onClick={() => toggleType('zh_to_vn')}
-                className={`p-4 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
                   enabledTypes.includes('zh_to_vn')
                     ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
-                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-60'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-50'
                 }`}
               >
                 <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
@@ -623,21 +678,146 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                 <div>
                   <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
                     <BookOpen size={15} className="text-indigo-600" />
-                    <span>Tiếng Trung ➔ Tiếng Việt</span>
+                    <span>Chữ Hán ➔ Chọn nghĩa Việt</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 mt-1">
-                    Hiện chữ Hán mục tiêu, người học chọn nghĩa tiếng Việt tương ứng.
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Hiện chữ Hán, bạn chọn nghĩa tiếng Việt tương ứng.
                   </p>
                 </div>
               </div>
 
-              {/* Type 3: Fill Blank */}
+              {/* Type 2: VN -> ZH */}
+              <div
+                onClick={() => toggleType('vn_to_zh')}
+                className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                  enabledTypes.includes('vn_to_zh')
+                    ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-50'
+                }`}
+              >
+                <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
+                  enabledTypes.includes('vn_to_zh') ? 'bg-indigo-600 text-white' : 'border border-stone-300 bg-white'
+                }`}>
+                  {enabledTypes.includes('vn_to_zh') && <Check size={13} />}
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
+                    <Languages size={15} className="text-indigo-600" />
+                    <span>Nghĩa Việt ➔ Chọn chữ Hán</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Hiện nghĩa tiếng Việt, bạn chọn chữ Hán và Pinyin đúng.
+                  </p>
+                </div>
+              </div>
+
+              {/* Type 3: ZH -> Pinyin */}
+              <div
+                onClick={() => toggleType('zh_to_pinyin')}
+                className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                  enabledTypes.includes('zh_to_pinyin')
+                    ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-50'
+                }`}
+              >
+                <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
+                  enabledTypes.includes('zh_to_pinyin') ? 'bg-indigo-600 text-white' : 'border border-stone-300 bg-white'
+                }`}>
+                  {enabledTypes.includes('zh_to_pinyin') && <Check size={13} />}
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
+                    <Sparkles size={15} className="text-purple-600" />
+                    <span>Chữ Hán ➔ Chọn Pinyin chuẩn</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Rèn luyện nhớ chuẩn phiên âm Pinyin và dấu thanh điệu.
+                  </p>
+                </div>
+              </div>
+
+              {/* Type 4: Pinyin -> ZH */}
+              <div
+                onClick={() => toggleType('pinyin_to_zh')}
+                className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                  enabledTypes.includes('pinyin_to_zh')
+                    ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-50'
+                }`}
+              >
+                <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
+                  enabledTypes.includes('pinyin_to_zh') ? 'bg-indigo-600 text-white' : 'border border-stone-300 bg-white'
+                }`}>
+                  {enabledTypes.includes('pinyin_to_zh') && <Check size={13} />}
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
+                    <Sparkles size={15} className="text-teal-600" />
+                    <span>Pinyin ➔ Nhận diện chữ Hán</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Cho phiên âm Pinyin, người học chọn đúng mặt chữ Hán tương ứng.
+                  </p>
+                </div>
+              </div>
+
+              {/* Type 5: ZH -> HanViet */}
+              <div
+                onClick={() => toggleType('zh_to_hanviet')}
+                className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                  enabledTypes.includes('zh_to_hanviet')
+                    ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-50'
+                }`}
+              >
+                <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
+                  enabledTypes.includes('zh_to_hanviet') ? 'bg-indigo-600 text-white' : 'border border-stone-300 bg-white'
+                }`}>
+                  {enabledTypes.includes('zh_to_hanviet') && <Check size={13} />}
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
+                    <BookOpen size={15} className="text-rose-600" />
+                    <span>Chữ Hán ➔ Chọn âm Hán Việt</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Nhớ nghĩa siêu nhanh thông qua từ gốc Hán Việt quen thuộc.
+                  </p>
+                </div>
+              </div>
+
+              {/* Type 6: Listening */}
+              <div
+                onClick={() => toggleType('listening_choice')}
+                className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                  enabledTypes.includes('listening_choice')
+                    ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-50'
+                }`}
+              >
+                <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
+                  enabledTypes.includes('listening_choice') ? 'bg-indigo-600 text-white' : 'border border-stone-300 bg-white'
+                }`}>
+                  {enabledTypes.includes('listening_choice') && <Check size={13} />}
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
+                    <Volume2 size={15} className="text-rose-500" />
+                    <span>Nghe âm thanh ➔ Chọn chữ Hán</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Hệ thống phát âm chuẩn bản xứ, bạn nghe và chọn chữ Hán đúng.
+                  </p>
+                </div>
+              </div>
+
+              {/* Type 7: Fill Blank */}
               <div
                 onClick={() => toggleType('fill_blank')}
-                className={`p-4 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
                   enabledTypes.includes('fill_blank')
                     ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
-                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-60'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-50'
                 }`}
               >
                 <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
@@ -647,22 +827,22 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                 </div>
                 <div>
                   <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
-                    <Sparkles size={15} className="text-amber-500" />
-                    <span>Điền từ còn thiếu vào câu</span>
+                    <BookOpen size={15} className="text-amber-500" />
+                    <span>Điền từ vào câu ngữ cảnh</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 mt-1">
-                    Hiện câu ví dụ khuyết từ, người học chọn từ đúng để hoàn thành câu.
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Hiện câu ví dụ khuyết từ, bạn chọn từ đúng để hoàn chỉnh câu.
                   </p>
                 </div>
               </div>
 
-              {/* Type 4: Hanzi Typing */}
+              {/* Type 8: Hanzi Typing */}
               <div
                 onClick={() => toggleType('hanzi_typing')}
-                className={`p-4 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
                   enabledTypes.includes('hanzi_typing')
                     ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
-                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-60'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-50'
                 }`}
               >
                 <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
@@ -675,19 +855,19 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                     <Keyboard size={15} className="text-teal-600" />
                     <span>Luyện gõ chữ Hán (IME)</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 mt-1">
-                    Tự tay gõ từ vựng chữ Hán vào ô theo nghĩa và gợi ý Pinyin để rèn phản xạ.
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Tự tay gõ từ vựng chữ Hán bằng bàn phím theo nghĩa và gợi ý.
                   </p>
                 </div>
               </div>
 
-              {/* Type 5: Sentence Typing (Writing full sentence based on word's contextual example) */}
+              {/* Type 9: Sentence Typing */}
               <div
                 onClick={() => toggleType('sentence_typing')}
-                className={`p-4 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 ${
+                className={`p-3.5 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 sm:col-span-2 ${
                   enabledTypes.includes('sentence_typing')
                     ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
-                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-60'
+                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-50'
                 }`}
               >
                 <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
@@ -698,92 +878,230 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                 <div>
                   <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
                     <PenTool size={15} className="text-blue-600" />
-                    <span>Viết câu tiếng Trung (Theo ngữ cảnh)</span>
+                    <span>Viết toàn bộ câu tiếng Trung (Ngữ cảnh câu mẫu)</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 mt-1">
+                  <p className="text-[11px] text-slate-500 mt-0.5">
                     Dựa vào nghĩa câu ví dụ của từ, tự gõ lại toàn bộ câu tiếng Trung hoàn chỉnh.
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Type 6: Listening */}
-              <div
-                onClick={() => toggleType('listening_choice')}
-                className={`p-4 rounded-2xl border-2 transition cursor-pointer flex items-start gap-3 sm:col-span-2 ${
-                  enabledTypes.includes('listening_choice')
-                    ? 'border-indigo-500 bg-indigo-50/50 shadow-xs'
-                    : 'border-stone-200 bg-white hover:border-stone-300 opacity-60'
+          {/* Section 2: Questions Per Word (Repeats Per Word) */}
+          <div className="space-y-3 pt-3 border-t border-stone-100">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <Repeat size={14} className="text-indigo-600" />
+                <span>2. Số câu hỏi / Vòng lặp cho mỗi chữ Hán:</span>
+              </span>
+              <span className="text-[11px] font-bold text-indigo-600">
+                {repeatsPerWord === -1
+                  ? `Mỗi chữ làm đủ cả ${enabledTypes.length} dạng khác nhau`
+                  : `Mỗi chữ làm ${repeatsPerWord} dạng khác nhau`}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {/* Option 1: All enabled types */}
+              <button
+                type="button"
+                onClick={() => setRepeatsPerWord(-1)}
+                className={`p-3.5 rounded-2xl border-2 text-left transition active:scale-95 relative ${
+                  repeatsPerWord === -1
+                    ? 'border-indigo-600 bg-indigo-50/80 ring-2 ring-indigo-200 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300'
                 }`}
               >
-                <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
-                  enabledTypes.includes('listening_choice') ? 'bg-indigo-600 text-white' : 'border border-stone-300 bg-white'
-                }`}>
-                  {enabledTypes.includes('listening_choice') && <Check size={13} />}
+                <div className="flex items-center gap-1.5 text-xs font-black text-slate-900">
+                  <Flame size={14} className="text-amber-500" />
+                  <span>Tất cả các dạng</span>
                 </div>
-                <div>
-                  <div className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5">
-                    <Volume2 size={15} className="text-rose-500" />
-                    <span>Nghe phát âm chuẩn ➔ Chọn chữ Hán</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 mt-1">
-                    Hệ thống tự động phát âm giọng bản xứ, người học nghe và chọn chữ Hán chính xác.
-                  </p>
+                <div className="text-[11px] text-indigo-700 font-extrabold mt-1">
+                  ⭐ Khuyên dùng
                 </div>
+                <div className="text-[10px] text-slate-500 mt-0.5">
+                  Mỗi chữ ôn qua cả {enabledTypes.length} dạng khác nhau để nhớ sâu.
+                </div>
+              </button>
+
+              {/* Option 2: 3 types per word */}
+              <button
+                type="button"
+                onClick={() => setRepeatsPerWord(3)}
+                className={`p-3.5 rounded-2xl border-2 text-left transition active:scale-95 ${
+                  repeatsPerWord === 3
+                    ? 'border-indigo-600 bg-indigo-50/80 ring-2 ring-indigo-200 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300'
+                }`}
+              >
+                <div className="text-xs font-black text-slate-900">3 dạng / chữ</div>
+                <div className="text-[11px] text-slate-700 font-bold mt-1">Luyện tập sâu</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">
+                  Mỗi chữ làm 3 loại câu hỏi khác nhau.
+                </div>
+              </button>
+
+              {/* Option 3: 2 types per word */}
+              <button
+                type="button"
+                onClick={() => setRepeatsPerWord(2)}
+                className={`p-3.5 rounded-2xl border-2 text-left transition active:scale-95 ${
+                  repeatsPerWord === 2
+                    ? 'border-indigo-600 bg-indigo-50/80 ring-2 ring-indigo-200 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300'
+                }`}
+              >
+                <div className="text-xs font-black text-slate-900">2 dạng / chữ</div>
+                <div className="text-[11px] text-slate-700 font-bold mt-1">Cân bằng</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">
+                  Mỗi chữ làm 2 câu hỏi với 2 góc độ.
+                </div>
+              </button>
+
+              {/* Option 4: 1 type per word */}
+              <button
+                type="button"
+                onClick={() => setRepeatsPerWord(1)}
+                className={`p-3.5 rounded-2xl border-2 text-left transition active:scale-95 ${
+                  repeatsPerWord === 1
+                    ? 'border-indigo-600 bg-indigo-50/80 ring-2 ring-indigo-200 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300'
+                }`}
+              >
+                <div className="text-xs font-black text-slate-900">1 câu / chữ</div>
+                <div className="text-[11px] text-slate-700 font-bold mt-1">Ôn nhanh</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">
+                  Mỗi chữ 1 câu hỏi ngẫu nhiên.
+                </div>
+              </button>
+            </div>
+
+            {/* Estimation banner */}
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-50 to-indigo-50 border border-indigo-100 flex items-center justify-between gap-3 text-xs">
+              <span className="text-slate-700 font-medium">
+                📊 Tổng số câu hỏi dự kiến: <strong>{maxPossibleQuestions} câu</strong> (cho {bucket.length} chữ trong giỏ).
+              </span>
+              <span className="text-[11px] font-bold text-indigo-700 shrink-0">
+                {calculatedRepeats} câu hỏi khác nhau / mỗi chữ
+              </span>
+            </div>
+          </div>
+
+          {/* Section 3: Ordering & Spaced Repetition Mode */}
+          <div className="space-y-3 pt-3 border-t border-stone-100">
+            <span className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+              <Shuffle size={14} className="text-indigo-600" />
+              <span>3. Cách sắp xếp câu hỏi (Mặc định ngẫu nhiên giãn cách):</span>
+            </span>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setOrderMode('interleaved')}
+                className={`p-4 rounded-2xl border-2 text-left transition active:scale-95 ${
+                  orderMode === 'interleaved'
+                    ? 'border-indigo-600 bg-indigo-50/80 ring-2 ring-indigo-200 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300'
+                }`}
+              >
+                <div className="text-xs font-black text-slate-900 flex items-center justify-between">
+                  <span>🔀 Trộn ngẫu nhiên giãn cách (Khuyên dùng)</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">Chuẩn Spaced Repetition</span>
+                </div>
+                <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
+                  Các câu hỏi được trộn ngẫu nhiên và <strong>giãn cách tối đa</strong>: Tuyệt đối không bao giờ xuất hiện 2 câu của cùng một từ liên tiếp. Não bộ sẽ liên tục được kích thích gợi nhớ ngắt quãng!
+                </p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setOrderMode('staged')}
+                className={`p-4 rounded-2xl border-2 text-left transition active:scale-95 ${
+                  orderMode === 'staged'
+                    ? 'border-indigo-600 bg-indigo-50/80 ring-2 ring-indigo-200 shadow-xs'
+                    : 'border-stone-200 bg-white hover:border-stone-300'
+                }`}
+              >
+                <div className="text-xs font-black text-slate-900 flex items-center justify-between">
+                  <span>🪜 Phân tầng cấp độ (Dễ ➔ Khó)</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">Theo bậc thang</span>
+                </div>
+                <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
+                  Làm hết nhận diện nghĩa ➔ Nghe âm thanh ➔ Tự gõ chữ Hán. Trong từng tầng vẫn trộn ngẫu nhiên giãn cách giữa các từ.
+                </p>
+              </button>
+            </div>
+          </div>
+
+          {/* Section 4: Smart Retry Loop & Additional settings */}
+          <div className="space-y-3 pt-3 border-t border-stone-100">
+            <span className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+              <GraduationCap size={14} className="text-indigo-600" />
+              <span>4. Vòng lặp chống quên & Giới hạn câu hỏi:</span>
+            </span>
+
+            {/* Smart Retry on Wrong Answer */}
+            <div
+              onClick={() => setRetryWrongQuestions(!retryWrongQuestions)}
+              className="flex items-center justify-between p-3.5 bg-stone-50 hover:bg-stone-100 rounded-2xl border border-stone-200 cursor-pointer transition"
+            >
+              <div className="space-y-0.5 pr-2">
+                <div className="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                  <span>🔄 Tự động lặp lại câu làm sai ở cuối bài thi</span>
+                  <span className="px-1.5 py-0.5 text-[9px] font-black rounded bg-emerald-100 text-emerald-800">
+                    Nên bật
+                  </span>
+                </div>
+                <div className="text-[11px] text-slate-500 leading-relaxed">
+                  Nếu bạn trả lời sai một câu, câu hỏi đó sẽ được tự động đưa về cuối bài thi để bạn làm lại cho đến khi nhớ hẳn!
+                </div>
+              </div>
+              <input
+                type="checkbox"
+                checked={retryWrongQuestions}
+                onChange={() => {}}
+                className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer shrink-0"
+              />
+            </div>
+
+            {/* Limit Total Questions */}
+            <div className="space-y-2 pt-1">
+              <div className="text-xs font-bold text-slate-600">Giới hạn số câu hỏi (nếu muốn làm bài ngắn):</div>
+              <div className="flex items-center gap-2 flex-wrap">
+                {[-1, 10, 20, 30].map((count, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setQuestionCount(count)}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-bold transition active:scale-95 ${
+                      questionCount === count
+                        ? 'bg-slate-900 text-white shadow-xs'
+                        : 'bg-stone-100 text-slate-700 hover:bg-stone-200'
+                    }`}
+                  >
+                    {count === -1 ? `Toàn bộ đề thi (${maxPossibleQuestions} câu)` : `${count} câu`}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Number of Questions */}
-          <div className="space-y-2 pt-2 border-t border-stone-100">
-            <div className="text-xs font-bold text-slate-600 uppercase tracking-wider">
-              2. Số lượng câu hỏi:
-            </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              {[5, 10, 15, bucket.length].map((count, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setQuestionCount(count)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition active:scale-95 ${
-                    questionCount === count
-                      ? 'bg-slate-900 text-white shadow-xs'
-                      : 'bg-stone-100 text-slate-700 hover:bg-stone-200'
-                  }`}
-                >
-                  {count === bucket.length ? `Tất cả (${bucket.length} câu)` : `${count} câu`}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Shuffle Toggle */}
-          <div className="flex items-center justify-between p-3.5 bg-stone-50 rounded-2xl border border-stone-200">
-            <div>
-              <div className="text-xs font-bold text-slate-800">Trộn ngẫu nhiên thứ tự câu hỏi & đáp án</div>
-              <div className="text-[11px] text-slate-500">Giúp rèn luyện phản xạ không bị học vẹt</div>
-            </div>
-            <input
-              type="checkbox"
-              checked={shuffleQuestions}
-              onChange={(e) => setShuffleQuestions(e.target.checked)}
-              className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer"
-            />
-          </div>
-
           {/* Action Button */}
-          <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center justify-between pt-4 border-t border-stone-200">
             <button
               onClick={() => setActiveStep('list')}
               className="px-4 py-2.5 rounded-2xl bg-stone-100 hover:bg-stone-200 text-slate-700 text-xs font-bold transition"
             >
-              Quay lại danh sách
+              Quay lại danh sách giỏ
             </button>
 
             <button
               onClick={handleStartQuiz}
-              className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-extrabold text-sm shadow-md transition active:scale-95"
+              className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-black text-sm shadow-md transition active:scale-95"
             >
               <Play size={16} />
-              <span>Bắt Đầu Làm Bài Ngay ➔</span>
+              <span>Bắt Đầu Ôn Tập Ngay ({maxPossibleQuestions} câu) ➔</span>
             </button>
           </div>
         </div>
@@ -801,7 +1119,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                     Câu {currentIndex + 1} / {quizQuestions.length}
                   </span>
 
-                  {/* Header Prev / Next Navigation Buttons */}
                   <div className="inline-flex items-center gap-0.5 bg-stone-100 p-0.5 rounded-xl border border-stone-200">
                     <button
                       onClick={handlePrevQuestion}
@@ -822,7 +1139,22 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                   </div>
                 </div>
 
-                {/* Persistent Pinyin On/Off Toggle for Questions & Answers */}
+                {/* Word repeat badge */}
+                {currentQ.repeatIndex && (
+                  <span className="text-[11px] font-extrabold px-2.5 py-1 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 flex items-center gap-1">
+                    <Repeat size={12} className="text-amber-600" />
+                    <span>Chữ: <strong className="hanzi-font text-xs font-black">{currentQ.word.hanzi}</strong> (Lần {currentQ.repeatIndex}/{currentQ.totalRepeatsForWord || '?'})</span>
+                  </span>
+                )}
+
+                {/* Retry badge if this was repeated after wrong answer */}
+                {currentQ.isRetry && (
+                  <span className="text-[11px] font-black px-2 py-0.5 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 animate-pulse">
+                    ⚠️ Luyện lại câu sai
+                  </span>
+                )}
+
+                {/* Persistent Pinyin On/Off Toggle */}
                 <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-2xl border border-stone-200 shrink-0 shadow-2xs">
                   <span className="text-[11px] font-bold text-slate-600 pl-2 flex items-center gap-1">
                     <span>Pinyin</span>
@@ -835,7 +1167,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                         ? 'bg-rose-500 text-white shadow-xs'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
-                    title="Ẩn toàn bộ Pinyin ở cả câu hỏi và các đáp án lựa chọn (Phím tắt: P)"
+                    title="Ẩn toàn bộ Pinyin ở cả câu hỏi và các đáp án (Phím tắt: P)"
                   >
                     <EyeOff size={12} />
                     <span>Tắt</span>
@@ -847,7 +1179,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                         ? 'bg-indigo-600 text-white shadow-xs'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
-                    title="Hiện Pinyin trợ giúp ở câu hỏi và đáp án (Phím tắt: P)"
+                    title="Hiện Pinyin trợ giúp (Phím tắt: P)"
                   >
                     <Eye size={12} />
                     <span>Bật</span>
@@ -857,7 +1189,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
 
               <span className="flex items-center gap-2">
                 <span>Đúng: <strong className="text-emerald-600">{correctCount}</strong></span>
-                <span>Sai: <strong className="text-rose-600">{results.length - correctCount}</strong></span>
+                <span>Sai: <strong className="text-rose-600">{results.filter(r => !r.isCorrect).length}</strong></span>
               </span>
             </div>
 
@@ -873,14 +1205,19 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
           {/* Question Card */}
           <div className="space-y-4">
             <div className="space-y-1">
-              <span className="text-[11px] font-black uppercase tracking-wider text-amber-600">
-                {currentQ.type === 'vn_to_zh' && '🇻🇳 Dịch sang tiếng Trung'}
-                {currentQ.type === 'zh_to_vn' && '🇨🇳 Dịch sang tiếng Việt'}
-                {currentQ.type === 'fill_blank' && '✍️ Điền từ vào chỗ trống'}
-                {currentQ.type === 'hanzi_typing' && '⌨️ Luyện gõ chữ Hán'}
-                {currentQ.type === 'sentence_typing' && '✍️ Viết câu tiếng Trung (Ngữ cảnh câu mẫu)'}
-                {currentQ.type === 'listening_choice' && '🔊 Luyện nghe phát âm'}
-              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-[11px] font-black uppercase tracking-wider text-amber-600">
+                  {currentQ.type === 'zh_to_vn' && '🇨🇳 Chữ Hán ➔ Chọn nghĩa tiếng Việt'}
+                  {currentQ.type === 'vn_to_zh' && '🇻🇳 Nghĩa Việt ➔ Chọn chữ Hán'}
+                  {currentQ.type === 'zh_to_pinyin' && '🔤 Chữ Hán ➔ Chọn Pinyin & Thanh điệu'}
+                  {currentQ.type === 'pinyin_to_zh' && '🔤 Cho Pinyin ➔ Nhận diện chữ Hán'}
+                  {currentQ.type === 'zh_to_hanviet' && '🇻🇳 Chữ Hán ➔ Chọn âm Hán Việt'}
+                  {currentQ.type === 'fill_blank' && '✍️ Điền từ vào chỗ trống'}
+                  {currentQ.type === 'hanzi_typing' && '⌨️ Luyện gõ chữ Hán (IME)'}
+                  {currentQ.type === 'sentence_typing' && '✍️ Viết câu tiếng Trung (Ngữ cảnh câu mẫu)'}
+                  {currentQ.type === 'listening_choice' && '🔊 Luyện nghe phát âm chuẩn'}
+                </span>
+              </div>
 
               <h3 className="text-lg sm:text-xl font-black text-slate-900">
                 {currentQ.prompt}
@@ -906,7 +1243,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                 </div>
               )}
 
-              {/* Hanzi Typing Pinyin Hint (governed by showQuizPinyin) */}
+              {/* Hanzi Typing Pinyin Hint */}
               {currentQ.type === 'hanzi_typing' && showQuizPinyin && (
                 <div className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-xl border border-indigo-100 inline-block mt-1">
                   🔤 Gợi ý Pinyin: {currentQ.word.pinyin}
@@ -940,7 +1277,6 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                     </div>
                   </div>
 
-                  {/* Pinyin Hint for sentence_typing governed by showQuizPinyin */}
                   {showQuizPinyin && currentQ.clozePinyin && (
                     <div className="pt-2 border-t border-indigo-100/80 flex items-center justify-between flex-wrap gap-2">
                       <span className="text-xs font-bold text-indigo-800 bg-white px-2.5 py-1 rounded-lg border border-indigo-200 shadow-2xs">
@@ -994,7 +1330,13 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                       onClick={() => handleSelectOption(opt)}
                       className={`p-4 rounded-2xl border-2 text-left font-bold text-sm sm:text-base transition active:scale-95 flex items-center justify-between ${btnStyle}`}
                     >
-                      {renderOptionLabel(opt)}
+                      {currentQ.type === 'zh_to_pinyin' ? (
+                        <span className="text-base sm:text-lg font-black text-slate-900 tracking-wide">{opt}</span>
+                      ) : currentQ.type === 'zh_to_hanviet' ? (
+                        <span className="text-base sm:text-lg font-black text-slate-900 uppercase">{opt}</span>
+                      ) : (
+                        renderOptionLabel(opt)
+                      )}
                       {isAnswerSubmitted && isCorrectAnswer && <CheckCircle2 size={18} />}
                       {isAnswerSubmitted && isChosen && !isCorrectAnswer && <XCircle size={18} />}
                     </button>
@@ -1003,7 +1345,7 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
               </div>
             )}
 
-            {/* Answer Mode 2: Typing Input (for single hanzi or full sentence) */}
+            {/* Answer Mode 2: Typing Input */}
             {(currentQ.type === 'hanzi_typing' || currentQ.type === 'sentence_typing') && (
               <div className="space-y-3 pt-2">
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
@@ -1061,6 +1403,12 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
                 <p className="text-xs leading-relaxed font-medium">
                   {currentQ.explanation}
                 </p>
+                {!isCurrentCorrect && retryWrongQuestions && !currentQ.isRetry && (
+                  <p className="text-[11px] font-bold text-amber-800 pt-1 border-t border-rose-200/60 flex items-center gap-1">
+                    <Repeat size={12} />
+                    <span>Hệ thống đã tự động thêm chữ này vào cuối bài thi để bạn luyện lại cho đến khi thuộc!</span>
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -1111,81 +1459,102 @@ export const BucketStudio: React.FC<BucketStudioProps> = ({ onSpeak, onOpenWrite
 
       {/* 6. STEP 4: QUIZ RESULTS SUMMARY */}
       {activeStep === 'results' && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 shadow-md space-y-6 max-w-2xl mx-auto text-center">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-indigo-100 shadow-md space-y-6 max-w-3xl mx-auto text-center">
           <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/30">
             <Trophy size={40} />
           </div>
 
           <div className="space-y-1">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-amber-600">Hoàn Thành Bài Kiểm Tra</span>
+            <span className="text-xs font-extrabold uppercase tracking-wider text-amber-600">Hoàn Thành Bài Ôn Tập Chuyên Sâu</span>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Kết Quả: {scorePercent}%
+              Kết Quả Chung: {scorePercent}%
             </h3>
             <p className="text-xs sm:text-sm text-slate-500">
-              Bạn đã trả lời đúng <strong>{correctCount}</strong> trên tổng số <strong>{results.length}</strong> câu hỏi.
+              Bạn đã hoàn thành <strong>{results.length}</strong> câu hỏi ôn tập, trả lời đúng <strong>{correctCount}</strong> câu.
             </p>
           </div>
 
-          {/* Results Breakdown */}
-          <div className="text-left space-y-2 max-h-60 overflow-y-auto pr-1">
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Chi tiết từng từ:</div>
-            {results.map((r, i) => (
-              <div
-                key={i}
-                className={`p-3 rounded-2xl border text-xs flex items-center justify-between ${
-                  r.isCorrect ? 'bg-emerald-50/60 border-emerald-200 text-slate-800' : 'bg-rose-50/60 border-rose-200 text-slate-800'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="hanzi-font font-black text-base text-slate-900">{r.question.word.hanzi}</span>
-                  <span className="text-slate-500">({r.question.word.pinyin})</span>
-                  <span className="font-bold text-slate-800">• {r.question.word.meaning}</span>
-                </div>
-                <div className="flex items-center gap-1.5 shrink-0">
-                  {r.isCorrect ? (
-                    <span className="text-emerald-700 font-bold flex items-center gap-1 text-[11px]">
-                      <CheckCircle2 size={14} /> Đúng
-                    </span>
-                  ) : (
-                    <span className="text-rose-700 font-bold flex items-center gap-1 text-[11px]">
-                      <XCircle size={14} /> Sai
-                    </span>
-                  )}
-                  <button
-                    onClick={() => onSpeak(r.question.type === 'sentence_typing' ? r.question.correctAnswer : r.question.word.hanzi)}
-                    className="p-1 rounded-md bg-white hover:bg-stone-100 text-slate-600"
-                    title="Nghe phát âm"
+          {/* Word-level Mastery Breakdown: The key value of multi-repeat practice! */}
+          <div className="bg-stone-50 rounded-3xl p-5 border border-stone-200 text-left space-y-3">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <span className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <GraduationCap size={15} className="text-indigo-600" />
+                <span>Mức Độ Nắm Vững Từng Chữ Hán ({wordMasteryMap.length} chữ):</span>
+              </span>
+              <span className="text-xs font-bold text-slate-600">
+                Đã thuộc lòng 100%: <strong className="text-emerald-600">{fullyMasteredWords}</strong> / {wordMasteryMap.length} chữ
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-72 overflow-y-auto pr-1">
+              {wordMasteryMap.map(({ word, total, correct, failedTypes }) => {
+                const isMastered = correct === total && total > 0;
+                return (
+                  <div
+                    key={word.hanzi}
+                    className={`p-3 rounded-2xl border transition flex items-center justify-between ${
+                      isMastered
+                        ? 'bg-emerald-50/70 border-emerald-200 text-emerald-950'
+                        : 'bg-amber-50/70 border-amber-200 text-amber-950'
+                    }`}
                   >
-                    <Volume2 size={13} />
-                  </button>
-                </div>
-              </div>
-            ))}
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-10 rounded-xl bg-white border border-stone-200 flex items-center justify-center shrink-0 shadow-2xs">
+                        <span className="hanzi-font text-xl font-black text-slate-900">{word.hanzi}</span>
+                      </div>
+                      <div>
+                        <div className="text-xs font-black text-slate-900 flex items-center gap-1">
+                          <span>{word.pinyin}</span>
+                          <span className="text-slate-400 font-normal">• {word.meaning}</span>
+                        </div>
+                        {failedTypes.length > 0 ? (
+                          <div className="text-[10px] text-rose-600 font-bold mt-0.5">
+                            Cần ôn: {failedTypes.join(', ')}
+                          </div>
+                        ) : (
+                          <div className="text-[10px] text-emerald-700 font-bold mt-0.5">
+                            🌟 Đã thuộc mọi dạng bài!
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="text-right shrink-0">
+                      <span className={`text-xs font-black px-2 py-1 rounded-lg ${
+                        isMastered ? 'bg-emerald-200/80 text-emerald-900' : 'bg-amber-200/80 text-amber-900'
+                      }`}>
+                        {correct}/{total} đúng
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Action buttons */}
-          <div className="flex items-center justify-center gap-3 pt-4 border-t border-stone-100 flex-wrap">
+          <div className="flex items-center justify-center gap-3 pt-3 border-t border-stone-100 flex-wrap">
             {correctCount < results.length && (
               <button
                 onClick={handleRetakeWrongAnswers}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs transition active:scale-95"
+                className="flex items-center gap-1.5 px-5 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs transition active:scale-95"
               >
                 <RotateCcw size={14} />
-                <span>Ôn lại các từ làm sai ({results.length - correctCount})</span>
+                <span>Ôn lại các chữ còn sai ({wordMasteryMap.filter(w => w.correct < w.total).length} chữ)</span>
               </button>
             )}
 
             <button
               onClick={handleStartQuiz}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-stone-100 hover:bg-stone-200 text-slate-800 font-bold text-xs transition active:scale-95"
+              className="flex items-center gap-1.5 px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs shadow-md transition active:scale-95"
             >
               <RotateCcw size={14} />
-              <span>Làm lại bài mới</span>
+              <span>Làm bài ôn tập mới</span>
             </button>
 
             <button
               onClick={() => setActiveStep('list')}
-              className="px-5 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs transition active:scale-95"
+              className="px-5 py-2.5 rounded-2xl bg-stone-100 hover:bg-stone-200 text-slate-800 font-bold text-xs transition active:scale-95"
             >
               Quay lại danh sách giỏ
             </button>
