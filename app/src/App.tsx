@@ -17,6 +17,7 @@ import { VocabSection } from './components/VocabSection';
 import { DialogueQuizSection } from './components/DialogueQuizSection';
 import { ThematicSection } from './components/ThematicSection';
 import { BucketStudio } from './components/bucket/BucketStudio';
+import { PinyinMasterStudio } from './components/pinyin/PinyinMasterStudio';
 import { WriteModal } from './components/WriteModal';
 import { lessonsList, allLessonsData } from './data/lessons';
 import { playlistSections } from './data/thematicTopics';
@@ -26,7 +27,7 @@ import { VocabItem } from './types/lesson';
 type TabKey = 'pinyin' | 'tones' | 'hanzi' | 'vocab' | 'dialogue';
 
 export default function App() {
-  const [mainMode, setMainMode] = useState<'lessons' | 'thematic' | 'bucket'>('lessons');
+  const [mainMode, setMainMode] = useState<'lessons' | 'pinyin' | 'thematic' | 'bucket'>('lessons');
   const [currentSectionId, setCurrentSectionId] = useState<string>('section-1');
   const [currentLessonId, setCurrentLessonId] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<TabKey>('pinyin');
@@ -90,7 +91,12 @@ export default function App() {
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-        {/* MODE 1: THEMATIC TOPICS & TYPING PRACTICE */}
+        {/* MODE 1: FULL PINYIN MASTER STUDIO (ALL INITIALS, FINALS, RULES & MATRIX) */}
+        {mainMode === 'pinyin' && (
+          <PinyinMasterStudio onSpeak={speak} />
+        )}
+
+        {/* MODE 2: THEMATIC TOPICS & TYPING PRACTICE */}
         {mainMode === 'thematic' && (
           <ThematicSection onSpeak={speak} />
         )}
@@ -237,6 +243,7 @@ export default function App() {
                 finalsGroups={lessonData.finalsGroups}
                 practiceSyllables={lessonData.practiceSyllables}
                 onSpeak={speak}
+                onNavigateToPinyinMaster={() => setMainMode('pinyin')}
               />
             )}
 

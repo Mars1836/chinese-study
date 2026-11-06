@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Keyboard, Bookmark } from 'lucide-react';
+import { BookOpen, Keyboard, Bookmark, Languages } from 'lucide-react';
 import { LessonSummary } from '../../data/lessons';
 import { playlistSections } from '../../data/thematic';
 import { CurriculumDropdown } from './CurriculumDropdown';
@@ -12,8 +12,8 @@ interface Props {
   onSelectLesson: (id: number) => void;
   currentSectionId: string;
   onSelectSection: (sectionId: string) => void;
-  mainMode: 'lessons' | 'thematic' | 'bucket';
-  onSelectMainMode: (mode: 'lessons' | 'thematic' | 'bucket') => void;
+  mainMode: 'lessons' | 'pinyin' | 'thematic' | 'bucket';
+  onSelectMainMode: (mode: 'lessons' | 'pinyin' | 'thematic' | 'bucket') => void;
   hasChineseVoice: boolean;
   chineseVoiceName: string;
   availableVoices: SpeechSynthesisVoice[];
@@ -85,6 +85,22 @@ export const Navbar: React.FC<Props> = ({
               >
                 <BookOpen size={14} className={mainMode === 'lessons' ? 'text-cinnabar-600' : 'text-slate-500'} />
                 <span>Giáo Trình</span>
+              </button>
+
+              <button
+                onClick={() => onSelectMainMode('pinyin')}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs whitespace-nowrap shrink-0 transition active:scale-95 ${
+                  mainMode === 'pinyin'
+                    ? 'bg-white text-slate-900 font-black shadow-xs ring-1 ring-black/5'
+                    : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-stone-200/50'
+                }`}
+                title="Bảng tra cứu toàn bộ Vận âm & Vận mẫu Pinyin, chú thích và quy tắc cốt lõi"
+              >
+                <Languages size={14} className={mainMode === 'pinyin' ? 'text-indigo-600' : 'text-slate-500'} />
+                <span>Bảng Pinyin</span>
+                <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black bg-rose-500 text-white shrink-0">
+                  MỚI
+                </span>
               </button>
 
               <button

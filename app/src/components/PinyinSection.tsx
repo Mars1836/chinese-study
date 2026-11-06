@@ -7,13 +7,15 @@ interface Props {
   finalsGroups: FinalGroup[];
   practiceSyllables: PracticeSyllable[];
   onSpeak: (char: string, tone?: number) => void;
+  onNavigateToPinyinMaster?: () => void;
 }
 
 export const PinyinSection: React.FC<Props> = ({
   initialsGroups,
   finalsGroups,
   practiceSyllables,
-  onSpeak
+  onSpeak,
+  onNavigateToPinyinMaster
 }) => {
   const [blowing, setBlowing] = useState<boolean>(false);
 
@@ -27,6 +29,31 @@ export const PinyinSection: React.FC<Props> = ({
 
   return (
     <div className="space-y-8 animate-fadeIn">
+      {/* Quick Jump to Full Pinyin Master Studio */}
+      {onNavigateToPinyinMaster && (
+        <div className="p-4 rounded-3xl bg-gradient-to-r from-indigo-50 via-blue-50 to-indigo-50 border-2 border-indigo-200/90 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <Sparkles size={20} className="text-amber-300" />
+            </span>
+            <div>
+              <div className="text-xs sm:text-sm font-black text-slate-900">
+                Sổ Tay Tra Cứu Toàn Diện Tất Cả Vận Âm, Vận Mẫu & Quy Tắc Pinyin
+              </div>
+              <div className="text-[11px] text-slate-600">
+                Xem trọn bộ 23 thanh mẫu, 36 vận mẫu, mẹo khẩu hình miệng, 10 cặp âm đối lập và 9 quy tắc chính tả cốt lõi.
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={onNavigateToPinyinMaster}
+            className="px-4 py-2 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black transition active:scale-95 shadow-xs whitespace-nowrap shrink-0"
+          >
+            Mở Bảng Pinyin Toàn Diện ➔
+          </button>
+        </div>
+      )}
+
       {/* Overview & Paper simulation card */}
       <div className="bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-100 pb-4 mb-5">
